@@ -10,7 +10,7 @@ import filledStar from "@assets/img/star-1-3.svg";
 import borderedStar from "@assets/img/star-1-4.svg";
 
 interface Props {
-  star: boolean;
+  star?: boolean;
   text: string;
   text1: string;
 }
