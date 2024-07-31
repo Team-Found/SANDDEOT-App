@@ -2,7 +2,8 @@ import HomeScreen from "@pages/Home";
 import { Ocr } from "@pages/Article/OCR";
 import Article from "@pages/Article/Article";
 import ErrorPage from "@pages/error";
-import Root from "@routes/root";
+import Root from "@renderer/routes/Root";
+import Explore from "@pages/Explore";
 import { Outlet } from "react-router-dom";
 // import { Routes, Route } from "react-router-dom";
 import { createHashRouter, RouterProvider } from "react-router-dom";
@@ -19,7 +20,7 @@ const router = createHashRouter([
       },
       {
         path: "explore",
-        element: <div></div>,
+        element: <Explore />,
       },
       {
         path: "article",
@@ -37,7 +38,7 @@ const router = createHashRouter([
       },
       {
         path: "word",
-        element: <div></div>,
+        element: <div className="text-white">wordwordword</div>,
       },
     ],
   },
