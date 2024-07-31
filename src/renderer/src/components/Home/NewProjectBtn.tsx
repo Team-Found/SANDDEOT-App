@@ -24,11 +24,9 @@ export const NewProjectBtn = ({
   extension = "/img/extension-1.png",
 }: Props): JSX.Element => {
   return (
-    <div className="w-[88px] flex flex-col items-center gap-[5px] pt-2.5 pb-2 px-[19px] h-[88px] rounded-[20px] justify-center bg-variable-collection-secondarybg relative">
+    <div className="w-[88px] flex flex-col items-center gap-[5px] pt-2.5 pb-2 px-[19px] h-[88px] rounded-[20px] justify-center bg-variable-collection-secondarybg">
       <img
-        className={`relative ${property1 === "variant-2" ? "w-[46px]" : "w-12"} ${
-          property1 === "variant-2" ? "h-11" : "h-12"
-        }`}
+        className="w-12 h-12"
         alt="Dictionary"
         src={
           property1 === "variant-2"
@@ -41,7 +39,7 @@ export const NewProjectBtn = ({
         }
       />
       <div
-        className={`[font-family:Helvetica] w-fit tracking-[0] text-sm font-bold leading-[normal] relative ${
+        className={`[font-family:Helvetica] w-fit tracking-[0] text-sm font-bold leading-[normal] ${
           property1 === "variant-4" ? "text-center" : ""
         } ${
           property1 === "variant-2"

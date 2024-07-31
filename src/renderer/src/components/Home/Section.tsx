@@ -17,13 +17,10 @@ export const Section = (): JSX.Element => {
         새롭게 시작하기
       </div>
       <div className="flex flex-wrap items-center gap-[10px_10px] relative self-stretch w-full flex-[0_0_auto]">
-        <NewProjectBtn dictionary="/img/dictionary.png" property1="default" />
-        <NewProjectBtn img="/img/2x.png" property1="variant-2" />
-        <NewProjectBtn
-          centerFocusWeak="/img/center-focus-weak.png"
-          property1="variant-3"
-        />
-        <NewProjectBtn extension="/img/extension.png" property1="variant-4" />
+        <NewProjectBtn property1="default" />
+        {/* <NewProjectBtn property1="variant-2" /> */}
+        <NewProjectBtn property1="variant-3" />
+        <NewProjectBtn property1="variant-4" />
       </div>
     </div>
   );
