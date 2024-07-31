@@ -1,6 +1,6 @@
 import { SidebarItem } from "./SidebarItem";
 import sidebarItemIcon from "@assets/img/icon-16.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export const Sidebar = (): JSX.Element => {
   const tab = [
@@ -9,6 +9,8 @@ export const Sidebar = (): JSX.Element => {
     { name: "본문", link: "/article", icon: sidebarItemIcon },
     { name: "단어", link: "/word", icon: sidebarItemIcon },
   ];
+
+  const location = useLocation();
 
   return (
     <div
@@ -20,16 +22,18 @@ export const Sidebar = (): JSX.Element => {
             기본
           </div>
           <div className="flex flex-col items-start self-stretch w-full flex-[0_0_auto]">
-            {tab.map((a) => (
-              <Link to={a.link}>
-                <SidebarItem darkMode icon={a.icon} text={a.name} />
+            {tab.map((a, index) => (
+              <Link key={index} to={a.link} className="w-full">
+                <SidebarItem
+                  darkMode
+                  icon={a.icon}
+                  text={a.name}
+                  selected={
+                    location.pathname.split("/")[1] === a.link.split("/")[1]
+                  }
+                />
               </Link>
             ))}
-            <SidebarItem darkMode icon={sidebarItemIcon} selected text="홈" />
-            <SidebarItem darkMode icon={sidebarItemIcon} text="탐색" />
-            <SidebarItem darkMode icon={sidebarItemIcon} text="추천" />
-            <SidebarItem darkMode icon={sidebarItemIcon} text="OCR" />
-            <SidebarItem darkMode icon={sidebarItemIcon} text="확장" />
           </div>
         </div>
         <div className="gap-[1.7px] self-stretch w-full flex-[0_0_auto] flex flex-col items-start">
