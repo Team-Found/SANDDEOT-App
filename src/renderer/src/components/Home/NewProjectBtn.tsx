@@ -7,6 +7,9 @@ Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcN
 
 // import PropTypes from 'prop-types'
 // import React from 'react'
+import dictionary from "@assets/img/dictionary.svg";
+import centerFocusWeak from "@assets/img/center_focus_weak.svg";
+import extension from "@assets/img/extension.svg";
 
 interface Props {
   property1?: "variant-4" | "variant-2" | "variant-3" | "default";
@@ -18,10 +21,6 @@ interface Props {
 
 export const NewProjectBtn = ({
   property1 = "default",
-  dictionary = "/img/dictionary-1.png",
-  img = "/img/1.png",
-  centerFocusWeak = "/img/center-focus-weak-1.png",
-  extension = "/img/extension-1.png",
 }: Props): JSX.Element => {
   return (
     <div className="w-[88px] flex flex-col items-center gap-[5px] pt-2.5 pb-2 px-[19px] h-[88px] rounded-[20px] justify-center bg-variable-collection-secondarybg">
@@ -29,13 +28,11 @@ export const NewProjectBtn = ({
         className="w-12 h-12"
         alt="Dictionary"
         src={
-          property1 === "variant-2"
-            ? img
-            : property1 === "variant-3"
-              ? centerFocusWeak
-              : property1 === "variant-4"
-                ? extension
-                : dictionary
+          property1 === "variant-3"
+            ? centerFocusWeak
+            : property1 === "variant-4"
+              ? extension
+              : dictionary
         }
       />
       <div
