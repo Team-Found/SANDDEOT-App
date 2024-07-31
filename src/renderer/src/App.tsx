@@ -8,6 +8,9 @@ function App(): JSX.Element {
       <Sidebar />
       <Routes>
         <Route path="/" element={<HomeScreen />} />
+        <Route path="explore" element={<div></div>} />
+        <Route path="article" element={<div></div>} />
+        <Route path="word" element={<div></div>} />
       </Routes>
     </div>
   );
