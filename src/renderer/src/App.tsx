@@ -1,5 +1,5 @@
 import { Sidebar } from "@components/Sidebar";
-import HomeScreen from "./components/Home/Screen";
+import HomeScreen from "@pages/Home";
 import { Routes, Route } from "react-router-dom";
 
 function App(): JSX.Element {

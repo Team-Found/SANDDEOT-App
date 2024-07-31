@@ -15,7 +15,8 @@
         "src/renderer/src/*"
       ],
       "@components/*": ["src/renderer/src/components/*"],
-      "@assets/*": ["src/renderer/src/assets/*"]
+      "@assets/*": ["src/renderer/src/assets/*"],
+      "@pages/*": ["src/renderer/src/pages/*"]
     }
   }
 }
