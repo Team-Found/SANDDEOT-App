@@ -1,6 +1,67 @@
 import db from "../../db";
 import { LearnAddEdit } from "../../types/Learn";
 
+const learnEditAdd = (
+  learnID: number,
+  editList: LearnAddEdit[],
+  bodyID: number,
+): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    const sql =
+      "INSERT INTO LearnEdit (learnID, editLineNum, original, translated, bodyID) VALUES (?, ?, ?, ?, ?)";
+    const promises = editList.map((edit) => {
+      return new Promise<void>((resolve, reject) => {
+        db.run(
+          sql,
+          [learnID, edit.lineNum, edit.original, edit.newTranslated, bodyID],
+          (err) => {
+            if (err) {
+              console.error("SQL error:", err.message);
+              reject();
+            } else {
+              console.log(`third success`);
+              resolve();
+            }
+          },
+        );
+      });
+    });
+    Promise.all(promises)
+      .then(() => {
+        console.log(`fourth success`);
+        resolve(learnID);
+      })
+      .catch(() => {
+        reject();
+      });
+  });
+};
+
+const getLearnID = (
+  startDate: Date,
+  endDate: Date,
+  bodyID: number,
+): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    db.get(
+      "Select learnID from Learn Where startDate = ? and endDate = ? and bodyID = ?",
+      [
+        Math.floor(startDate.getTime() / 1000),
+        Math.floor(endDate.getTime() / 1000),
+        bodyID,
+      ],
+      (err, row: { learnID: number }) => {
+        if (err) {
+          console.error("SQL error:", err.message);
+          reject();
+        } else {
+          resolve(row.learnID);
+        }
+      },
+    );
+  });
+};
+
 const learnAdd = (
   startDate: Date,
   endDate: Date,
@@ -22,52 +83,11 @@ const learnAdd = (
           reject();
         } else {
           console.log(`frist success`);
-          db.get(
-            "Select learnID from Learn Where startDate = ? and endDate = ? and bodyID = ?",
-            [
-              Math.floor(startDate.getTime() / 1000),
-              Math.floor(endDate.getTime() / 1000),
-              bodyID,
-            ],
-            (err, row: { learnID: number }) => {
-              if (err) {
-                console.error("SQL error:", err.message);
-                reject();
-              } else {
-                console.log(`second success`);
-                const learnID = row.learnID;
-                const sql =
-                  "INSERT INTO LearnEdit (learnID, editLineNum, original, translated, bodyID) VALUES (?, ?, ?, ?, ?)";
-                const promises = editList.map((edit) => {
-                  return new Promise<void>((resolve, reject) => {
-                    db.run(
-                      sql,
-                      [
-                        learnID,
-                        edit.lineNum,
-                        edit.original,
-                        edit.newTranslated,
-                        bodyID,
-                      ],
-                      (err) => {
-                        if (err) {
-                          console.error("SQL error:", err.message);
-                          reject();
-                        } else {
-                          console.log(`third success`);
-                          resolve();
-                        }
-                      },
-                    );
-                  });
-                });
-                Promise.all(promises).then(() => {
-                  console.log(`fourth success`);
-                  resolve(learnID);
-                });
-              }
-            },
-          );
+          getLearnID(startDate, endDate, bodyID).then((learnID) => {
+            learnEditAdd(learnID, editList, bodyID).then((learnID) => {
+              resolve(learnID);
+            });
+          });
         }
       },
     );
