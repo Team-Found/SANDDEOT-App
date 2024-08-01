@@ -1,5 +1,5 @@
-import WordDetail from "../types/WordDetail";
-import db from "../db";
+import WordDetail from "../../types/WordDetail";
+import db from "../../db";
 
 const wordDetail = (star?: boolean): Promise<WordDetail> => {
   const sql =
