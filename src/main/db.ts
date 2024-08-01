@@ -29,6 +29,64 @@ const db = new sqlite3.Database(
 //   IMPP: null,
 //   categoryID: 1
 // }
+
+type Article = {
+  title: string;
+  author: string;
+  level: number;
+  progress: number;
+  image: Blob;
+};
+
+const articleList = (
+  startLevel: number = 1,
+  endLevel: number = 6,
+  categoryID?: number,
+): Promise<Article[]> => {
+  const sql = `SELECT title, author, level, progress, image FROM Body WHERE level between ? and ? ${categoryID ? `and categoryID = ?` : ``}`;
+  return new Promise((resolve, reject) => {
+    db.all(sql, [startLevel, endLevel, categoryID], (err, rows: Article[]) => {
+      if (err) {
+        console.error("SQL error:", err.message);
+        reject();
+      } else if (rows) {
+        resolve(rows);
+      } else {
+        console.log(
+          `No article found with ${[startLevel, endLevel, categoryID]}`,
+        );
+        reject();
+      }
+    });
+    // db.each(
+    //   sql,
+    //   [startLevel, endLevel, categoryID],
+    //   (err, row: ArticleList) => {
+    //     if (err) {
+    //       console.error("SQL error:", err.message);
+    //       reject();
+    //     } else if (row) {
+    //       result.push(row);
+    //     } else {
+    //       console.log(
+    //         `No article found with bodyID ${[startLevel, endLevel, categoryID]}`,
+    //       );
+    //       reject();
+    //     }
+    //   },
+    //   (err, n) => {
+    //     if (err) {
+    //       console.error("SQL error:", err.message);
+    //       reject();
+    //     } else {
+    //       console.log(`Returned ${n} rows`);
+    //       resolve(result);
+    //     }
+    //   },
+    // );
+  });
+};
+
 type ArticleDetail = {
   bodyID: number;
   title: string;
@@ -43,6 +101,8 @@ type ArticleDetail = {
   editDate: number | null;
   IMPP: number | null;
   categoryID: number;
+  level: number;
+  author: string;
 };
 
 // db.serialize(() => {
@@ -97,6 +157,10 @@ const wordDetail = (star?: boolean): Promise<WordDetail> => {
     });
   });
 };
+
+articleList().then((list) => {
+  console.log(list);
+});
 
 wordDetail(false).then((word) => {
   console.log(word);
