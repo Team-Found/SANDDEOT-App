@@ -185,33 +185,31 @@ const newText = (
   title: string,
   date: Date,
   body: string,
+  translated: string,
   origin: number,
   categoryID: number,
   image?: Blob,
 ): Promise<number> => {
   const sql =
-    "INSERT INTO Body (title, date, body, origin, image, categoryID) VALUES (?, ?, ?, ?, ?, ?)";
+    "INSERT INTO Body (title, date, body, translated, origin, image, categoryID) VALUES (?, ?, ?, ?, ?, ?, ?)";
   const unixTime = Math.floor(date.getTime()) / 1000;
   return new Promise((resolve, reject) => {
-    db.all(
+    db.run(
       sql,
-      [title, unixTime, body, origin, image, categoryID],
-      (err, rows: any) => {
+      [title, unixTime, body, translated, origin, image, categoryID],
+      (err) => {
         if (err) {
           console.error("SQL error:", err.message);
           reject();
-        } else if (rows) {
-          console.log(rows);
-          resolve(rows);
         } else {
-          console.log(`No word found with ??}`);
-          reject();
+          console.log(`success`);
+          resolve(0);
         }
       },
     );
   });
 };
 
-newText("Hello", new Date(), "hi my name is jaehwan", 3, 1).then((a) => {
+newText("JJJJunho", new Date(), "junho is mmotsanggim", "", 3, 1).then((a) => {
   console.log(a);
 });
