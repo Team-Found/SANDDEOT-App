@@ -44,6 +44,7 @@ type ArticleDetail = {
   IMPP: number | null;
   categoryID: number;
 };
+
 // db.serialize(() => {
 const articleDetail = (bodyID: number): Promise<ArticleDetail> => {
   const sql = "SELECT * FROM Body WHERE bodyID = ?";
@@ -63,6 +64,43 @@ const articleDetail = (bodyID: number): Promise<ArticleDetail> => {
   });
 };
 
+type WordDetail = {
+  wordID: number;
+  word: string;
+  mean: string;
+  expos: number;
+  star: number;
+  level: number;
+  bodyID: number;
+};
+
+const wordDetail = (star?: boolean): Promise<WordDetail> => {
+  const sql =
+    "SELECT * FROM Word" +
+    (star === false
+      ? " WHERE star = 0"
+      : star === true
+        ? " WHERE star = 1"
+        : "");
+
+  return new Promise((resolve, reject) => {
+    db.get(sql, [], (err, row: WordDetail) => {
+      if (err) {
+        console.error("SQL error:", err.message);
+        reject();
+      } else if (row) {
+        resolve(row);
+      } else {
+        console.log(`No word found with ${star}`);
+        reject();
+      }
+    });
+  });
+};
+
+wordDetail(false).then((word) => {
+  console.log(word);
+});
 // Example call
 articleDetail(1).then((article) => {
   console.log(article);
