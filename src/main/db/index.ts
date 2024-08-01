@@ -9,6 +9,8 @@ import wordAdd from "./module/Word/wordAdd";
 import wordList from "./module/Word/wordList";
 import wordDelete from "./module/Word/wordDelete";
 import categoryList from "./module/Category/categoryList";
+import categoryAdd from "./module/Category/categoryAdd";
+import categoryDelete from "./module/Category/categoryDelete";
 
 export {
   articleDetail,
@@ -22,4 +24,6 @@ export {
   wordList,
   wordDelete,
   categoryList,
+  categoryAdd,
+  categoryDelete,
 };
