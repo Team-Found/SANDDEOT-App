@@ -15,6 +15,4 @@ const articleDelete = (bodyID: number): Promise<number> => {
   });
 };
 
-articleDelete(4);
-
 export default articleDelete;
