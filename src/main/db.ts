@@ -281,9 +281,9 @@ const LearnAnalytics = async (
   });
 };
 
-LearnAnalytics().then((learn) => {
-  console.log(learn);
-});
+// LearnAnalytics().then((learn) => {
+//   console.log(learn);
+// });
 
 // categoryList().then((category) => {
 //   console.log(category);
@@ -373,6 +373,29 @@ const updateText = (
   });
 };
 
-updateText(1, { title: "jaehwan" }).then((a) => {
-  console.log(a);
-});
+// updateText(1, { title: "jaehwan" }).then((a) => {
+//   console.log(a);
+// });
+
+const addWord = (
+  word: string,
+  mean: string,
+  bodyID: number,
+): Promise<number> => {
+  const sql = "INSERT INTO Word (word, mean, bodyID) VALUES (?, ?, ?)";
+  return new Promise((resolve, reject) => {
+    db.run(sql, [word, mean, bodyID], (err) => {
+      if (err) {
+        console.error("SQL error:", err.message);
+        reject();
+      } else {
+        console.log(`success`);
+        resolve(0);
+      }
+    });
+  });
+};
+
+// addWord("jelly", "젤리", 1).then((a) => {
+//   console.log(a);
+// });
