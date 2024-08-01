@@ -241,10 +241,10 @@ const LearnAnalytics = async (
       ],
       (err, rows: Learn[]) => {
         if (err) {
-          // console.error("SQL error:", err.message);
+          console.error("SQL error:", err.message);
           reject();
         } else if (rows) {
-          console.log(rows);
+          // console.log(rows);
           const promises = rows.map(async (row) => {
             const learnDate = new Date(row.startDate * 1000);
             let status = false;
