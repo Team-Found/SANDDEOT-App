@@ -1,5 +1,5 @@
-import Category from "../types/Category";
-import db from "../db";
+import Category from "../../types/Category";
+import db from "../../db";
 const categoryList = (): Promise<Category[]> => {
   const sql = "SELECT * FROM Category";
 
