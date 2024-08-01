@@ -6,7 +6,7 @@ function dateToEpoch(thedate): Date {
   return thedate.setHours(0, 0, 0, 0);
 }
 
-const LearnAnalytics = async (
+const learnAnalytics = async (
   anStartDate: Date = new Date(0),
   anEndDate: Date = new Date(),
 ): Promise<LearnAnalytics[]> => {
@@ -62,4 +62,4 @@ const LearnAnalytics = async (
   });
 };
 
-export default LearnAnalytics;
+export default learnAnalytics;

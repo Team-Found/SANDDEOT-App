@@ -11,7 +11,7 @@ const articleAdd = (
 ): Promise<number> => {
   const sql =
     "INSERT INTO Body (title, date, body, translated, origin, image, categoryID) VALUES (?, ?, ?, ?, ?, ?, ?)";
-  const unixTime = Math.floor(date.getTime()) / 1000;
+  const unixTime = Math.floor(date.getTime() / 1000);
   return new Promise((resolve, reject) => {
     db.run(
       sql,

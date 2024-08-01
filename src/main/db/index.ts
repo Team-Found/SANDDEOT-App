@@ -3,8 +3,9 @@ import articleList from "./module/Article/articleList";
 import articleAdd from "./module/Article/articleAdd";
 import articleUpdate from "./module/Article/articleUpdate";
 import articleDelete from "./module/Article/articleDelete";
-import LearnAnalytics from "./module/Learn/learnAnalytics";
-import LearnEdit from "./module/Learn/learnEdit";
+import learnAnalytics from "./module/Learn/learnAnalytics";
+import learnEdit from "./module/Learn/learnEdit";
+import learnAdd from "./module/Learn/ learnAdd";
 import wordAdd from "./module/Word/wordAdd";
 import wordList from "./module/Word/wordList";
 import wordDelete from "./module/Word/wordDelete";
@@ -18,8 +19,9 @@ export {
   articleAdd,
   articleUpdate,
   articleDelete,
-  LearnAnalytics,
-  LearnEdit,
+  learnAnalytics,
+  learnEdit,
+  learnAdd,
   wordAdd,
   wordList,
   wordDelete,

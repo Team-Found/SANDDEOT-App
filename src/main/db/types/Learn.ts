@@ -20,3 +20,9 @@ export interface Learn {
   endDate: number; // 학습 종료 시간 unix timestamp
   bodyID: number; // 학습한 본문 ID
 }
+
+export interface LearnAddEdit {
+  lineNum: number;
+  newTranslated: string;
+  original: string;
+}
