@@ -1,7 +1,7 @@
 import db from "../../db";
 import { LeanEdit } from "../../types/Learn";
 
-const LearnEdit = (learnID?: number): Promise<LeanEdit[]> => {
+const learnEdit = (learnID?: number): Promise<LeanEdit[]> => {
   const sql = `SELECT * FROM LearnEdit ${learnID ? `WHERE learnID = ?` : ""}`;
   return new Promise((resolve, reject) => {
     db.all(sql, [learnID], (err, rows: LeanEdit[]) => {
@@ -18,4 +18,4 @@ const LearnEdit = (learnID?: number): Promise<LeanEdit[]> => {
   });
 };
 
-export default LearnEdit;
+export default learnEdit;
