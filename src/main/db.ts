@@ -158,6 +158,33 @@ const wordDetail = (star?: boolean): Promise<WordDetail> => {
   });
 };
 
+type Category = {
+  categoryID: number;
+  categoryName: string;
+};
+
+const categoryList = (): Promise<Category[]> => {
+  const sql = "SELECT * FROM Category";
+
+  return new Promise((resolve, reject) => {
+    db.all(sql, [], (err, rows: Category[]) => {
+      if (err) {
+        console.error("SQL error:", err.message);
+        reject();
+      } else if (rows) {
+        resolve(rows);
+      } else {
+        console.log(`No word found with ??}`);
+        reject();
+      }
+    });
+  });
+};
+
+categoryList().then((category) => {
+  console.log(category);
+});
+
 articleList().then((list) => {
   console.log(list);
 });
