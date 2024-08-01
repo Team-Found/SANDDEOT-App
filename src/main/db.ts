@@ -181,19 +181,125 @@ const categoryList = (): Promise<Category[]> => {
   });
 };
 
-categoryList().then((category) => {
-  console.log(category);
+interface LearnAnalytics {
+  date: Date; // 학습 날짜
+  learnID: number[]; // 학습한 학습 ID
+  duration: number; // 해당 일의 총 학습 시간
+  edit: LeanEdit[]; // 해당 일의 수정사항 리스트
+}
+
+interface LeanEdit {
+  editID: number; // 수정 ID
+  learnID: number; // 학습 ID
+  bodyID: number; // 수정한 본문 ID
+  editLineNum: number; // 수정한 라인 번호
+  original: string; // 수정 전 내용
+  translated: string; // 수정 후 내용
+}
+
+interface Learn {
+  learnID: number; // 학습 ID
+  startDate: number; // 학습 시작 시간 unix timestamp
+  endDate: number; // 학습 종료 시간 unix timestamp
+  bodyID: number; // 학습한 본문 ID
+}
+
+function dateToEpoch(thedate): Date {
+  return thedate.setHours(0, 0, 0, 0);
+}
+
+const LearnAnalytics = (
+  anStartDate: Date = new Date(0),
+  anEndDate: Date = new Date(),
+): Promise<LearnAnalytics[]> => {
+  const sql = "SELECT * FROM Learn WHERE startDate between ? and ?";
+
+  return new Promise((resolve, reject) => {
+    const result = [] as LearnAnalytics[];
+    db.each(
+      sql,
+      [
+        Math.floor(anStartDate.getTime()) / 1000,
+        Math.floor(anEndDate.getTime()) / 1000,
+      ],
+      (err, row: Learn) => {
+        if (err) {
+          console.error("SQL error:", err.message);
+          reject();
+        } else if (row) {
+          const learnDate = new Date(row.startDate * 1000);
+          let status = false;
+          result.forEach((learn) => {
+            if (learn.date === dateToEpoch(learnDate)) {
+              learn.learnID.push(row.learnID);
+              learn.duration += row.endDate - row.startDate;
+              status = true;
+              db.all(
+                "SELECT * FROM LearnEdit WHERE learnID = ?",
+                [row.learnID],
+                (err, rows: LeanEdit[]) => {
+                  if (err) {
+                    console.error("SQL error:", err.message);
+                    reject();
+                  }
+                  learn.edit.push(...rows);
+                },
+              );
+            }
+          });
+          if (!status) {
+            db.all(
+              "SELECT * FROM LearnEdit WHERE learnID = ?",
+              [row.learnID],
+              (err, rows: LeanEdit[]) => {
+                if (err) {
+                  console.error("SQL error:", err.message);
+                  reject();
+                }
+                result.push({
+                  date: dateToEpoch(learnDate),
+                  learnID: [row.learnID],
+                  duration: row.endDate - row.startDate,
+                  edit: rows,
+                });
+              },
+            );
+          }
+        } else {
+          console.log(`No word found with ??}`);
+          reject();
+        }
+      },
+      (err, n) => {
+        if (err) {
+          console.error("SQL error:", err.message);
+          reject();
+        } else {
+          console.log(`Returned ${n} rows`);
+          setTimeout(() => {
+            resolve(result);
+          }, 2000);
+        }
+      },
+    );
+  });
+};
+
+LearnAnalytics().then((learn) => {
+  console.log(learn);
 });
 
-articleList().then((list) => {
-  console.log(list);
-});
+// categoryList().then((category) => {
+//   console.log(category);
+// });
 
-wordDetail(false).then((word) => {
-  console.log(word);
-});
-// Example call
-articleDetail(1).then((article) => {
-  console.log(article);
-});
+// articleList().then((list) => {
+//   console.log(list);
+// });
+
+// wordDetail(false).then((word) => {
+//   console.log(word);
+// });
+// articleDetail(1).then((article) => {
+//   console.log(article);
 // });
