@@ -1,7 +1,7 @@
 import WordDetail from "../../types/WordDetail";
 import db from "../../db";
 
-const wordDetail = (star?: boolean): Promise<WordDetail> => {
+const wordList = (star?: boolean): Promise<WordDetail[]> => {
   const sql =
     "SELECT * FROM Word" +
     (star === false
@@ -11,12 +11,12 @@ const wordDetail = (star?: boolean): Promise<WordDetail> => {
         : "");
 
   return new Promise((resolve, reject) => {
-    db.get(sql, [], (err, row: WordDetail) => {
+    db.all(sql, [], (err, rows: WordDetail[]) => {
       if (err) {
         console.error("SQL error:", err.message);
         reject();
-      } else if (row) {
-        resolve(row);
+      } else if (rows) {
+        resolve(rows);
       } else {
         console.log(`No word found with ${star}`);
         reject();
@@ -25,4 +25,4 @@ const wordDetail = (star?: boolean): Promise<WordDetail> => {
   });
 };
 
-export default wordDetail;
+export default wordList;
