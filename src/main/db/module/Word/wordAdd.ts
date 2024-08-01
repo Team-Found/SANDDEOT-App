@@ -1,6 +1,6 @@
 import db from "../../db";
 
-const addWord = (
+const wordAdd = (
   word: string,
   mean: string,
   bodyID: number,
@@ -19,4 +19,4 @@ const addWord = (
   });
 };
 
-export default addWord;
+export default wordAdd;

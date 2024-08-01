@@ -1,6 +1,6 @@
 import db from "../../db";
 
-const updateArticle = (
+const articleUpdate = (
   bodyID: number,
   option: {
     title?: string;
@@ -40,4 +40,4 @@ const updateArticle = (
     );
   });
 };
-export default updateArticle;
+export default articleUpdate;
