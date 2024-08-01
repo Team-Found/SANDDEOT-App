@@ -23,11 +23,7 @@ export default function Banner(): JSX.Element {
               BBC
             </div>
           </div> */}
-          <div className="#08e292">
-            <div className="w-fit mt-[-0.35px] [font-family:'Notable-Regular',Helvetica] font-normal text-white text-[6px] text-center tracking-[-0.30px] leading-[5.4px] whitespace-nowrap">
-              Lv. 0
-            </div>
-          </div>
+          <Tag color="#08e292">Lv. 0</Tag>
         </div>
       </div>
     </div>
