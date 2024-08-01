@@ -1,21 +1,21 @@
 import articleDetail from "./module/Article/articleDetail";
 import articleList from "./module/Article/articleList";
-import newArticle from "./module/Article/newArticle";
-import updateArticle from "./module/Article/updateArticle";
+import articleAdd from "./module/Article/articleAdd";
+import articleUpdate from "./module/Article/articleUpdate";
 import LearnAnalytics from "./module/Learn/learnAnalytics";
 import LearnEdit from "./module/Learn/learnEdit";
-import addWord from "./module/Word/addWord";
+import wordAdd from "./module/Word/wordAdd";
 import wordDetail from "./module/Word/wordDetail";
 import categoryList from "./module/categoryList";
 
 export {
   articleDetail,
   articleList,
-  newArticle,
-  updateArticle,
+  articleAdd,
+  articleUpdate,
   LearnAnalytics,
   LearnEdit,
-  addWord,
+  wordAdd,
   wordDetail,
   categoryList,
 };

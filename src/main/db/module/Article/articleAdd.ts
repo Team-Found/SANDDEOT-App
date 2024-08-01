@@ -1,6 +1,6 @@
 import db from "../../db";
 
-const newArticle = (
+const articleAdd = (
   title: string,
   date: Date,
   body: string,
@@ -28,4 +28,4 @@ const newArticle = (
     );
   });
 };
-export default newArticle;
+export default articleAdd;
