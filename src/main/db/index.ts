@@ -8,7 +8,7 @@ import LearnEdit from "./module/Learn/learnEdit";
 import wordAdd from "./module/Word/wordAdd";
 import wordList from "./module/Word/wordList";
 import wordDelete from "./module/Word/wordDelete";
-import categoryList from "./module/categoryList";
+import categoryList from "./module/Category/categoryList";
 
 export {
   articleDetail,
