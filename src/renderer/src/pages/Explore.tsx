@@ -1,5 +1,7 @@
 // import { Bonmoon } from "./Bonmoon";
 import Banner from "@components/Explore/Banner";
+import SearchResult from "@components/Explore/SearchResult";
+import imgUrl from "@assets/img/article-main-image.png";
 export default function Explore(): JSX.Element {
   return (
     <>
@@ -52,12 +54,20 @@ export default function Explore(): JSX.Element {
           </div>
         </div>
       </div>
-      <div className="flex flex-col w-[508px] items-start gap-4 flex-[0_0_auto]">
+      <div className="flex flex-col items-start gap-4 flex-[0_0_auto]">
         <Banner />
         {/* <Bonmoon
             articleMainImage="article-main-image-2.png"
             className="!self-stretch !w-full"
           /> */}
+        <SearchResult
+          title="Bot or not: Are fake accounts swaying voters towards Reform UK?"
+          author="Marianna Spring, Disinformation and social media correspondent"
+          level={1}
+          tags={["BBC"]}
+          imageURL={imgUrl}
+          url=""
+        />
       </div>
     </>
   );
