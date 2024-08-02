@@ -7,14 +7,25 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import React from "react";
+import React, { useState } from "react";
 
 interface props {
   textCategoryID: number | undefined;
   setTextCategoryID: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 
+type category = {
+  categoryID: number;
+  categoryName: string;
+};
+
 export function SelectDemo(props: props) {
+  let [categoryList, setCategoryList] = useState<category[]>();
+
+  window.api.db.categoryList().then((categorys) => {
+    setCategoryList(categorys);
+  });
+
   return (
     <Select
       onValueChange={(value: string) => {
@@ -22,16 +33,16 @@ export function SelectDemo(props: props) {
       }}
     >
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select a fruit" />
+        <SelectValue placeholder="카테고리를 선택하세요!" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel>카테고리</SelectLabel>
-          <SelectItem value="1">사람</SelectItem>
-          <SelectItem value="2">Banana</SelectItem>
-          <SelectItem value="3">Blueberry</SelectItem>
-          <SelectItem value="4">Grapes</SelectItem>
-          <SelectItem value="5">Pineapple</SelectItem>
+          {categoryList?.map((a, i) => (
+            <SelectItem value={String(a.categoryID)}>
+              {a.categoryName}
+            </SelectItem>
+          ))}
         </SelectGroup>
       </SelectContent>
     </Select>
