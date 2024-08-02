@@ -19,7 +19,7 @@ export default function SearchResult(props: {
         src={imageURL}
       />
       <div className="grow shrink basis-0 self-stretch relative">
-        <div className="text-white text-2xl font-normal font-['Rozha One'] leading-tight">
+        <div className="text-2xl font-normal font-['Rozha One'] leading-tight">
           {title}
         </div>
         <div className="text-[#eaeaea] text-xs font-medium font-['Pretendard Variable']">

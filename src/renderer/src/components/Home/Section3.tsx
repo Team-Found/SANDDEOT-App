@@ -13,7 +13,7 @@ export const Section3 = (): JSX.Element => {
     <div
       className={`flex flex-col items-start gap-2 relative !self-stretch !flex-[0_0_auto] !w-full`}
     >
-      <div className="relative self-stretch mt-[-1.00px] [font-family:Helvetica] font-bold text-white text-2xl tracking-[0] leading-[normal]">
+      <div className="relative self-stretch mt-[-1.00px] [font-family:Helvetica] font-bold text-2xl tracking-[0] leading-[normal]">
         오늘의단어
       </div>
       <div className="flex flex-wrap items-center gap-[9px_9px] relative self-stretch w-full flex-[0_0_auto]">

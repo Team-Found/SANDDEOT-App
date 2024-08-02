@@ -10,7 +10,7 @@ export const Input = (): JSX.Element => {
   return (
     //title, date new Date(), body, translated '', origin 3, image, categoryID ???
     <>
-      <div className="text-white text-3xl">본문을 입력하세요</div>
+      <div className="text-3xl">본문을 입력하세요</div>
       <div className="flex flex-col">
         <input
           type="file"

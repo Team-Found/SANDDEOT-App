@@ -24,21 +24,21 @@ export const RecentProject = ({
       className={`flex flex-col max-w-[645px] w-full items-start gap-[20px] p-4 relative bg-variable-collection-secondarybg rounded-[20px] overflow-hidden ${className}`}
     >
       <div className="flex items-start justify-center gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
-        <p className="relative flex-1 mt-[-1.00px] [font-family:Helvetica] font-bold text-white text-base tracking-[0] leading-[normal] overflow-hidden text-ellipsis [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical]">
+        <p className="relative flex-1 mt-[-1.00px] [font-family:Helvetica] font-bold text-base tracking-[0] leading-[normal] overflow-hidden text-ellipsis [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical]">
           {title}
         </p>
         <img className="relative w-[17px] h-8" alt="More vert" src={moreVert} />
       </div>
       <div className="flex flex-col items-start gap-1 relative self-stretch w-full flex-[0_0_auto]">
         <div className="inline-flex items-start gap-1 relative flex-[0_0_auto]">
-          <div className="relative w-fit mt-[-1.00px] [font-family:Helvetica] font-normal text-white text-sm tracking-[0] leading-[normal] whitespace-nowrap">
+          <div className="relative w-fit mt-[-1.00px] [font-family:Helvetica] font-normal text-sm tracking-[0] leading-[normal] whitespace-nowrap">
             진척도
           </div>
           <div className="inline-flex items-center relative flex-[0_0_auto]">
-            <div className="relative w-fit mt-[-1.00px] [font-family:Helvetica] font-normal text-white text-sm tracking-[0] leading-[normal] whitespace-nowrap">
+            <div className="relative w-fit mt-[-1.00px] [font-family:Helvetica] font-normal text-sm tracking-[0] leading-[normal] whitespace-nowrap">
               {progress}
             </div>
-            <div className="relative w-fit mt-[-1.00px] [font-family:Helvetica] font-normal text-white text-sm tracking-[0] leading-[normal] whitespace-nowrap">
+            <div className="relative w-fit mt-[-1.00px] [font-family:Helvetica] font-normal text-sm tracking-[0] leading-[normal] whitespace-nowrap">
               %
             </div>
           </div>

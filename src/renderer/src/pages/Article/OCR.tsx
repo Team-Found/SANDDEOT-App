@@ -1,7 +1,7 @@
 export const Ocr = (): JSX.Element => {
   return (
     <>
-      <div className="self-stretch mt-[-0.85px] [font-family:'Pretendard_Variable-Bold',Helvetica] font-bold text-white text-2xl tracking-[0] leading-[normal]">
+      <div className="self-stretch mt-[-0.85px] [font-family:'Pretendard_Variable-Bold',Helvetica] font-bold text-2xl tracking-[0] leading-[normal]">
         OCR
       </div>
       <div className="self-stretch w-full h-96 rounded-lg bg-[url(/frame-56.png)] bg-cover bg-[50%_50%]" />
@@ -16,7 +16,7 @@ export const Ocr = (): JSX.Element => {
         </div>
         <div className="flex flex-col w-[195px] items-start ">
           <div className="#1b1918">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Pretendard_Variable-Regular',Helvetica] font-normal text-white text-xs tracking-[0] leading-[normal] whitespace-nowrap">
+            <div className="relative w-fit mt-[-1.00px] [font-family:'Pretendard_Variable-Regular',Helvetica] font-normal text-xs tracking-[0] leading-[normal] whitespace-nowrap">
               FaceTime HD Camera
             </div>
             <img
