@@ -1,43 +1,11 @@
 import { useState } from "react";
-
-import * as React from "react";
-
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
-export function SelectDemo() {
-  return (
-    <Select>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select a fruit" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Fruits</SelectLabel>
-          <SelectItem value="apple">Apple</SelectItem>
-          <SelectItem value="banana">Banana</SelectItem>
-          <SelectItem value="blueberry">Blueberry</SelectItem>
-          <SelectItem value="grapes">Grapes</SelectItem>
-          <SelectItem value="pineapple">Pineapple</SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
-  );
-}
+import { SelectDemo } from "@components/Article/Select";
 
 export const Input = (): JSX.Element => {
   let [textTitle, setTextTitle] = useState("");
   let [textBody, setTextBody] = useState("");
   let [textImage, setTextImage] = useState<File | null>(null);
-  let [textCategoryID, setTextCategoryID] = useState();
-  let [categoryView, setCategoryView] = useState(false);
+  let [textCategoryID, setTextCategoryID] = useState<number>();
   let [buttonValue, setButtonValue] = useState("");
   return (
     //title, date new Date(), body, translated '', origin 3, image, categoryID ???
@@ -66,8 +34,16 @@ export const Input = (): JSX.Element => {
             setTextBody(e.target.value);
           }}
         ></input>
-        <SelectDemo />
-        <button className="bg-gray-300" onClick={() => {}}>
+        <SelectDemo
+          textCategoryID={textCategoryID}
+          setTextCategoryID={setTextCategoryID}
+        />
+        <button
+          className="bg-gray-300"
+          onClick={() => {
+            //여기에 db함수 써야함..
+          }}
+        >
           확인
         </button>
       </div>
