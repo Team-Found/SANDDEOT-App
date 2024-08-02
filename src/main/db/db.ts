@@ -1,8 +1,10 @@
 import * as sqlite3 from "sqlite3";
 const path = require("path");
 
+console.log(path.resolve(process.cwd(), "src/main/db/SANDDOET.db"));
+
 const db = new sqlite3.Database(
-  path.resolve(__dirname, "./SANDDOET.db"),
+  path.resolve(process.cwd(), "src/main/db/SANDDOET.db"),
   sqlite3.OPEN_READWRITE,
   (err) => {
     if (err) {

@@ -24,4 +24,8 @@ const articleList = (
   });
 };
 
+articleList().then((articles) => {
+  console.log(articles);
+});
+
 export default articleList;
