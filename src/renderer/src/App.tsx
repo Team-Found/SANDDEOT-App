@@ -1,6 +1,7 @@
 import HomeScreen from "@pages/Home";
 import { Ocr } from "@pages/Article/OCR";
 import Article from "@pages/Article/Article";
+import { Input } from "@pages/Article/Input";
 import ErrorPage from "@pages/error";
 import Root from "@routes/root";
 import { Outlet } from "react-router-dom";
@@ -32,6 +33,10 @@ const router = createHashRouter([
           {
             path: "ocr",
             element: <Ocr />,
+          },
+          {
+            path: "input",
+            element: <Input />,
           },
         ],
       },
