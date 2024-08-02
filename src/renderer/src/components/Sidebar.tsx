@@ -50,7 +50,7 @@ export const Sidebar = (): JSX.Element => {
       <div className="flex-grow w-full drag"></div>
       <div className="inline-flex items-center gap-2 m-2.5">
         <div className=" w-[30px] h-[30px] rounded-[60px] bg-[url(/static/img/frame-39.png)] bg-cover bg-[50%_50%]" />
-        <div className="[font-family:Helvetica] font-normal text-white text-sm relative w-fit tracking-[0] leading-[normal]">
+        <div className="[font-family:Helvetica] font-normal text-sm relative w-fit tracking-[0] leading-[normal]">
           홍길동
         </div>
       </div>

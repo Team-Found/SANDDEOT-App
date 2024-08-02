@@ -24,11 +24,11 @@ export const TodayWord = ({
     <div className="inline-flex items-start gap-2.5 p-4 rounded-[20px] justify-center bg-variable-collection-secondarybg">
       <div>
         <div className="w-28 flex items-start gap-2.5 justify-center ">
-          <div className="[font-family:Helvetica] [display:-webkit-box] text-base [-webkit-line-clamp:2] flex-1 text-white font-bold leading-[normal] [-webkit-box-orient:vertical] text-ellipsis ">
+          <div className="[font-family:Helvetica] [display:-webkit-box] text-base [-webkit-line-clamp:2] flex-1 font-bold leading-[normal] [-webkit-box-orient:vertical] text-ellipsis ">
             {text}
           </div>
         </div>
-        <p className="[font-family:Helvetica] text-sm top-[19px] text-white font-normal leading-[normal] whitespace-nowrap ">
+        <p className="[font-family:Helvetica] text-sm top-[19px] font-normal leading-[normal] whitespace-nowrap ">
           {text1}
         </p>
       </div>

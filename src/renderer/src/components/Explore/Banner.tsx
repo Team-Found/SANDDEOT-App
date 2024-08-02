@@ -9,10 +9,10 @@ export default function Banner(): JSX.Element {
       style={{ backgroundImage: `url(${imgUrl})` }}
     >
       <div className="absolute w-[40%] h-full p-4 bg-black bg-opacity-80 ">
-        <p className="self-stretch mt-[-0.42px] [font-family:'Rozha_One-Regular',Helvetica] font-normal text-white text-xl tracking-[-1.00px] leading-[18.0px]">
+        <p className="self-stretch mt-[-0.42px] [font-family:'Rozha_One-Regular',Helvetica] font-normal text-xl tracking-[-1.00px] leading-[18.0px]">
           Bot or not: Are fake accounts swaying voters towards Reform UK?
         </p>
-        <p className="text-[8px] font-normal [font-family:'Pretendard_Variable-Regular',Helvetica] text-white leading-[7.20px]">
+        <p className="text-[8px] font-normal [font-family:'Pretendard_Variable-Regular',Helvetica] leading-[7.20px]">
           By Marianna Spring, Disinformation and social media correspondent
         </p>
         <div className="absolute w-[121px] h-[17px] top-[168px] left-4" />

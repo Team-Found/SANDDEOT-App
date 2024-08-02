@@ -11,9 +11,9 @@ export default function Tag({
 }: TagProps): JSX.Element {
   return (
     <div
-      className={`text-white text-[8px] font-normal font-['Rozha One'] leading-[7.20px] bg-[${color}] rounded-full px-1.5 py-1`}
+      className={`text-[8px] font-normal font-['Rozha One'] leading-[7.20px] bg-[${color}] rounded-full px-1.5 py-1`}
     >
-      <div className="text-white text-[8px] font-normal font-['Rozha One'] leading-[7.20px]">
+      <div className="text-[8px] font-normal font-['Rozha One'] leading-[7.20px]">
         {children}
       </div>
     </div>
