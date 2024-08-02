@@ -17,6 +17,7 @@ export default defineConfig({
         "@assets": resolve("src/renderer/src/assets"),
         "@pages": resolve("src/renderer/src/pages"),
         "@routes": resolve("src/renderer/src/routes"),
+        "@": resolve("src/renderer/src/@"),
       },
     },
     plugins: [react()],
