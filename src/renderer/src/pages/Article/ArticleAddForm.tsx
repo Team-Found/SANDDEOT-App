@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SelectDemo } from "@components/Article/Select";
 
 export const Input = (): JSX.Element => {
-  window.api.db.categoryList().then((categorys) => {
+  window.api.db.Category.categoryList().then((categorys) => {
     console.log(categorys);
   });
 
@@ -10,7 +10,6 @@ export const Input = (): JSX.Element => {
   let [textBody, setTextBody] = useState("");
   let [textImage, setTextImage] = useState<File | null>(null);
   let [textCategoryID, setTextCategoryID] = useState<number>();
-  let [buttonValue, setButtonValue] = useState("");
   return (
     <>
       <div className="text-3xl">본문을 입력하세요</div>
@@ -45,15 +44,17 @@ export const Input = (): JSX.Element => {
         <button
           className="bg-gray-300"
           onClick={() => {
-            window.api.db.articleAdd(
-              textTitle,
-              new Date(),
-              textBody,
-              "",
-              3,
-              textCategoryID,
-              textImage,
-            );
+            if (textCategoryID && textImage) {
+              window.api.db.Article.articleAdd(
+                textTitle,
+                new Date(),
+                textBody,
+                "",
+                3,
+                textCategoryID,
+                textImage,
+              );
+            }
           }}
         >
           확인
