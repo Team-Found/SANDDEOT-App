@@ -12,7 +12,6 @@ export const Input = (): JSX.Element => {
   let [textCategoryID, setTextCategoryID] = useState<number>();
   let [buttonValue, setButtonValue] = useState("");
   return (
-    //title, date new Date(), body, translated '', origin 3, image, categoryID ???
     <>
       <div className="text-3xl">본문을 입력하세요</div>
       <div className="flex flex-col">
@@ -42,10 +41,19 @@ export const Input = (): JSX.Element => {
           textCategoryID={textCategoryID}
           setTextCategoryID={setTextCategoryID}
         />
+
         <button
           className="bg-gray-300"
           onClick={() => {
-            sendMain();
+            window.api.db.articleAdd(
+              textTitle,
+              new Date(),
+              textBody,
+              "",
+              3,
+              textCategoryID,
+              textImage,
+            );
           }}
         >
           확인
