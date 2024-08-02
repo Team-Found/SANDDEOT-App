@@ -2,6 +2,7 @@ import { app, shell, BrowserWindow, ipcMain } from "electron";
 import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
+import { constants } from "../shared/constants";
 
 function createWindow(): void {
   // Create the browser window.
@@ -40,6 +41,10 @@ function createWindow(): void {
     mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
 }
+
+ipcMain.on(constants.SEND_MAIN_PING, (event, arg) => {
+  console.log("Main.js received a ping!!!");
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
