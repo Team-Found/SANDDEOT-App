@@ -6,7 +6,7 @@ export default function Explore(): JSX.Element {
   return (
     <>
       <div className="flex flex-col w-full items-start gap-2 flex-[0_0_auto]">
-        <div className="self-stretch [font-family:'Pretendard_Variable-Bold',Helvetica] font-bold text-white text-2xl mt-[-1.00px] tracking-[0] leading-[normal]">
+        <div className="self-stretch [font-family:'Pretendard_Variable-Bold',Helvetica] font-bold text-2xl mt-[-1.00px] tracking-[0] leading-[normal]">
           탐색하기
         </div>
         <div className="flex items-start gap-1.5 self-stretch w-full flex-[0_0_auto]">
@@ -21,12 +21,12 @@ export default function Explore(): JSX.Element {
             <div className="absolute w-[39px] h-[30px] top-0 left-[88px] bg-white" />
             <div className="flex w-[178px] items-center gap-2.5 absolute top-0 left-0">
               <div className="inline-flex flex-col items-center justify-center gap-2.5 px-2.5 py-2 relative flex-[0_0_auto] rounded-full">
-                <div className="relative self-stretch mt-[-1.00px] [font-family:'Pretendard-Medium',Helvetica] font-medium text-white text-xs tracking-[0] leading-[normal]">
+                <div className="relative self-stretch mt-[-1.00px] [font-family:'Pretendard-Medium',Helvetica] font-medium text-xs tracking-[0] leading-[normal]">
                   1
                 </div>
               </div>
               <div className="inline-flex flex-col items-center justify-center gap-2.5 px-2.5 py-2 relative flex-[0_0_auto] rounded-full">
-                <div className="relative self-stretch mt-[-1.00px] [font-family:'Pretendard-Medium',Helvetica] font-medium text-white text-xs tracking-[0] leading-[normal]">
+                <div className="relative self-stretch mt-[-1.00px] [font-family:'Pretendard-Medium',Helvetica] font-medium text-xs tracking-[0] leading-[normal]">
                   2
                 </div>
               </div>
@@ -41,12 +41,12 @@ export default function Explore(): JSX.Element {
                 </div>
               </div>
               <div className="inline-flex flex-col items-center justify-center gap-2.5 px-2.5 py-2 relative flex-[0_0_auto] rounded-full">
-                <div className="relative self-stretch mt-[-1.00px] [font-family:'Pretendard-Medium',Helvetica] font-medium text-white text-xs tracking-[0] leading-[normal]">
+                <div className="relative self-stretch mt-[-1.00px] [font-family:'Pretendard-Medium',Helvetica] font-medium text-xs tracking-[0] leading-[normal]">
                   5
                 </div>
               </div>
               <div className="inline-flex flex-col items-center justify-center gap-2.5 px-2.5 py-2 relative flex-[0_0_auto] mr-[-38.00px] rounded-full">
-                <div className="relative self-stretch mt-[-1.00px] [font-family:'Pretendard-Medium',Helvetica] font-medium text-white text-xs tracking-[0] leading-[normal]">
+                <div className="relative self-stretch mt-[-1.00px] [font-family:'Pretendard-Medium',Helvetica] font-medium text-xs tracking-[0] leading-[normal]">
                   6
                 </div>
               </div>
