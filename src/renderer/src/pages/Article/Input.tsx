@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { SelectDemo } from "@components/Article/Select";
+import { constants } from "../../../../shared/constants";
+import { ipcRenderer } from "electron";
 
 export const Input = (): JSX.Element => {
+  const sendMain = () => {
+    ipcRenderer.send(constants.SEND_MAIN_PING, "send");
+  };
   let [textTitle, setTextTitle] = useState("");
   let [textBody, setTextBody] = useState("");
   let [textImage, setTextImage] = useState<File | null>(null);
@@ -18,6 +23,11 @@ export const Input = (): JSX.Element => {
             if (e.target.files && e.target.files[0]) {
               setTextImage(e.target.files[0]);
             }
+            console.log(textTitle);
+            console.log(textBody);
+            console.log(textImage);
+            console.log(buttonValue);
+            console.log(setButtonValue);
           }}
         ></input>
         <input
@@ -41,6 +51,7 @@ export const Input = (): JSX.Element => {
         <button
           className="bg-gray-300"
           onClick={() => {
+            sendMain();
             //여기에 db함수 써야함..
           }}
         >
