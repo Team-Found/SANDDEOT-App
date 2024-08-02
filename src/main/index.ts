@@ -2,7 +2,6 @@ import { app, shell, BrowserWindow, ipcMain } from "electron";
 import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
-import { constants } from "../shared/constants";
 
 function createWindow(): void {
   // Create the browser window.
@@ -59,9 +58,9 @@ app.whenReady().then(() => {
   // IPC test
   ipcMain.on("ping", () => console.log("pong"));
 
-  ipcMain.on(constants.SEND_MAIN_PING, (event, arg) => {
-    console.log("Main.js received a ping!!!");
-  });
+  // ipcMain.on(constants.SEND_MAIN_PING, (event, arg) => {
+  //   console.log("Main.js received a ping!!!");
+  // });
 
   createWindow();
 
