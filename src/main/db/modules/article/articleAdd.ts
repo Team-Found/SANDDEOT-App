@@ -1,6 +1,6 @@
-// import db from "../../db";
+import db from "../../db";
 
-const db = require("../../db");
+// const db = require("../../db");
 
 const add = (
   title: string,
@@ -13,6 +13,9 @@ const add = (
 ): Promise<number> => {
   const sql =
     "INSERT INTO Body (title, date, body, translated, origin, image, categoryID) VALUES (?, ?, ?, ?, ?, ?, ?)";
+  console.log(body);
+  console.log(title);
+  console.log(date);
   const unixTime = Math.floor(date.getTime() / 1000);
   return new Promise((resolve, reject) => {
     db.run(
