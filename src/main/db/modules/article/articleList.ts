@@ -1,7 +1,7 @@
 import db from "../../db";
 import Article from "../../types/Article";
 
-const articleList = (
+const list = (
   startLevel: number = 1,
   endLevel: number = 6,
   categoryID?: number,
@@ -28,4 +28,4 @@ const articleList = (
 //   console.log(articles);
 // });
 
-export default articleList;
+export default list;

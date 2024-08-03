@@ -62,7 +62,7 @@ const getLearnID = (
   });
 };
 
-const learnAdd = (
+const add = (
   startDate: Date,
   endDate: Date,
   bodyID: number,
@@ -100,4 +100,4 @@ const learnAdd = (
 //   { lineNum: 3, original: "이준ㅎ", newTranslated: "이재ㅎ" },
 // ]);
 
-export default learnAdd;
+export default add;

@@ -6,7 +6,7 @@ require("@babel/register")({
   presets: ["@babel/preset-typescript"],
 });
 
-const modulesDir = path.join(process.cwd(), "src/main/db/module");
+const modulesDir = path.join(process.cwd(), "src/main/db/modules");
 
 // 모듈 파일에서 import 문을 추출하는 함수
 function extractImports(filePath: string): string[] {
@@ -117,11 +117,11 @@ import { Modules } from "./types/modules";
 
 const modules = {} as Modules;
 
-function functionToAnnymouseFunction(func: Function): Function {
-  return async function (...args: any[]) {
-    return func(...args);
-  };
-}
+// function functionToAnnymouseFunction(func: Function): Function {
+//   return async function (...args: any[]) {
+//     return func(...args);
+//   };
+// }
 
 // 모듈을 로드하는 함수
 async function loadModules(
@@ -136,10 +136,11 @@ async function loadModules(
       parentObj[file] = {};
       await loadModules(fullPath, parentObj[file]); // 재귀적으로 하위 디렉토리 탐색
     } else if (stats.isFile() && path.extname(fullPath) === ".ts") {
-      const moduleName = path.basename(file, ".ts");
+      // const moduleName = path.basename(file, ".ts");
       const module = require(fullPath).default;
+      const moduleName = module.name;
       // parentObj[moduleName] = functionToAnnymouseFunction(module);
-      parentObj[moduleName] = () => module();
+      parentObj[moduleName] = (): unknown => module();
     }
   });
   await Promise.all(promises);

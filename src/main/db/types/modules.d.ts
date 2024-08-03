@@ -8,40 +8,40 @@ import LearnEdit from "./learnEdit";
 import { LeanEdit } from "../../types/Learn";
 import WordDetail from "../../types/WordDetail";
 interface Modules {
-Article: {
-    articleAdd(title: string, date: Date, body: string, translated: string, origin: number, categoryID: number, image?: Blob,): Promise<number>;
+article: {
+    add(title: string, date: Date, body: string, translated: string, origin: number, categoryID: number, image?: Blob,): Promise<number>;
 
-    articleDelete(bodyID: number): Promise<number>;
+    detail(bodyID: number): Promise<ArticleDetail>;
 
-    articleDetail(bodyID: number): Promise<ArticleDetail>;
+    list(startLevel: number = 1, endLevel: number = 6, categoryID?: number,): Promise<Article[]>;
 
-    articleList(startLevel: number = 1, endLevel: number = 6, categoryID?: number,): Promise<Article[]>;
+    remove(bodyID: number): Promise<number>;
 
-    articleUpdate(bodyID: number, option: { title?: string; body?: string; image?: Blob; translated?: string; feedback?: string; score?: number; editDate?: Date; IMPP?: string; level?: number; },): Promise<number>;
-
-};
-Category: {
-    categoryAdd(categoryName: string): Promise<number>;
-
-    categoryDelete(categoryID: number): Promise<number>;
-
-    categoryList(): Promise<Category[]>;
+    update(bodyID: number, option: { title?: string; body?: string; image?: Blob; translated?: string; feedback?: string; score?: number; editDate?: Date; IMPP?: string; level?: number; },): Promise<number>;
 
 };
-Learn: {
-    learnAdd(startDate: Date, endDate: Date, bodyID: number, editList: LearnAddEdit[],): Promise<number>;
+category: {
+    add(categoryName: string): Promise<number>;
 
-    learnAnalytics(anStartDate: Date = new Date(0), anEndDate: Date = new Date(),): Promise<LearnAnalytics[]>;
+    remove(categoryID: number): Promise<number>;
 
-    learnEdit(learnID?: number): Promise<LeanEdit[]>;
+    list(): Promise<Category[]>;
 
 };
-Word: {
-    wordAdd(word: string, mean: string, bodyID: number,): Promise<number>;
+learn: {
+    add(startDate: Date, endDate: Date, bodyID: number, editList: LearnAddEdit[],): Promise<number>;
 
-    wordDelete(wordID: number): Promise<number>;
+    analytics(anStartDate: Date = new Date(0), anEndDate: Date = new Date(),): Promise<LearnAnalytics[]>;
 
-    wordList(star?: boolean): Promise<WordDetail[]>;
+    edit(learnID?: number): Promise<LeanEdit[]>;
+
+};
+word: {
+    add(word: string, mean: string, bodyID: number): Promise<number>;
+
+    list(star?: boolean): Promise<WordDetail[]>;
+
+    remove(wordID: number): Promise<number>;
 
 };
 }

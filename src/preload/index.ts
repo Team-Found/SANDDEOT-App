@@ -21,7 +21,7 @@ if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld("electron", electronAPI);
     contextBridge.exposeInMainWorld("api", api);
-    contextBridge.exposeInMainWorld("db", db);
+    contextBridge.exposeInMainWorld("dbApi", db);
   } catch (error) {
     console.error(error);
   }
