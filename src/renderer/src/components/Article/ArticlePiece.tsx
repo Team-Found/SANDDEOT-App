@@ -14,6 +14,7 @@ export default function ArticlePiece({
   articleDetail: ArticleType;
 }): JSX.Element {
   console.log(articleDetail);
+  console.log(articleDetail.progress);
   return (
     <>
       <div className="w-full h-34 px-4 py-4 bg-gradient-to-br from-secondaryBG via-stone-900 to-stone-900 rounded-2xl flex-col justify-center items-start gap-4 inline-flex mb-4">
@@ -37,6 +38,7 @@ export default function ArticlePiece({
         </div>
         <div className="w-full h-1.5 bg-zinc-700 rounded-3xl justify-start items-center inline-flex">
           <div
+            style={{ width: `${articleDetail.progress}%` }}
             className={`w-[${articleDetail.progress}%] h-1.5 relative bg-progress rounded-3xl`}
           />
         </div>
