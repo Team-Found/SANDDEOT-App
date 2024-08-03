@@ -58,6 +58,10 @@ app.whenReady().then(() => {
   // IPC test
   ipcMain.on("ping", () => console.log("pong"));
 
+  // ipcMain.on(constants.SEND_MAIN_PING, (event, arg) => {
+  //   console.log("Main.js received a ping!!!");
+  // });
+
   createWindow();
 
   app.on("activate", function () {

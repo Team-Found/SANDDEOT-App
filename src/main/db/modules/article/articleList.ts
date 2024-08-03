@@ -1,7 +1,7 @@
 import db from "../../db";
 import Article from "../../types/Article";
 
-const articleList = (
+const list = (
   startLevel: number = 1,
   endLevel: number = 6,
   categoryID?: number,
@@ -16,7 +16,7 @@ const articleList = (
         resolve(rows);
       } else {
         console.log(
-          `No article found with ${[startLevel, endLevel, categoryID]}`,
+          `No article found with ${startLevel}, ${endLevel}, ${categoryID}`,
         );
         reject();
       }
@@ -24,4 +24,8 @@ const articleList = (
   });
 };
 
-export default articleList;
+// articleList().then((articles) => {
+//   console.log(articles);
+// });
+
+export default list;

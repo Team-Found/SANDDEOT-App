@@ -1,6 +1,6 @@
 import db from "../../db";
 
-const categoryAdd = (categoryName: string): Promise<number> => {
+const add = (categoryName: string): Promise<number> => {
   const sql = "INSERT INTO Category (categoryName) VALUES (?)";
   return new Promise((resolve, reject) => {
     db.run(sql, [categoryName], (err) => {
@@ -15,4 +15,4 @@ const categoryAdd = (categoryName: string): Promise<number> => {
   });
 };
 
-export default categoryAdd;
+export default add;

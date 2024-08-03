@@ -1,7 +1,7 @@
 import ArticleDetail from "../../types/ArticleDetail";
 import db from "../../db";
 // db.serialize(() => {
-const articleDetail = (bodyID: number): Promise<ArticleDetail> => {
+const detail = (bodyID: number): Promise<ArticleDetail> => {
   const sql = "SELECT * FROM Body WHERE bodyID = ?";
   return new Promise((resolve, reject) => {
     db.get(sql, [bodyID], (err, row: ArticleDetail) => {
@@ -18,4 +18,4 @@ const articleDetail = (bodyID: number): Promise<ArticleDetail> => {
     });
   });
 };
-export default articleDetail;
+export default detail;
