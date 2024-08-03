@@ -19,9 +19,7 @@
 .drag {
   -webkit-app-region: drag;
 }
-#root
-  > div
-  > div.flex.flex-col.items-start.gap-\[50px\].px-\[30px\].py-\[42px\].flex-1.self-stretch.grow.bg-variable-collection-primarybg.overflow-y-scroll.h-\[100dvh\] {
+#root > div > div.flex.flex-col.items-start.overflow-y-scroll.h-\[100dvh\] {
   scrollbar-width: thin;
   scrollbar-color: #6b6b6b #2b2b2b;
 }
