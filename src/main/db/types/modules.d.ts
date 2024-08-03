@@ -8,8 +8,13 @@ import LearnEdit from "./learnEdit";
 import { LeanEdit } from "../../types/Learn";
 import WordDetail from "../../types/WordDetail";
 interface Modules {
+<<<<<<< HEAD
 article: {
     add(title: string, date: Date, body: string, translated: string, origin: number, categoryID: number, image?: Blob,): Promise<number>;
+=======
+Article: {
+    articleAdd(title: string, date: Date, body: string, translated: string, origin: number, categoryID: number, image?: Blob | null,): Promise<number>;
+>>>>>>> 828dad859c6b15af118fb9fbbaf3e4c686175ffc
 
     detail(bodyID: number): Promise<ArticleDetail>;
 
