@@ -9,6 +9,7 @@ import { Outlet } from "react-router-dom";
 // import { Routes, Route } from "react-router-dom";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@components/theme-provider";
+import Feed from "@pages/Feed";
 
 const router = createHashRouter([
   {
@@ -18,6 +19,10 @@ const router = createHashRouter([
     children: [
       {
         index: true,
+        element: <Feed />,
+      },
+      {
+        path: "getting-started",
         element: <HomeScreen />,
       },
       {
