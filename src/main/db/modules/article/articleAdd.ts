@@ -9,18 +9,19 @@ const add = (
   translated: string,
   origin: number,
   categoryID: number,
+  author: string,
   image?: Blob | null,
 ): Promise<number> => {
   const sql =
-    "INSERT INTO Body (title, date, body, translated, origin, image, categoryID) VALUES (?, ?, ?, ?, ?, ?, ?)";
-  console.log(body);
-  console.log(title);
-  console.log(date);
+    "INSERT INTO Body (title, date, body, translated, origin, image, categoryID, author) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+  // console.log(body);
+  // console.log(title);
+  // console.log(date);
   const unixTime = Math.floor(date.getTime() / 1000);
   return new Promise((resolve, reject) => {
     db.run(
       sql,
-      [title, unixTime, body, translated, origin, image, categoryID],
+      [title, unixTime, body, translated, origin, image, categoryID, author],
       (err) => {
         if (err) {
           console.error("SQL error:", err.message);

@@ -13,6 +13,7 @@ export const FormDetail = (): JSX.Element => {
   const body = useSelector((state: RootState) => state.textData.body);
   const [textImage, setTextImage] = useState<File | null>(null);
   const [textCategoryID, setTextCategoryID] = useState<number>();
+  const [author, setAuthor] = useState<string>("");
   return (
     <>
       <div className="text-3xl">하잉</div>
@@ -25,12 +26,17 @@ export const FormDetail = (): JSX.Element => {
             }
           }}
         ></input>
-
         <SelectDemo
           textCategoryID={textCategoryID}
           setTextCategoryID={setTextCategoryID}
-        />
-
+        />{" "}
+        <input
+          type="text"
+          placeholder="저자를 입력하세요."
+          onChange={(e) => {
+            setAuthor(e.target.value);
+          }}
+        ></input>
         <button
           className="bg-gray-300"
           onClick={() => {
@@ -42,6 +48,7 @@ export const FormDetail = (): JSX.Element => {
                 "",
                 3,
                 textCategoryID,
+                author,
                 textImage,
               );
             }
