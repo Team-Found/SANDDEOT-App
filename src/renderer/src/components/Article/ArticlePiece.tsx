@@ -31,11 +31,15 @@ export default function ArticlePiece({
           </div>
           <div className="px-2.5 py-0.5 bg-white rounded-lg justify-center items-center gap-0.5 flex">
             <div className="w-12 text-center text-red-500 text-xs font-semibold font-['Pretendard Variable'] leading-3">
-              Level 0
+              Level {`${articleDetail.level}`}
             </div>
           </div>
         </div>
-        <div className="w-80 h-1.5 relative bg-progress rounded-3xl" />
+        <div className="w-full h-1.5 bg-zinc-700 rounded-3xl justify-start items-center inline-flex">
+          <div
+            className={`w-[${articleDetail.progress}%] h-1.5 relative bg-progress rounded-3xl`}
+          />
+        </div>
       </div>
     </>
   );
