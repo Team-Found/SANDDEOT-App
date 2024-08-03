@@ -2,7 +2,7 @@ import { Learn, LearnAnalytics } from "../../types/Learn";
 import db from "../../db";
 import LearnEdit from "./learnEdit";
 
-const learnAnalytics = async (
+const analytics = async (
   anStartDate: Date = new Date(0),
   anEndDate: Date = new Date(),
 ): Promise<LearnAnalytics[]> => {
@@ -61,4 +61,4 @@ const learnAnalytics = async (
   });
 };
 
-export default learnAnalytics;
+export default analytics;

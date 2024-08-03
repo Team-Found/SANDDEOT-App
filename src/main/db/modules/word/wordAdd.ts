@@ -1,10 +1,6 @@
 import db from "../../db";
 
-const wordAdd = (
-  word: string,
-  mean: string,
-  bodyID: number,
-): Promise<number> => {
+const add = (word: string, mean: string, bodyID: number): Promise<number> => {
   const sql = "INSERT INTO Word (word, mean, bodyID) VALUES (?, ?, ?)";
   return new Promise((resolve, reject) => {
     db.run(sql, [word, mean, bodyID], (err) => {
@@ -19,4 +15,4 @@ const wordAdd = (
   });
 };
 
-export default wordAdd;
+export default add;

@@ -1,9 +1,9 @@
 import db from "../../db";
 
-const articleDelete = (bodyID: number): Promise<number> => {
-  const sql = `DELETE FROM Body WHERE bodyID = ?`;
+const remove = (wordID: number): Promise<number> => {
+  const sql = `DELETE FROM Word WHERE wordID = ?`;
   return new Promise((resolve, reject) => {
-    db.run(sql, [bodyID], (err) => {
+    db.run(sql, [wordID], (err) => {
       if (err) {
         console.error("SQL error:", err.message);
         reject();
@@ -15,4 +15,4 @@ const articleDelete = (bodyID: number): Promise<number> => {
   });
 };
 
-export default articleDelete;
+export default remove;

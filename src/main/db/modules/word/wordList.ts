@@ -1,7 +1,7 @@
 import WordDetail from "../../types/WordDetail";
 import db from "../../db";
 
-const wordList = (star?: boolean): Promise<WordDetail[]> => {
+const list = (star?: boolean): Promise<WordDetail[]> => {
   const sql =
     "SELECT * FROM Word" +
     (star === false
@@ -25,4 +25,4 @@ const wordList = (star?: boolean): Promise<WordDetail[]> => {
   });
 };
 
-export default wordList;
+export default list;

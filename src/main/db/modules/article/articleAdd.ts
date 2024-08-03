@@ -2,7 +2,7 @@
 
 const db = require("../../db");
 
-const articleAdd = (
+const add = (
   title: string,
   date: Date,
   body: string,
@@ -30,4 +30,4 @@ const articleAdd = (
     );
   });
 };
-export default articleAdd;
+export default add;

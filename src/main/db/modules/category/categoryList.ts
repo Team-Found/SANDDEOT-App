@@ -1,10 +1,10 @@
+import Category from "../../types/Category";
 import db from "../../db";
-import { LeanEdit } from "../../types/Learn";
+const list = (): Promise<Category[]> => {
+  const sql = "SELECT * FROM Category";
 
-const learnEdit = (learnID?: number): Promise<LeanEdit[]> => {
-  const sql = `SELECT * FROM LearnEdit ${learnID ? `WHERE learnID = ?` : ""}`;
   return new Promise((resolve, reject) => {
-    db.all(sql, [learnID], (err, rows: LeanEdit[]) => {
+    db.all(sql, [], (err, rows: Category[]) => {
       if (err) {
         console.error("SQL error:", err.message);
         reject();
@@ -17,5 +17,4 @@ const learnEdit = (learnID?: number): Promise<LeanEdit[]> => {
     });
   });
 };
-
-export default learnEdit;
+export default list;

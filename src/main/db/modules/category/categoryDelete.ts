@@ -1,6 +1,6 @@
 import db from "../../db";
 
-const categoryDelete = (categoryID: number): Promise<number> => {
+const remove = (categoryID: number): Promise<number> => {
   const sql = `DELETE FROM Category WHERE categoryID = ?`;
   return new Promise((resolve, reject) => {
     db.run(sql, [categoryID], (err) => {
@@ -15,4 +15,4 @@ const categoryDelete = (categoryID: number): Promise<number> => {
   });
 };
 
-export default categoryDelete;
+export default remove;
