@@ -7,24 +7,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 interface props {
   textCategoryID: number | undefined;
   setTextCategoryID: React.Dispatch<React.SetStateAction<number | undefined>>;
 }
 
-type category = {
-  categoryID: number;
-  categoryName: string;
-};
+export function SelectDemo(props: props): JSX.Element {
+  const [categoryList, setCategoryList] = useState([]);
 
-export function SelectDemo(props: props) {
-  let [categoryList, setCategoryList] = useState<category[]>();
-
-  window.api.db.Category.categoryList().then((categorys) => {
-    setCategoryList(categorys);
-  });
+  useEffect(() => {
+    window.db.Category.categoryList().then((categories) => {
+      setCategoryList(categories); // 상태 업데이트
+    });
+  }, []); // 빈 배열을 전달하여 컴포넌트 마운트 시에만 실행
 
   return (
     <Select
@@ -38,10 +35,12 @@ export function SelectDemo(props: props) {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>카테고리</SelectLabel>
-          {categoryList?.map((a) => (
-            <SelectItem value={String(a.categoryID)}>
-              {a.categoryName}
-            </SelectItem>
+          {categoryList?.map((a, i) => (
+            <span key={i}>
+              <SelectItem value={String(a.categoryID)}>
+                {a.categoryName}
+              </SelectItem>
+            </span>
           ))}
         </SelectGroup>
       </SelectContent>
