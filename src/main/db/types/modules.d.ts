@@ -9,7 +9,7 @@ import { LeanEdit } from "../../types/Learn";
 import WordDetail from "../../types/WordDetail";
 interface Modules {
 article: {
-    add(title: string, date: Date, body: string, translated: string, origin: number, categoryID: number, image?: Blob | null,): Promise<number>;
+    add(title: string, date: Date, body: string, translated: string, origin: number, categoryID: number, author: string, image?: Blob | null,): Promise<number>;
 
     detail(bodyID: number): Promise<ArticleDetail>;
 
