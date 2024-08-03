@@ -95,6 +95,9 @@ export default function Input() {
   const editorContainerRef = useRef(null);
   const editorRef = useRef(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
+  const [textData, setTextData] = useState("");
+  const [textTitle, setTextTitle] = useState("");
+  const [textBody, setTextBody] = useState("");
 
   useEffect(() => {
     setIsLayoutReady(true);
@@ -196,7 +199,7 @@ export default function Input() {
       LinkImage,
       List,
       ListProperties,
-      Markdown,
+      //Markdown,
       MediaEmbed,
       PageBreak,
       Paragraph,
@@ -415,7 +418,24 @@ export default function Input() {
           <div className="editor-container__editor">
             <div ref={editorRef}>
               {isLayoutReady && (
-                <CKEditor editor={BalloonEditor} config={editorConfig} />
+                <CKEditor
+                  editor={BalloonEditor}
+                  config={editorConfig}
+                  onChange={(event, editor) => {
+                    setTextData(editor.getData());
+                    const regex = /<h1[^>]*>(.*?)<\/h1>/i;
+
+                    // 정규식을 사용하여 매칭
+                    const match = textData.match(regex);
+
+                    if (match) {
+                      console.log("<h1> content:", match[1]);
+                      setTextTitle(match[1]);
+                    } else {
+                      console.log("No <h1> tag found.");
+                    }
+                  }}
+                />
               )}
             </div>
           </div>
@@ -423,7 +443,9 @@ export default function Input() {
       </div>
       <div className="flex flex-row-reverse">
         <Link2 to="./detail">
-          <ButtonDemo />
+          <div>
+            <ButtonDemo />
+          </div>
         </Link2>
       </div>
     </div>
