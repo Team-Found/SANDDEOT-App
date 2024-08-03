@@ -16,11 +16,11 @@ interface props {
 
 export function SelectDemo(props: props): JSX.Element {
   const [categoryList, setCategoryList] = useState<
-    Awaited<ReturnType<typeof window.db.Category.categoryList>>
+    Awaited<ReturnType<typeof window.dbApi.category.list>>
   >([]);
 
   useEffect(() => {
-    window.db.Category.categoryList().then((categories) => {
+    window.dbApi.category.list().then((categories) => {
       setCategoryList(categories); // 상태 업데이트
     });
   }, []); // 빈 배열을 전달하여 컴포넌트 마운트 시에만 실행

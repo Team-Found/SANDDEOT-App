@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { Link as Link2 } from "react-router-dom";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import store, { setTitle, setBody, RootState } from "../../utils/store";
 
 import {
   BalloonEditor,
@@ -80,8 +83,8 @@ import {
 
 import { Button } from "@/components/ui/button";
 
-export function ButtonDemo() {
-  return <Button>다음</Button>;
+function ButtonDemo(): JSX.Element {
+  return <Button className="px-8">다음</Button>;
 }
 
 // import translations from "ckeditor5/translations/ko.js";
@@ -90,10 +93,15 @@ import "ckeditor5/ckeditor5.css";
 
 import "./ckeditor.css";
 
-export default function Input() {
+export default function Input(): JSX.Element {
+  const dispatch = useDispatch();
+  const title = useSelector((state: RootState) => state.textData.title);
+  const body = useSelector((state: RootState) => state.textData.body);
+
   const editorContainerRef = useRef(null);
   const editorRef = useRef(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
+  const [textData, setTextData] = useState("");
 
   useEffect(() => {
     setIsLayoutReady(true);
@@ -195,7 +203,7 @@ export default function Input() {
       LinkImage,
       List,
       ListProperties,
-      Markdown,
+      //Markdown,
       MediaEmbed,
       PageBreak,
       Paragraph,
@@ -405,24 +413,46 @@ export default function Input() {
   };
 
   return (
-    <div>
-      <div className="main-container prose lg:prose-xl dark:prose-invert">
+    <>
+      <div className="main-container prose lg:prose-lg dark:prose-invert w-full m-0">
         <div
-          className="editor-container editor-container_balloon-editor editor-container_include-style editor-container_include-block-toolbar"
+          className="editor-container editor-container_balloon-editor editor-container_include-style editor-container_include-block-toolbar w-full"
           ref={editorContainerRef}
         >
           <div className="editor-container__editor">
             <div ref={editorRef}>
               {isLayoutReady && (
-                <CKEditor editor={BalloonEditor} config={editorConfig} />
+                <CKEditor
+                  editor={BalloonEditor}
+                  config={editorConfig}
+                  onChange={(event, editor) => {
+                    setTextData(editor.getData());
+                    dispatch(setBody(textData));
+                    const regex = /<h1[^>]*>(.*?)<\/h1>/i;
+
+                    // 정규식을 사용하여 매칭
+                    const match = textData.match(regex);
+
+                    if (match) {
+                      console.log("<h1> content:", match[1]);
+                      dispatch(setTitle(match[1].replace(/<\/?h1>/g, "")));
+                    } else {
+                      console.log("No <h1> tag found.");
+                    }
+                  }}
+                />
               )}
             </div>
           </div>
         </div>
       </div>
-      <div className="flex flex-row-reverse">
-        <ButtonDemo />
+      <div className="flex flex-row-reverse w-full max-w-[1000px] mx-auto my-0">
+        <Link2 to="./detail">
+          <div>
+            <ButtonDemo />
+          </div>
+        </Link2>
       </div>
-    </div>
+    </>
   );
 }
