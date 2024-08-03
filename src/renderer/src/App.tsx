@@ -21,14 +21,16 @@ const router = createHashRouter([
         index: true,
         element: <HomeScreen />,
       },
-      {
-        path: "explore",
-        element: <Explore />,
-      },
+
       {
         path: "article",
         element: <Outlet />,
         children: [
+          {
+            path: "explore",
+            element: <Explore />,
+          },
+
           {
             index: true,
             element: <Article />,

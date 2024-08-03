@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 export const Sidebar = (): JSX.Element => {
   const tab = [
     { name: "홈", link: "/", icon: sidebarItemIcon },
-    { name: "탐색", link: "/explore", icon: sidebarItemIcon },
+    // { name: "탐색", link: "/explore", icon: sidebarItemIcon },
     { name: "본문", link: "/article", icon: sidebarItemIcon },
     { name: "단어", link: "/word", icon: sidebarItemIcon },
   ];
