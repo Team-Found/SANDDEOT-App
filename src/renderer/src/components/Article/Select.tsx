@@ -31,7 +31,7 @@ export function SelectDemo(props: props): JSX.Element {
         props.setTextCategoryID(Number(value));
       }}
     >
-      <SelectTrigger className="w-[180px]">
+      <SelectTrigger className="w-[300px]">
         <SelectValue placeholder="카테고리를 선택하세요!" />
       </SelectTrigger>
       <SelectContent>
