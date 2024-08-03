@@ -9,7 +9,7 @@ const articleAdd = (
   translated: string,
   origin: number,
   categoryID: number,
-  image?: Blob,
+  image?: Blob | null,
 ): Promise<number> => {
   const sql =
     "INSERT INTO Body (title, date, body, translated, origin, image, categoryID) VALUES (?, ?, ?, ?, ?, ?, ?)";
