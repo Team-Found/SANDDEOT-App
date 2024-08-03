@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { Link as Link2 } from "react-router-dom";
 
 import {
   BalloonEditor,
@@ -421,7 +422,9 @@ export default function Input() {
         </div>
       </div>
       <div className="flex flex-row-reverse">
-        <ButtonDemo />
+        <Link2 to="./detail">
+          <ButtonDemo />
+        </Link2>
       </div>
     </div>
   );
