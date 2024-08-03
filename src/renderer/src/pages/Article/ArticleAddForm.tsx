@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { Link as Link2 } from "react-router-dom";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import store, { setTitle, setBody, RootState } from "../../utils/store";
 
 import {
   BalloonEditor,
@@ -92,12 +94,14 @@ import "ckeditor5/ckeditor5.css";
 import "./ckeditor.css";
 
 export default function Input() {
+  const dispatch = useDispatch();
+  const title = useSelector((state: RootState) => state.textData.title);
+  const body = useSelector((state: RootState) => state.textData.body);
+
   const editorContainerRef = useRef(null);
   const editorRef = useRef(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
   const [textData, setTextData] = useState("");
-  const [textTitle, setTextTitle] = useState("");
-  const [textBody, setTextBody] = useState("");
 
   useEffect(() => {
     setIsLayoutReady(true);
@@ -423,6 +427,7 @@ export default function Input() {
                   config={editorConfig}
                   onChange={(event, editor) => {
                     setTextData(editor.getData());
+                    dispatch(setBody(textData));
                     const regex = /<h1[^>]*>(.*?)<\/h1>/i;
 
                     // 정규식을 사용하여 매칭
@@ -430,7 +435,7 @@ export default function Input() {
 
                     if (match) {
                       console.log("<h1> content:", match[1]);
-                      setTextTitle(match[1]);
+                      dispatch(setTitle(match[1].replace(/<\/?h1>/g, "")));
                     } else {
                       console.log("No <h1> tag found.");
                     }

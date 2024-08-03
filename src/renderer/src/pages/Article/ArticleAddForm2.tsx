@@ -1,19 +1,21 @@
 import { useState } from "react";
 import { SelectDemo } from "@components/Article/Select";
+import { Provider, useDispatch, useSelector } from "react-redux";
+import store, { setTitle, setBody, RootState } from "../../utils/store";
 
 export const FormDetail = (): JSX.Element => {
   window.dbApi.category.list().then((categorys) => {
     console.log(categorys);
   });
 
-  let [textTitle, setTextTitle] = useState("");
-  let [textBody, setTextBody] = useState("");
-  let [textImage, setTextImage] = useState<File | null>(null);
-  let [textCategoryID, setTextCategoryID] = useState<number>();
-  let [buttonValue, setButtonValue] = useState("");
+  const dispatch = useDispatch();
+  const title = useSelector((state: RootState) => state.textData.title);
+  const body = useSelector((state: RootState) => state.textData.body);
+  const [textImage, setTextImage] = useState<File | null>(null);
+  const [textCategoryID, setTextCategoryID] = useState<number>();
   return (
     <>
-      <div className="text-3xl">본문을 입력하세요</div>
+      <div className="text-3xl">하잉</div>
       <div className="flex flex-col">
         <input
           type="file"
@@ -23,20 +25,7 @@ export const FormDetail = (): JSX.Element => {
             }
           }}
         ></input>
-        <input
-          placeholder="제목"
-          type="text"
-          onChange={(e) => {
-            setTextTitle(e.target.value);
-          }}
-        ></input>
-        <input
-          placeholder="안녕하세요"
-          type="text"
-          onChange={(e) => {
-            setTextBody(e.target.value);
-          }}
-        ></input>
+
         <SelectDemo
           textCategoryID={textCategoryID}
           setTextCategoryID={setTextCategoryID}
@@ -47,9 +36,9 @@ export const FormDetail = (): JSX.Element => {
           onClick={() => {
             if (textCategoryID) {
               window.dbApi.article.add(
-                textTitle,
+                title,
                 new Date(),
-                textBody,
+                body,
                 "",
                 3,
                 textCategoryID,
