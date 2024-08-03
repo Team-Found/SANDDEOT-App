@@ -38,7 +38,7 @@ export function SelectDemo(props: props) {
       <SelectContent>
         <SelectGroup>
           <SelectLabel>카테고리</SelectLabel>
-          {categoryList?.map((a, i) => (
+          {categoryList?.map((a) => (
             <SelectItem value={String(a.categoryID)}>
               {a.categoryName}
             </SelectItem>

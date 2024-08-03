@@ -1,7 +1,7 @@
 import HomeScreen from "@pages/Home";
 import { Ocr } from "@pages/Article/OCR";
 import Article from "@pages/Article/Article";
-import { Input } from "@pages/Article/ArticleAddForm";
+import Input from "@pages/Article/ArticleAddForm";
 import ErrorPage from "@pages/error";
 import Root from "@renderer/routes/Root";
 import Explore from "@pages/Explore";
