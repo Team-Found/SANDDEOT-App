@@ -2,14 +2,13 @@ import { Learn, LearnAnalytics } from "../../types/Learn";
 import db from "../../db";
 import LearnEdit from "./learnEdit";
 
-function dateToEpoch(thedate): Date {
-  return thedate.setHours(0, 0, 0, 0);
-}
-
 const learnAnalytics = async (
   anStartDate: Date = new Date(0),
   anEndDate: Date = new Date(),
 ): Promise<LearnAnalytics[]> => {
+  function dateToEpoch(thedate): Date {
+    return thedate.setHours(0, 0, 0, 0);
+  }
   const sql = "SELECT * FROM Learn WHERE startDate between ? and ?";
 
   return new Promise((resolve, reject) => {
