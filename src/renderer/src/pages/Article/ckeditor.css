@@ -39,6 +39,10 @@
   word-break: break-word;
 }
 
+.editor-container {
+  margin: 0 !important;
+}
+
 .editor-container_include-block-toolbar {
   margin-left: 42px;
 }
