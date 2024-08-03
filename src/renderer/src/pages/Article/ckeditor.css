@@ -26,7 +26,9 @@
 
 .main-container {
   font-family: "Lato";
-  width: fit-content;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto !important;
   margin-left: auto;
   margin-right: auto;
 }
