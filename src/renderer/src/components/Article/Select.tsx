@@ -22,7 +22,7 @@ type category = {
 export function SelectDemo(props: props) {
   let [categoryList, setCategoryList] = useState<category[]>();
 
-  window.api.db.categoryList().then((categorys) => {
+  window.db.Category.categoryList().then((categorys) => {
     setCategoryList(categorys);
   });
 

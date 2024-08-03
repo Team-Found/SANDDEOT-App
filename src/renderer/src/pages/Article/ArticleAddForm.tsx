@@ -2,7 +2,7 @@ import { useState } from "react";
 import { SelectDemo } from "@components/Article/Select";
 
 export const Input = (): JSX.Element => {
-  window.api.db.categoryList().then((categorys) => {
+  window.db.Category.categoryList().then((categorys) => {
     console.log(categorys);
   });
 
@@ -45,7 +45,7 @@ export const Input = (): JSX.Element => {
         <button
           className="bg-gray-300"
           onClick={() => {
-            window.api.db.articleAdd(
+            window.db.Article.articleAdd(
               textTitle,
               new Date(),
               textBody,

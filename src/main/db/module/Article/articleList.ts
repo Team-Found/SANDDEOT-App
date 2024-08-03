@@ -16,7 +16,7 @@ const articleList = (
         resolve(rows);
       } else {
         console.log(
-          `No article found with ${[startLevel, endLevel, categoryID]}`,
+          `No article found with ${startLevel}, ${endLevel}, ${categoryID}`,
         );
         reject();
       }

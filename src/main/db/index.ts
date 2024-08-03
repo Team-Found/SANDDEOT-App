@@ -1,32 +1,86 @@
 const fs = require("fs");
-const path = require("path");
-interface ModuleTree {
-  [key: string]: any;
-}
-const modules: ModuleTree = {};
+const path = require("node:path");
+// require = require("esm")(module);
+
+// import { register } from "ts-node";
+
+// const require2 = require("esm")(module);
+
+// const register = require2("ts-node").register;
+
+// register({
+//   compilerOptions: {
+//     target: "ESNext",
+//     module: "ESNext",
+//     moduleResolution: "node",
+//     esModuleInterop: true,
+//     strict: true,
+//     skipLibCheck: true,
+//     allowSyntheticDefaultImports: true,
+//   },
+//   include: ["src"],
+// });
+
+require("@babel/register")({
+  extensions: [".ts"],
+  presets: ["@babel/preset-typescript"],
+});
+
+// import { register } from "esbuild-register/dist/node";
+
+// register({
+//   compilerOptions: {
+//     target: "ESNext",
+//     module: "CommonJS",
+//     moduleResolution: "Node",
+//     outDir: "./dist",
+//     rootDir: "./src",
+//     strict: true,
+//     esModuleInterop: true,
+//     skipLibCheck: true,
+//     forceConsistentCasingInFileNames: true,
+//   },
+//   include: ["src/**/*"],
+//   exclude: ["node_modules", "dist"],
+// });
+
 const modulesDir = path.join(process.cwd(), "src/main/db/module");
 
-// 모듈을 로드하는 함수
-function loadModules(directory: string, parentObj: any): void {
-  fs.readdirSync(directory).forEach((file) => {
-    const fullPath = path.join(directory, file);
-    const stats = fs.statSync(fullPath);
+// 모듈 파일에서 import 문을 추출하는 함수
+function extractImports(filePath: string): string[] {
+  const moduleContent = fs.readFileSync(filePath, "utf-8");
 
-    if (stats.isDirectory()) {
-      parentObj[file] = {};
-      loadModules(fullPath, parentObj[file]); // 재귀적으로 하위 디렉토리 탐색
-    } else if (stats.isFile() && path.extname(fullPath) === ".ts") {
-      const moduleName = path.basename(file, ".ts");
-      parentObj[moduleName] = require(fullPath).default;
-    }
-  });
+  const importRegex = /import\s+.*?\s+from\s+['"`](.*?)['"`];/g;
+  const imports: string[] = [];
+
+  let match;
+  while ((match = importRegex.exec(moduleContent)) !== null) {
+    imports.push(match[0]); // import 문을 배열에 추가
+  }
+
+  return imports;
 }
 
 // 함수 시그니처를 추출하는 함수
 function extractMethodSignatures(filePath: string): string {
   const moduleContent = fs.readFileSync(filePath, "utf-8");
-  const functionRegex =
-    /(\w+)\s*=\s*\(([\s\S]*?)\)\s*:\s*([\s\S]*?)\s*=>\s*{([\s\S]*?)};/g;
+
+  if (!moduleContent.includes("export default")) {
+    return "";
+  }
+  const exportDefaultRegex = /export\s+default\s+(\w+)/;
+  const functionName = exportDefaultRegex.exec(moduleContent)[1] as string;
+
+  // console.log(functionName);
+
+  // 템플릿 리터럴을 사용하여 정규표현식을 동적으로 생성합니다
+  const functionRegex = new RegExp(
+    `(${functionName})\\s*=\\s*(?:async\\s+)?\\(([\\s\\S]*?)\\)\\s*:\\s*([\\s\\S]*?)\\s*=>\\s*{([\\s\\S]*?)}`,
+    "g",
+  );
+
+  // const functionRegex =
+  //   /(\w+)\s*=\s*\(([\s\S]*?)\)\s*:\s*([\s\S]*?)\s*=>\s*{([\s\S]*?)};/g;
   let match;
   let methodsStr = "";
 
@@ -40,12 +94,24 @@ function extractMethodSignatures(filePath: string): string {
   return methodsStr;
 }
 
+// 배열에서 중복된 값을 제거하는 함수
+function removeDuplicates(arr: string[]): string[] {
+  const result: string[] = [];
+  for (const item of arr) {
+    if (result.indexOf(item) === -1) {
+      result.push(item);
+    }
+  }
+  return result;
+}
+
 // 인터페이스를 생성하는 함수
 function generateInterface(
   directory: string,
   parentPath: string[] = [],
-): string {
+): { interfaceStr: string; imports: string[] } {
   let interfaceStr = "";
+  let imports: string[] = []; // import 문을 저장할 배열
 
   fs.readdirSync(directory).forEach((file) => {
     const fullPath = path.join(directory, file);
@@ -53,45 +119,82 @@ function generateInterface(
 
     if (stats.isDirectory()) {
       interfaceStr += `${"  ".repeat(parentPath.length)}${file}: {\n`;
-      interfaceStr += generateInterface(fullPath, [...parentPath, file]);
+      const result = generateInterface(fullPath, [...parentPath, file]);
+      interfaceStr += result.interfaceStr;
+      imports = imports.concat(result.imports); // 배열을 합쳐서 추가
       interfaceStr += `${"  ".repeat(parentPath.length)}};\n`;
     } else if (stats.isFile() && path.extname(fullPath) === ".ts") {
       const moduleName = path.basename(file, ".ts");
       const methods = extractMethodSignatures(fullPath);
-      interfaceStr += `${"  ".repeat(parentPath.length)}${moduleName}: {\n${methods}}\n`;
+      const fileImports = extractImports(fullPath);
+
+      // import 문 추가
+      imports = imports.concat(fileImports);
+
+      interfaceStr += `${"  ".repeat(parentPath.length)}${methods}\n`;
     }
   });
 
-  return interfaceStr;
+  // 중복된 import 문 제거
+  imports = removeDuplicates(imports);
+
+  return { interfaceStr, imports };
 }
 
-// const modules = {};
-loadModules(modulesDir, modules);
+// 인터페이스 정의 생성 및 파일에 저장
+const { interfaceStr, imports } = generateInterface(modulesDir);
+const outputFile = path.join(modulesDir, "../types/modules.d.ts");
 
-// const interfaceDefinition = `interface Modules {\n${generateInterface(modulesDir)}}\n`;
-console.log(generateInterface(modulesDir));
-console.log(modules);
+// import 문을 포함한 인터페이스 정의 생성
+const interfaceDefinition = `${imports.join("\n")}\ninterface Modules {\n${interfaceStr}}\n`;
+
+fs.writeFileSync(outputFile, interfaceDefinition, "utf-8");
+// console.log(`TypeScript interface generated at ${outputFile}`);
+
+// ----------------------------------------------
+
+import { Modules } from "./types/modules";
+
+const modules = {} as Modules;
+
+function functionToAnnymouseFunction(func: Function): Function {
+  return async function (...args: any[]) {
+    return func(...args);
+  };
+}
+
+// 모듈을 로드하는 함수
+async function loadModules(directory: string, parentObj: any): Promise<void> {
+  const promises = fs.readdirSync(directory).map(async (file) => {
+    const fullPath = path.join(directory, file);
+    const stats = fs.statSync(fullPath);
+
+    if (stats.isDirectory()) {
+      parentObj[file] = {};
+      await loadModules(fullPath, parentObj[file]); // 재귀적으로 하위 디렉토리 탐색
+    } else if (stats.isFile() && path.extname(fullPath) === ".ts") {
+      const moduleName = path.basename(file, ".ts");
+
+      // console.log(parentObj);
+
+      const module = require(fullPath).default as Function;
+
+      // const module = await import(fullPath).default;
+
+      // parentObj[moduleName] = () => module;
+      parentObj[moduleName] = functionToAnnymouseFunction(module);
+    }
+  });
+  await Promise.all(promises);
+  // console.log("All modules loaded");
+}
+
+loadModules(modulesDir, modules).then(() => {
+  console.log(modules);
+});
+
 // 인터페이스를 export합니다
 export default modules;
-
-// 모든 모듈을 사용해보기
-// function executeModules(obj, functionName): void {
-//   Object.keys(obj).forEach((key) => {
-//     if (typeof obj[key] === "function") {
-//       console.log(`Executing ${functionName}`);
-//       obj[key]();
-//     } else {
-//       executeModules(
-//         obj[key],
-//         typeof obj[key].default == "function" ? key : functionName,
-//       );
-//     }
-//   });
-// }
-
-// executeModules(modules, "excute");
-
-// export default modules;
 
 // import articleDetail from "./module/Article/articleDetail";
 // import articleList from "./module/Article/articleList";

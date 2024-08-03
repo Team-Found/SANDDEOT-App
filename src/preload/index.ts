@@ -1,10 +1,17 @@
 import { contextBridge } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
-import * as db from "../main/db/index";
+import db from "../main/db/index.ts";
+// import path from "path";
+
+// const path = require("node:path");
+
+// const db = require(path.join(process.cwd(), "src/main/db/index.ts"));
+
+console.log(db);
 
 // Custom APIs for renderer
 const api = {
-  db: db,
+  // db: db,
 };
 
 // Use `contextBridge` APIs to expose Electron APIs to
@@ -14,6 +21,7 @@ if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld("electron", electronAPI);
     contextBridge.exposeInMainWorld("api", api);
+    contextBridge.exposeInMainWorld("db", db);
   } catch (error) {
     console.error(error);
   }
