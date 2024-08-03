@@ -15,7 +15,9 @@ interface props {
 }
 
 export function SelectDemo(props: props): JSX.Element {
-  const [categoryList, setCategoryList] = useState([]);
+  const [categoryList, setCategoryList] = useState<
+    Awaited<ReturnType<typeof window.db.Category.categoryList>>
+  >([]);
 
   useEffect(() => {
     window.db.Category.categoryList().then((categories) => {
