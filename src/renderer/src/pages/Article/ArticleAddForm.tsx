@@ -83,8 +83,8 @@ import {
 
 import { Button } from "@/components/ui/button";
 
-export function ButtonDemo() {
-  return <Button>다음</Button>;
+function ButtonDemo(): JSX.Element {
+  return <Button className="px-8">다음</Button>;
 }
 
 // import translations from "ckeditor5/translations/ko.js";
@@ -93,7 +93,7 @@ import "ckeditor5/ckeditor5.css";
 
 import "./ckeditor.css";
 
-export default function Input() {
+export default function Input(): JSX.Element {
   const dispatch = useDispatch();
   const title = useSelector((state: RootState) => state.textData.title);
   const body = useSelector((state: RootState) => state.textData.body);
@@ -413,10 +413,10 @@ export default function Input() {
   };
 
   return (
-    <div>
-      <div className="main-container prose lg:prose-xl dark:prose-invert">
+    <>
+      <div className="main-container prose lg:prose-lg dark:prose-invert w-full m-0">
         <div
-          className="editor-container editor-container_balloon-editor editor-container_include-style editor-container_include-block-toolbar"
+          className="editor-container editor-container_balloon-editor editor-container_include-style editor-container_include-block-toolbar w-full"
           ref={editorContainerRef}
         >
           <div className="editor-container__editor">
@@ -446,13 +446,13 @@ export default function Input() {
           </div>
         </div>
       </div>
-      <div className="flex flex-row-reverse">
+      <div className="flex flex-row-reverse w-full max-w-[1000px] mx-auto my-0">
         <Link2 to="./detail">
           <div>
             <ButtonDemo />
           </div>
         </Link2>
       </div>
-    </div>
+    </>
   );
 }
