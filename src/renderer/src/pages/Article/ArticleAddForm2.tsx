@@ -5,6 +5,7 @@ import store, { setTitle, setBody, RootState } from "../../utils/store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Link } from "react-router-dom";
 import "./fileInput.css";
 export function ButtonSecondary(): JSX.Element {
   return <Button variant="secondary">취소</Button>;
@@ -58,7 +59,9 @@ export const FormDetail = (): JSX.Element => {
           }}
         ></Input>
         <div className="flex w-100% justify-between">
-          <ButtonSecondary />
+          <Link to="../">
+            <ButtonSecondary />
+          </Link>
           <div
             onClick={() => {
               if (textCategoryID) {
