@@ -117,11 +117,11 @@ import { Modules } from "./types/modules";
 
 const modules = {} as Modules;
 
-// function functionToAnnymouseFunction(func: Function): Function {
-//   return async function (...args: any[]) {
-//     return func(...args);
-//   };
-// }
+function functionToAnnymouseFunction(func: Function): Function {
+  return async function (...args: any[]) {
+    return func(...args);
+  };
+}
 
 // 모듈을 로드하는 함수
 async function loadModules(
@@ -139,8 +139,8 @@ async function loadModules(
       // const moduleName = path.basename(file, ".ts");
       const module = require(fullPath).default;
       const moduleName = module.name;
-      // parentObj[moduleName] = functionToAnnymouseFunction(module);
-      parentObj[moduleName] = (): unknown => module();
+      parentObj[moduleName] = functionToAnnymouseFunction(module);
+      // parentObj[moduleName] = (): unknown => module();
     }
   });
   await Promise.all(promises);
