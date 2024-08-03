@@ -6,7 +6,7 @@ require("@babel/register")({
   presets: ["@babel/preset-typescript"],
 });
 
-const modulesDir = path.join(process.cwd(), "src/main/db/modules");
+const modulesDir = path.join(process.cwd(), "src/main/utils/db/modules");
 
 // 모듈 파일에서 import 문을 추출하는 함수
 function extractImports(filePath: string): string[] {
