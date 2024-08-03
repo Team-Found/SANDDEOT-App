@@ -1,12 +1,14 @@
 import HomeScreen from "@pages/Home";
 import { Ocr } from "@pages/Article/OCR";
 import Article from "@pages/Article/Article";
+import { Input } from "@pages/Article/Input";
 import ErrorPage from "@pages/error";
 import Root from "@renderer/routes/Root";
 import Explore from "@pages/Explore";
 import { Outlet } from "react-router-dom";
 // import { Routes, Route } from "react-router-dom";
 import { createHashRouter, RouterProvider } from "react-router-dom";
+import { ThemeProvider } from "@components/theme-provider";
 
 const router = createHashRouter([
   {
@@ -34,6 +36,10 @@ const router = createHashRouter([
             path: "ocr",
             element: <Ocr />,
           },
+          {
+            path: "input",
+            element: <Input />,
+          },
         ],
       },
       {
@@ -45,7 +51,11 @@ const router = createHashRouter([
 ]);
 
 function App(): JSX.Element {
-  return <RouterProvider router={router} />;
+  return (
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <RouterProvider router={router} />
+    </ThemeProvider>
+  );
 }
 
 export default App;
