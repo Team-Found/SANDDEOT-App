@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { SelectDemo } from "@components/Article/Select";
 
-export const Input = (): JSX.Element => {
-  window.db.Category.categoryList().then((categorys) => {
+export const FormDetail = (): JSX.Element => {
+  window.dbApi.category.list().then((categorys) => {
     console.log(categorys);
   });
 
@@ -46,7 +46,7 @@ export const Input = (): JSX.Element => {
           className="bg-gray-300"
           onClick={() => {
             if (textCategoryID) {
-              window.db.Article.articleAdd(
+              window.dbApi.article.add(
                 textTitle,
                 new Date(),
                 textBody,
