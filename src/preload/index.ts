@@ -1,6 +1,6 @@
 import { contextBridge } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
-import db from "../main/db/index.ts";
+import db from "../main/utils/db/index.ts";
 // import path from "path";
 
 // const path = require("node:path");
