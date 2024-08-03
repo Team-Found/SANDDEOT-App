@@ -1,48 +1,10 @@
 const fs = require("fs");
 const path = require("node:path");
-// require = require("esm")(module);
-
-// import { register } from "ts-node";
-
-// const require2 = require("esm")(module);
-
-// const register = require2("ts-node").register;
-
-// register({
-//   compilerOptions: {
-//     target: "ESNext",
-//     module: "ESNext",
-//     moduleResolution: "node",
-//     esModuleInterop: true,
-//     strict: true,
-//     skipLibCheck: true,
-//     allowSyntheticDefaultImports: true,
-//   },
-//   include: ["src"],
-// });
 
 require("@babel/register")({
   extensions: [".ts"],
   presets: ["@babel/preset-typescript"],
 });
-
-// import { register } from "esbuild-register/dist/node";
-
-// register({
-//   compilerOptions: {
-//     target: "ESNext",
-//     module: "CommonJS",
-//     moduleResolution: "Node",
-//     outDir: "./dist",
-//     rootDir: "./src",
-//     strict: true,
-//     esModuleInterop: true,
-//     skipLibCheck: true,
-//     forceConsistentCasingInFileNames: true,
-//   },
-//   include: ["src/**/*"],
-//   exclude: ["node_modules", "dist"],
-// });
 
 const modulesDir = path.join(process.cwd(), "src/main/db/module");
 
@@ -79,8 +41,6 @@ function extractMethodSignatures(filePath: string): string {
     "g",
   );
 
-  // const functionRegex =
-  //   /(\w+)\s*=\s*\(([\s\S]*?)\)\s*:\s*([\s\S]*?)\s*=>\s*{([\s\S]*?)};/g;
   let match;
   let methodsStr = "";
 
@@ -124,7 +84,7 @@ function generateInterface(
       imports = imports.concat(result.imports); // 배열을 합쳐서 추가
       interfaceStr += `${"  ".repeat(parentPath.length)}};\n`;
     } else if (stats.isFile() && path.extname(fullPath) === ".ts") {
-      const moduleName = path.basename(file, ".ts");
+      // const moduleName = path.basename(file, ".ts");
       const methods = extractMethodSignatures(fullPath);
       const fileImports = extractImports(fullPath);
 
@@ -164,7 +124,10 @@ function functionToAnnymouseFunction(func: Function): Function {
 }
 
 // 모듈을 로드하는 함수
-async function loadModules(directory: string, parentObj: any): Promise<void> {
+async function loadModules(
+  directory: string,
+  parentObj: Partial<Modules>,
+): Promise<void> {
   const promises = fs.readdirSync(directory).map(async (file) => {
     const fullPath = path.join(directory, file);
     const stats = fs.statSync(fullPath);
@@ -174,19 +137,12 @@ async function loadModules(directory: string, parentObj: any): Promise<void> {
       await loadModules(fullPath, parentObj[file]); // 재귀적으로 하위 디렉토리 탐색
     } else if (stats.isFile() && path.extname(fullPath) === ".ts") {
       const moduleName = path.basename(file, ".ts");
-
-      // console.log(parentObj);
-
-      const module = require(fullPath).default as Function;
-
-      // const module = await import(fullPath).default;
-
-      // parentObj[moduleName] = () => module;
-      parentObj[moduleName] = functionToAnnymouseFunction(module);
+      const module = require(fullPath).default;
+      // parentObj[moduleName] = functionToAnnymouseFunction(module);
+      parentObj[moduleName] = () => module();
     }
   });
   await Promise.all(promises);
-  // console.log("All modules loaded");
 }
 
 loadModules(modulesDir, modules).then(() => {
