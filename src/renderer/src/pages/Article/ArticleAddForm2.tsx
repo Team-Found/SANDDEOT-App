@@ -27,9 +27,8 @@ export const FormDetail = (): JSX.Element => {
   const [textCategoryID, setTextCategoryID] = useState<number>();
   const [author, setAuthor] = useState<string>("");
   return (
-    <div>
-      {/* <div className="text-3xl">하잉</div> */}
-      <div>
+    <div className="flex justify-center items-center w-full h-full max-w-10 mx-auto">
+      <div className="flex flex-col gap-2">
         <div>
           <Label
             htmlFor="picture"
@@ -58,7 +57,7 @@ export const FormDetail = (): JSX.Element => {
             setAuthor(e.target.value);
           }}
         ></Input>
-        <div className="flex w-100% justify-between">
+        <div className="flex w-full justify-between">
           <Link to="../">
             <ButtonSecondary />
           </Link>
