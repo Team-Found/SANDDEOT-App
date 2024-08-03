@@ -1,4 +1,6 @@
-import db from "../../db";
+// import db from "../../db";
+
+const db = require("../../db");
 
 const articleAdd = (
   title: string,
