@@ -126,7 +126,6 @@ export const FormDetail = (): JSX.Element => {
                 dispatch(setBody(""));
                 dispatch(setTitle(""));
                 navigate("../../");
-                Naviga;
               } else {
                 alert("입력 정보를 다시 확인해주세요.");
               }
