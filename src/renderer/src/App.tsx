@@ -7,6 +7,7 @@ import ErrorPage from "@pages/error";
 import Root from "@renderer/routes/Root";
 import Explore from "@pages/Explore";
 import { Outlet } from "react-router-dom";
+import ArticleDetail from "./components/Article/ArticleDetail";
 // import { Routes, Route } from "react-router-dom";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@components/theme-provider";
@@ -27,14 +28,18 @@ const router = createHashRouter([
         element: <Outlet />,
         children: [
           {
+            index: true,
+            element: <Article />,
+          },
+          {
+            path: ":id",
+            element: <ArticleDetail />,
+          },
+          {
             path: "explore",
             element: <Explore />,
           },
 
-          {
-            index: true,
-            element: <Article />,
-          },
           {
             path: "ocr",
             element: <Ocr />,

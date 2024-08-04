@@ -439,6 +439,10 @@ export default function Input(): JSX.Element {
                     } else {
                       console.log("No <h1> tag found.");
                     }
+
+                    // 정규식을 사용하여 첫 번째 <h1> 태그 제거
+                    const textbody = textData.replace(/<h1>.*?<\/h1>/, "");
+                    dispatch(setBody(textbody));
                   }}
                 />
               )}

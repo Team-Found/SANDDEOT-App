@@ -4,4 +4,5 @@ export default interface Article {
   level: number;
   progress: number;
   image: Blob;
+  bodyID: number;
 }

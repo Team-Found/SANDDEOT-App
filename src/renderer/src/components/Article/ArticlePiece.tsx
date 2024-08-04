@@ -16,7 +16,7 @@ export default function ArticlePiece({
   console.log(articleDetail);
   console.log(articleDetail.progress);
   return (
-    <>
+    <div>
       <div className="w-full h-34 px-4 py-4 bg-gradient-to-br from-secondaryBG via-stone-900 to-stone-900 rounded-2xl flex-col justify-center items-start gap-4 inline-flex mb-4">
         <div className="w-full text-white text-2xl font-normal font-['Rozha One'] leading-tight">
           {articleDetail.title}
@@ -43,6 +43,6 @@ export default function ArticlePiece({
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }

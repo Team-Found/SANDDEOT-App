@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import ArticlePiece from "./ArticlePiece";
 import { useEffect, useState } from "react";
 export default function ArticleList(): JSX.Element {
@@ -13,8 +14,13 @@ export default function ArticleList(): JSX.Element {
     <>
       {list
         ? list.map((a, i) => {
+            console.log(a.bodyID);
             console.log(a);
-            return <ArticlePiece articleDetail={a} key={i} />;
+            return (
+              <Link to={`${a.bodyID}`}>
+                <ArticlePiece articleDetail={a} key={i} />
+              </Link>
+            );
           })
         : ""}
     </>
