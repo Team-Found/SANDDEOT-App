@@ -4,7 +4,7 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import store, { setTitle, setBody, RootState } from "../../utils/store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Label } from "@/components/ui/label";
 import { Buffer } from "buffer"; // 브라우저 환경에서 Buffer를 사용하기 위한 polyfill
 import "./fileInput.css";
@@ -83,6 +83,7 @@ export const FormDetail = (): JSX.Element => {
   const [author, setAuthor] = useState<string>("");
   const [binaryData, setBinaryData] = useState<Uint8Array | null>(null);
   const [bufferData, setBufferData] = useState<Buffer | null>(null);
+  const navigate = useNavigate();
 
   return (
     <div className="flex justify-center items-center w-full h-full max-w-10 mx-auto">
@@ -111,7 +112,7 @@ export const FormDetail = (): JSX.Element => {
           </Link>
           <div
             onClick={() => {
-              if (textCategoryID) {
+              if (title && body && textCategoryID && author) {
                 window.dbApi.article.add(
                   title,
                   new Date(),
@@ -122,9 +123,13 @@ export const FormDetail = (): JSX.Element => {
                   author,
                   bufferData, // bufferData를 사용하여 업로드
                 );
+                dispatch(setBody(""));
+                dispatch(setTitle(""));
+                navigate("../../");
+                Naviga;
+              } else {
+                alert("입력 정보를 다시 확인해주세요.");
               }
-              dispatch(setBody(""));
-              dispatch(setTitle(""));
             }}
           >
             <ButtonDemo />
