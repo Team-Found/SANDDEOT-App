@@ -123,6 +123,8 @@ export const FormDetail = (): JSX.Element => {
                   bufferData, // bufferData를 사용하여 업로드
                 );
               }
+              dispatch(setBody(""));
+              dispatch(setTitle(""));
             }}
           >
             <ButtonDemo />
