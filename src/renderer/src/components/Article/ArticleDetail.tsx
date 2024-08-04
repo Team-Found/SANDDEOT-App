@@ -1,29 +1,65 @@
 import { useParams } from "react-router-dom";
-import ArticlePiece from "./ArticlePiece";
-import { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
 interface HtmlRendererProps {
   htmlString: string;
 }
 
 const HtmlRenderer: React.FC<HtmlRendererProps> = ({ htmlString }) => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const createElementsFromHTML = (htmlString: string): React.ReactNode => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, "text/html");
 
-  useEffect(() => {
-    if (containerRef.current) {
-      // DOMParser를 사용하여 HTML 문자열을 문서로 파싱
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(htmlString, "text/html");
+    const traverseNodes = (node: ChildNode): React.ReactNode => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        return node.textContent; // 텍스트 노드의 경우
+      }
 
-      // 파싱된 HTML 문서의 body에서 내용을 가져와서 컨테이너에 추가
-      containerRef.current.innerHTML = "";
-      Array.from(doc.body.childNodes).forEach((node) => {
-        containerRef.current?.appendChild(node);
-      });
-    }
-  }, [htmlString]);
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        const element = node as Element;
+        const children = Array.from(element.childNodes).map(traverseNodes);
 
-  return <div ref={containerRef} />;
+        // 빈 태그, 공백 태그 및 특정 태그 예외 처리
+        const isEmptyOrWhitespace = children.every(
+          (child) => typeof child === "string" && child.trim() === "",
+        );
+
+        const isExceptionTag = ["hr", "br", "ol", "ul", "span"].includes(
+          element.tagName.toLowerCase(),
+        );
+
+        if (isEmptyOrWhitespace || isExceptionTag) {
+          return React.createElement(
+            element.tagName.toLowerCase(),
+            {},
+            children,
+          );
+        }
+
+        // React.createElement를 사용하여 JSX 요소 생성
+        return React.createElement(
+          element.tagName.toLowerCase(), // 태그 이름
+          {}, // 속성은 생략
+          [
+            ...children,
+            <Textarea
+              key={`input-${element.tagName}`}
+              placeholder="Enter text here"
+              className="my-2 min-h-0"
+            />,
+          ],
+        );
+      }
+
+      return null;
+    };
+
+    return Array.from(doc.body.childNodes).map(traverseNodes);
+  };
+
+  return <div>{createElementsFromHTML(htmlString)}</div>;
 };
 
 export default function ArticleDetail(): JSX.Element {
@@ -31,13 +67,13 @@ export default function ArticleDetail(): JSX.Element {
   const [detail, setDetail] = useState<
     Awaited<ReturnType<typeof window.dbApi.article.detail>>
   >({});
+
   useEffect(() => {
     window.dbApi.article.detail(Number(id)).then((article) => {
-      console.log(article);
       setDetail(article);
-      console.log(detail);
     });
-  }, []);
+  }, [id]); // id에 변화가 있을 때 effect 실행
+
   return (
     <>
       <div className="w-full h-34 px-4 py-4 bg-gradient-to-br from-secondaryBG via-stone-900 to-stone-900 rounded-2xl flex-col justify-center items-start gap-4 inline-flex mb-4">
