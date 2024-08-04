@@ -62,6 +62,8 @@ export const FormDetail = (): JSX.Element => {
                   textImage,
                 );
               }
+              dispatch(setBody(""));
+              dispatch(setTitle(""));
             }}
           >
             <ButtonDemo />
