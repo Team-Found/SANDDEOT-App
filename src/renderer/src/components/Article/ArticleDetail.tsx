@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
+import Textarea from "./textarea";
 
 interface HtmlRendererProps {
   htmlString: string;
@@ -45,10 +45,7 @@ const HtmlRenderer: React.FC<HtmlRendererProps> = ({ htmlString }) => {
           [
             ...children,
             <Textarea
-              key={`input-${element.tagName}`}
-              placeholder="Enter text here"
-              className="my-2 min-h-0"
-            />,
+              key={`input-${element.tagName}`}/>,
           ],
         );
       }
