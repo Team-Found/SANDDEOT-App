@@ -16,14 +16,10 @@ export default function FileUploadBtn(): JSX.Element {
         if (event.target?.result) {
           const arrayBuffer = event.target.result as ArrayBuffer;
           const uint8Array = new Uint8Array(arrayBuffer);
-          const binaryString = Array.from(uint8Array)
-            .map((byte) => byte.toString(2).padStart(8, "0"))
-            .join("");
 
-          // binaryString 이진수로 나와요~
-          console.log("Binary String:", binaryString);
+          // Uint8Array 변수 Db에 삽입하면 됩니다~
 
-          // 상태에 이진 데이터 저장
+          // 상태에 Uint8Array 데이터 저장
           setBinaryData(uint8Array);
         }
       };
