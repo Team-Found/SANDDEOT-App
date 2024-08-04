@@ -4,13 +4,21 @@ type ArticleType = ArrayElement<
   Awaited<ReturnType<typeof window.dbApi.article.list>>
 >;
 import ArticleDelete from "./ArticleDelete";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 export default function ArticlePiece({
   articleDetail,
 }: {
   articleDetail: ArticleType;
 }): JSX.Element {
   const [del, setDel] = useState(false);
+  const [list, setList] =
+    useState<Awaited<ReturnType<typeof window.dbApi.category.list>>>();
+
+  useEffect(() => {
+    window.dbApi.category.list().then((list) => {
+      setList(list);
+    });
+  }, []);
 
   // console.log(articleDetail);
   // console.log(articleDetail.progress);
@@ -26,7 +34,7 @@ export default function ArticlePiece({
         <div className="h-4 justify-start items-center gap-0.5 inline-flex">
           <div className="px-2.5 py-0.5 bg-red-500 rounded-lg justify-center items-center gap-0.5 flex">
             <div className="text-white text-xs font-normal font-['Rozha One'] leading-3">
-              BBC
+              {list ? list.map((a, i) => a.categoryName) : null}
             </div>
           </div>
           <div className="px-2.5 py-0.5 bg-white rounded-lg justify-center items-center gap-0.5 flex">
