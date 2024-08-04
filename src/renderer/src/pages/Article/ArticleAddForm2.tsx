@@ -4,7 +4,8 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import store, { setTitle, setBody, RootState } from "../../utils/store";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import FileUploadBtn from "../../components/Article/FileUploadBtn";
+// import { Label } from "@/components/ui/label";
 import { Link } from "react-router-dom";
 import "./fileInput.css";
 export function ButtonSecondary(): JSX.Element {
@@ -17,7 +18,7 @@ export function ButtonDemo(): JSX.Element {
 
 export const FormDetail = (): JSX.Element => {
   window.dbApi.category.list().then((categorys) => {
-    console.log(categorys);
+    // console.log(categorys);
   });
 
   const dispatch = useDispatch();
@@ -30,21 +31,7 @@ export const FormDetail = (): JSX.Element => {
     <div className="flex justify-center items-center w-full h-full max-w-10 mx-auto">
       <div className="flex flex-col gap-2">
         <div>
-          <Label
-            htmlFor="picture"
-            className="rounded-md border-soild border border-[0 0% 14.9%]; pt-2 flex w-[300px] h-[30px] justify-center"
-          >
-            썸네일을 업로드 하세요.
-          </Label>
-          <input
-            id="picture"
-            type="file"
-            onChange={(e) => {
-              if (e.target.files && e.target.files[0]) {
-                setTextImage(e.target.files[0]);
-              }
-            }}
-          />
+          <FileUploadBtn></FileUploadBtn>
         </div>
         <SelectDemo
           textCategoryID={textCategoryID}

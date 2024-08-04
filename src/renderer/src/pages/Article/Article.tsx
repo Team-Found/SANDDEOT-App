@@ -5,7 +5,7 @@ import ArticleList from "@renderer/components/Article/ArticleList";
 export default function Article(): JSX.Element {
   useEffect(() => {
     window.dbApi.article.list().then((articleList) => {
-      console.log(articleList);
+      // console.log(articleList);
     });
   }, []);
 

@@ -6,7 +6,7 @@ export default function ArticleList(): JSX.Element {
     useState<Awaited<ReturnType<typeof window.dbApi.article.list>>>();
   useEffect(() => {
     window.dbApi.article.list().then((articleList) => {
-      console.log(articleList);
+      // console.log(articleList);
       setList(articleList);
     });
   }, []);
@@ -14,8 +14,8 @@ export default function ArticleList(): JSX.Element {
     <>
       {list
         ? list.map((a, i) => {
-            console.log(a.bodyID);
-            console.log(a);
+            // console.log(a.bodyID);
+            // console.log(a);
             return (
               <Link to={`${a.bodyID}`}>
                 <ArticlePiece articleDetail={a} key={i} />

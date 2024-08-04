@@ -434,10 +434,10 @@ export default function Input(): JSX.Element {
                     const match = textData.match(regex);
 
                     if (match) {
-                      console.log("<h1> content:", match[1]);
+                      // console.log("<h1> content:", match[1]);
                       dispatch(setTitle(match[1].replace(/<\/?h1>/g, "")));
                     } else {
-                      console.log("No <h1> tag found.");
+                      // console.log("No <h1> tag found.");
                     }
 
                     // 정규식을 사용하여 첫 번째 <h1> 태그 제거
