@@ -1,43 +1,37 @@
-import React, { useState, KeyboardEvent } from "react";
+import React, { useRef, useEffect } from 'react';
 
-const Textarea: React.FC = () => {
-  const [text, setText] = useState<string>("");
-  const [rows, setRows] = useState<number>(5); // 기본 높이 (행 수)
+interface TextareaProps {
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onSubmit: () => void; // 추가: 전송 함수
+}
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Enter") {
-      if (event.shiftKey) {
-        // Shift + Enter는 줄바꿈
-        event.preventDefault(); // 기본 Enter 동작 방지
-        setText((prevText) => prevText + "\n");
+const Textarea: React.FC<TextareaProps> = ({ value, onChange, onSubmit }) => {
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-        // 현재 rows 값에 1을 추가하여 높이 증가
-        setRows((prevRows) => prevRows + 1);
-      } else {
-        // Enter는 전송
-        event.preventDefault(); // 기본 Enter 동작 방지
-        handleSubmit();
-      }
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = 'auto'; // 높이를 초기화하여 scrollHeight를 정확히 계산할 수 있도록 함
+      textarea.style.height = `${textarea.scrollHeight}px`; // 콘텐츠의 높이에 맞게 조정
+    }
+  }, [value]); // 값이 변경될 때마다 높이를 조정
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault(); // 기본 엔터 동작을 방지
+      alert(`전송된 내용: ${text}`);
     }
   };
 
-  const handleSubmit = () => {
-    alert("전송되었습니다: " + text);
-  };
-
   return (
-    <div>
-      <textarea
-        className="flex rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        onKeyDown={handleKeyDown}
-        placeholder="Enter text here"
-        rows={5}
-        cols={40}
-      />
-      <button onClick={handleSubmit}>전송</button>
-    </div>
+    <textarea
+      ref={textareaRef}
+      value={value}
+      onChange={onChange}
+      onKeyDown={handleKeyDown} // 키보드 이벤트 핸들러 추가
+      className="w-full p-2 border rounded resize-none overflow-hidden bg-background text-sm px-2 py-2 placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:outline-none focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+    />
   );
 };
 

@@ -37,6 +37,17 @@ const HtmlRenderer: React.FC<HtmlRendererProps> = ({ htmlString }) => {
             children,
           );
         }
+        const [text, setText] = useState<string>("");
+
+        const handleChange = (
+          event: React.ChangeEvent<HTMLTextAreaElement>,
+        ) => {
+          setText(event.target.value);
+        };
+
+        const handleSubmit = () => {
+          alert(`전송된 내용: ${text}`);
+        };
 
         // React.createElement를 사용하여 JSX 요소 생성
         return React.createElement(
@@ -45,7 +56,11 @@ const HtmlRenderer: React.FC<HtmlRendererProps> = ({ htmlString }) => {
           [
             ...children,
             <Textarea
-              key={`input-${element.tagName}`}/>,
+              key={`input-${element.tagName}`}
+              value={text}
+              onChange={handleChange}
+              onSubmit={handleSubmit}
+            />,
           ],
         );
       }
