@@ -2,6 +2,50 @@ import db from "../../db";
 
 // const db = require("../../db");
 
+const insertRSSA = (bodyID: number, RSSID: number): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    db.run(
+      "INSERT INTO RSSArticle (bodyID, RSSID) VALUES (?, ?)",
+      [bodyID, RSSID],
+      (err) => {
+        if (err) {
+          console.error("SQL error3:", err.message);
+          reject();
+        } else {
+          console.log(`third success`);
+          resolve(0);
+        }
+      },
+    );
+  });
+};
+
+const selectBodyID = (
+  title: string,
+  unixTime: number,
+  body: string,
+  translated: string,
+  origin: number,
+  categoryID: number,
+  author: string,
+): Promise<number> => {
+  return new Promise((resolve, reject) => {
+    db.get(
+      "SELECT bodyID FROM Body WHERE title = ? and date = ? and body = ? and translated = ? and origin = ? and categoryID = ? and author = ?",
+      [title, unixTime, body, translated, origin, categoryID, author],
+      (err, row: { bodyID: number }) => {
+        if (err) {
+          console.error("SQL error2:", err.message);
+          reject();
+        } else {
+          console.log(`second success`);
+          resolve(row.bodyID);
+        }
+      },
+    );
+  });
+};
+
 const add = (
   title: string,
   date: Date,
@@ -29,31 +73,20 @@ const add = (
           reject();
         } else if (RSSID) {
           console.log(`success`);
-          db.get(
-            "SELECT bodyID FROM Body WHERE title = ? and date = ? and body = ? and translated = ? and origin = ? and categoryID = ? and author = ?",
-            [title, unixTime, body, translated, origin, categoryID, author],
-            (err, row: { bodyID: number }) => {
-              if (err) {
-                console.error("SQL error2:", err.message);
-                reject();
-              } else {
-                console.log(`second success`);
-                db.run(
-                  "INSERT INTO RSSArticle (bodyID, RSSID) VALUES (?, ?)",
-                  [row.bodyID, RSSID],
-                  (err, row) => {
-                    if (err) {
-                      console.error("SQL error3:", err.message);
-                      reject();
-                    } else {
-                      console.log(`third success`);
-                      resolve(0);
-                    }
-                  },
-                );
-              }
-            },
-          );
+          selectBodyID(
+            title,
+            unixTime,
+            body,
+            translated,
+            origin,
+            categoryID,
+            author,
+          ).then((bodyID) => {
+            insertRSSA(bodyID, RSSID).then(() => {
+              resolve(0);
+            });
+            resolve(0);
+          });
         } else {
           resolve(0);
         }
@@ -62,6 +95,6 @@ const add = (
   });
 };
 
-add("sd;lkf", new Date(), "hihihi", "", 3, 1, "dlwoghks", null, 1);
+// add("1234234", new Date(), "hihihi", "", 3, 1, "woghks", null, 1);
 
 export default add;
