@@ -20,6 +20,7 @@ const Textarea: React.FC<TextareaProps> = ({ value, onChange, onSubmit }) => {
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault(); // 기본 엔터 동작을 방지
+      onSubmit()
       alert(`전송된 내용: ${text}`);
     }
   };
