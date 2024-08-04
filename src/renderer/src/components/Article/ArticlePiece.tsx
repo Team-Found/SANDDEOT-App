@@ -1,22 +1,21 @@
-import { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { Provider, useDispatch, useSelector } from "react-redux";
-import store, { setTitle, setBody, RootState } from "../../utils/store";
 type ArrayElement<T> = T extends (infer U)[] ? U : never;
 
 type ArticleType = ArrayElement<
   Awaited<ReturnType<typeof window.dbApi.article.list>>
 >;
-
+import ArticleDelete from "./ArticleDelete";
+import { useState } from "react";
 export default function ArticlePiece({
   articleDetail,
 }: {
   articleDetail: ArticleType;
 }): JSX.Element {
+  const [del, setDel] = useState(false);
+
   // console.log(articleDetail);
   // console.log(articleDetail.progress);
-  return (
-    <div>
+  return !del ? (
+    <div className="w-full">
       <div className="w-full h-34 px-4 py-4 bg-gradient-to-br from-secondaryBG via-stone-900 to-stone-900 rounded-2xl flex-col justify-center items-start gap-4 inline-flex mb-4">
         <div className="w-full text-white text-2xl font-normal font-['Rozha One'] leading-tight">
           {articleDetail.title}
@@ -42,7 +41,10 @@ export default function ArticlePiece({
             className={`w-[${articleDetail.progress}%] h-1.5 relative bg-progress rounded-3xl`}
           />
         </div>
+        <ArticleDelete bodyID={articleDetail.bodyID} setDel={setDel} />
       </div>
     </div>
+  ) : (
+    <></>
   );
 }

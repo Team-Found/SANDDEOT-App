@@ -111,7 +111,7 @@ export const FormDetail = (): JSX.Element => {
           </Link>
           <div
             onClick={() => {
-              if (textCategoryID && bufferData != undefined) {
+              if (textCategoryID) {
                 window.dbApi.article.add(
                   title,
                   new Date(),

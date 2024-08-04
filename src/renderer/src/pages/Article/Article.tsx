@@ -10,7 +10,7 @@ export default function Article(): JSX.Element {
   }, []);
 
   return (
-    <div>
+    <div className="w-full">
       <ArticleList />
       <Link to="./ocr" relative="path">
         <div className="flex items-center justify-center w-[200px] h-[200px] bg-red-500">
