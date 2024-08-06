@@ -71,9 +71,9 @@ export function ButtonDemo(): JSX.Element {
 
 // 메인 폼 컴포넌트
 export const FormDetail = (): JSX.Element => {
-  window.dbApi.category.list().then((categories) => {
-    // console.log(categories);
-  });
+  // window.dbApi.category.list().then((categories) => {
+  //   // console.log(categories);
+  // });
 
   const dispatch = useDispatch();
   const title = useSelector((state: RootState) => state.textData.title);
