@@ -37,6 +37,7 @@
     "@reduxjs/toolkit": "^2.2.7",
     "@types/react-redux": "^7.1.33",
     "@types/sqlite3": "^3.1.11",
+    "buffer": "^6.0.3",
     "ckeditor5": "^42.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",

@@ -6,7 +6,7 @@ const list = (
   endLevel: number = 6,
   categoryID?: number,
 ): Promise<Article[]> => {
-  const sql = `SELECT title, author, level, progress, image FROM Body WHERE level between ? and ? ${categoryID ? `and categoryID = ?` : ``}`;
+  const sql = `SELECT title, author, level, progress, image, bodyID FROM Body WHERE level between ? and ? ${categoryID ? `and categoryID = ?` : ``}`;
   return new Promise((resolve, reject) => {
     db.all(sql, [startLevel, endLevel, categoryID], (err, rows: Article[]) => {
       if (err) {
