@@ -14,10 +14,12 @@ function FileUploadBtn({
   setTextImage,
   setBinaryData,
   setBufferData,
+  setImgFile,
 }: {
   setTextImage: (file: File | null) => void;
   setBinaryData: (data: Uint8Array | null) => void;
   setBufferData: (data: Buffer | null) => void;
+  setImgFile: (data: string | null) => void;
 }): JSX.Element {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -25,6 +27,10 @@ function FileUploadBtn({
       setTextImage(file);
 
       const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+        setImgFile(reader.result as string);
+      };
 
       reader.onload = (event) => {
         if (event.target?.result) {
@@ -55,7 +61,12 @@ function FileUploadBtn({
       >
         썸네일을 업로드 하세요.
       </Label>
-      <input id="picture" type="file" onChange={handleFileChange} />
+      <input
+        id="picture"
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+      />
     </>
   );
 }
@@ -84,6 +95,7 @@ export const FormDetail = (): JSX.Element => {
   const [binaryData, setBinaryData] = useState<Uint8Array | null>(null);
   const [bufferData, setBufferData] = useState<Buffer | null>(null);
   const navigate = useNavigate();
+  const [imgFile, setImgFile] = useState<string | null>(null);
 
   return (
     <div className="flex justify-center items-center w-full h-full max-w-10 mx-auto">
@@ -93,7 +105,9 @@ export const FormDetail = (): JSX.Element => {
             setTextImage={setTextImage}
             setBinaryData={setBinaryData}
             setBufferData={setBufferData}
+            setImgFile={setImgFile}
           />
+          {imgFile && <img src={imgFile} alt="썸네일" />}
         </div>
         <SelectDemo
           textCategoryID={textCategoryID}
