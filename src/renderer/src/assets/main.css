@@ -6,7 +6,7 @@
     format("opentype");
 }
 
-.drag-region {
+/* .drag-region {
   -webkit-app-region: drag;
   position: fixed;
   top: 0;
@@ -15,7 +15,7 @@
   height: 35px;
   width: 100dvw;
   z-index: 9999;
-}
+} */
 .drag {
   -webkit-app-region: drag;
 }
@@ -90,4 +90,9 @@
   /* body {
     @apply bg-background text-foreground;
   } */
+}
+
+html {
+  font-size: 16px;
+  color: var(--variable-collection-primaryText);
 }

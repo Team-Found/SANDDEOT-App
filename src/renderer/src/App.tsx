@@ -11,6 +11,7 @@ import { Outlet } from "react-router-dom";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@components/theme-provider";
 import Feed from "@pages/Feed";
+import Statusbar from "@components/Statusbar";
 
 const router = createHashRouter([
   {
@@ -68,9 +69,12 @@ const router = createHashRouter([
 
 function App(): JSX.Element {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <RouterProvider router={router} />
-    </ThemeProvider>
+    <>
+      <Statusbar title="Vite Electron React" />
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </>
   );
 }
 

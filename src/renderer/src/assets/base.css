@@ -12,11 +12,15 @@
   --variable-collection-blue60: rgba(66, 97, 234, 1);
   --variable-collection-green60: rgba(106, 195, 88, 1);
   --variable-collection-orange60: rgba(234, 125, 66, 1);
-  --variable-collection-primarybg: rgba(20, 18, 17, 1);
+  --variable-collection-primarybg: #0c0b0a;
   --variable-collection-progress: rgba(153, 254, 150, 1);
   --variable-collection-red60: rgba(234, 66, 66, 1);
   --variable-collection-save: rgba(244, 192, 80, 1);
-  --variable-collection-secondarybg: rgba(27, 25, 24, 1);
+  --variable-collection-secondarybg: #1a1a1a;
+  --variable-collection-priamry: #216bff;
+  --variable-collection-primaryBd: #101010;
+  --variable-collection-primaryText: #e3e3e3;
+  --variable-collection-secondaryText: #cbcbcb;
 }
 
 :root {
