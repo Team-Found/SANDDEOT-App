@@ -59,7 +59,7 @@
 // };
 
 import { Sidebaritemicon1 } from "@assets/img/Sidebaritemicon1";
-import { Sidebaritemicon2 } from "@assets/img/Sidebaritemicon2";
+// import { Sidebaritemicon2 } from "@assets/img/Sidebaritemicon2";
 import { Sidebaritemicon5 } from "@assets/img/Sidebaritemicon5";
 import { SidebarItem } from "./SidebarItem";
 import logoImg from "@assets/img/logo.svg";
@@ -94,20 +94,20 @@ const customStyles = {
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement("#root");
 
-function Dropdown() {
+function Dropdown(): void {
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
-  function openModal() {
+  function openModal(): void {
     setIsOpen(true);
   }
 
-  function afterOpenModal() {
+  function afterOpenModal(): void {
     // references are now sync'd and can be accessed.
     subtitle.style.color = "#f00";
   }
 
-  function closeModal() {
+  function closeModal(): void {
     setIsOpen(false);
   }
   return (
@@ -155,16 +155,11 @@ function Dropdown() {
     </div>
   );
 }
-interface Props {
-  className: string;
-}
 
-export const Sidebar = ({ className }: Props): JSX.Element => {
-  const [isDropdownView, setDropdownView] = useState(false);
+export const Sidebar = (): JSX.Element => {
+  // const [isDropdownView, setDropdownView] = useState(false);
   return (
-    <div
-      className={`flex flex-col w-[200px] h-[calc(100vh-2.25rem)] items-start pt-2 pb-0 px-[11px] relative bg-variable-collection-primarybg border-r [border-right-style:solid] border-variable-collection-primaryborder ${className}`}
-    >
+    <div className="flex flex-col w-[200px] h-[calc(100vh-2.25rem)] items-start pt-2 pb-0 px-[11px] relative bg-variable-collection-primarybg border-r [border-right-style:solid] border-variable-collection-primaryborder">
       <div className="flex h-[57px] items-center gap-2.5 pl-2 pr-[15px] py-4 relative self-stretch w-full rounded-[27px]">
         <div className="flex items-center gap-1 relative flex-[0_0_auto] mt-[-0.50px] mb-[-0.50px]">
           <div className="relative w-[25px] h-[25px]">

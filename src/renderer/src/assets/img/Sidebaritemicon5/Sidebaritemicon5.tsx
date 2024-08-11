@@ -1,17 +1,12 @@
-/*
-We're constantly improving the code you see. 
-Please share your feedback here: https://form.asana.com/?k=uvp-HPgd3_hyoXRBw1IcNg&d=1152665201300829
-*/
-
-import PropTypes from "prop-types";
-import React from "react";
-
 interface Props {
-  color: string;
-  className: any;
+  color?: string;
+  className: string;
 }
 
-export const Sidebaritemicon5 = ({ color = "white", className }: Props): JSX.Element => {
+export const Sidebaritemicon5 = ({
+  color = "white",
+  className,
+}: Props): JSX.Element => {
   return (
     <svg
       className={`${className}`}
@@ -37,8 +32,4 @@ export const Sidebaritemicon5 = ({ color = "white", className }: Props): JSX.Ele
       />
     </svg>
   );
-};
-
-Sidebaritemicon5.propTypes = {
-  color: PropTypes.string,
 };

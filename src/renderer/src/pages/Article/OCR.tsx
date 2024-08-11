@@ -8,14 +8,14 @@ export const Ocr: React.FC = () => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = () => {
+      reader.onload = (): void => {
         setImage(reader.result);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleClick = () => {
+  const handleClick = (): void => {
     if (!image) {
       console.error("No image selected!");
       return;
