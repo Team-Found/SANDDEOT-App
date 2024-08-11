@@ -50,7 +50,8 @@
     "rss-parser": "^3.13.0",
     "sqlite3": "^5.1.7",
     "tailwind-merge": "^2.4.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "tesseract.js": "^5.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
