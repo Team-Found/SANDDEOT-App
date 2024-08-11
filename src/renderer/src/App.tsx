@@ -6,6 +6,7 @@ import { FormDetail } from "@pages/Article/ArticleAddForm2";
 import ErrorPage from "@pages/error";
 import Root from "@renderer/routes/Root";
 import Explore from "@pages/Explore";
+import Saved from "@pages/saved";
 import { Outlet } from "react-router-dom";
 // import { Routes, Route } from "react-router-dom";
 import { createHashRouter, RouterProvider } from "react-router-dom";
@@ -22,6 +23,10 @@ const router = createHashRouter([
       {
         index: true,
         element: <Feed />,
+      },
+      {
+        path: "saved",
+        element: <Saved />,
       },
       {
         path: "getting-started",
