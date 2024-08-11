@@ -1,15 +1,10 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RssBlock } from "./RssBlock";
 import search from "./search.svg";
 
 export const PromptModal: React.FC = () => {
-  const [isInputVisible, setInputVisible] = useState(false);
   const [inputValue, setInputValue] = useState("");
-
-  const handleButtonClick = () => {
-    setInputVisible(true);
-  };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -17,36 +12,16 @@ export const PromptModal: React.FC = () => {
 
   const handleSubmit = () => {
     alert(`You entered: ${inputValue}`);
-    setInputVisible(false); // Hide input after submission
     setInputValue(""); // Clear input field
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <button
-        className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
-        onClick={handleButtonClick}
-      >
-        Click me to enter a value
-      </button>
-
-      {isInputVisible && (
-        <div className="mt-4">
-          <input
-            type="text"
-            value={inputValue}
-            onChange={handleInputChange}
-            className="border border-gray-300 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter something..."
-          />
-          <button
-            className="ml-2 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-300"
-            onClick={handleSubmit}
-          >
-            Submit
-          </button>
-        </div>
-      )}
+    <div>
+      <input type="text" placeholder="RSS Link"></input>
+      <div>
+        <button>취소</button>
+        <button>확인</button>
+      </div>
     </div>
   );
 };
@@ -73,6 +48,7 @@ const FrameWrapper = ({
   RSSBlockPropertyVariantClassName,
   RSSBlockPropertyVariantClassNameOverride,
 }: Props): JSX.Element => {
+  const [modal, setModal] = useState(false);
   return (
     <div className="flex flex-col w-[295px] h-[810px] items-start gap-[17px] pt-2 pb-[45px] px-0 relative">
       <div className="flex items-center gap-3.5 px-3 relative self-stretch w-full flex-[0_0_auto] rounded-2xl overflow-hidden border border-solid border-variable-collection-primaryborder">
@@ -100,10 +76,17 @@ const FrameWrapper = ({
               followProperty1="variant-2"
               property1="default"
             />
-            <RssBlock
-              className={RSSBlockPropertyDefaultClassNameOverride}
-              property1="variant-2"
-            />
+            <div
+              onClick={() => {
+                setModal(!modal);
+              }}
+            >
+              <RssBlock
+                className={RSSBlockPropertyDefaultClassNameOverride}
+                property1="variant-2"
+              />
+            </div>
+            {modal ? <PromptModal /> : null}
           </div>
         </div>
         <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
