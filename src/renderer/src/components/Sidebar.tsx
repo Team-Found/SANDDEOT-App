@@ -105,7 +105,7 @@ export const Sidebar = ({ className }: Props): JSX.Element => {
             link="/my-activity"
           />
         </div>
-        <div className="flex items-center justify-center gap-2.5 px-[50px] py-[13px] relative self-stretch w-full flex-[0_0_auto] bg-variable-collection-primary rounded-[78px] overflow-hidden">
+        <div className="flex items-center justify-center gap-2.5 px-[50px] py-[13px] relative self-stretch w-full flex-[0_0_auto] bg-variable-collection-priamry rounded-[78px] overflow-hidden">
           <div className="w-fit mt-[-1.00px] [font-family:'Pretendard_Variable-Bold',Helvetica] font-bold text-white text-xs whitespace-nowrap relative tracking-[0] leading-[normal]">
             시작하기
           </div>

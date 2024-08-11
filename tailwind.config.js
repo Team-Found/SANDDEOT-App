@@ -25,7 +25,7 @@ module.exports = {
         "variable-collection-progress": "var(--variable-collection-progress)",
         "variable-collection-red60": "var(--variable-collection-red60)",
         "variable-collection-save": "var(--variable-collection-save)",
-        "variable-collection-primary": "var(--variable-collection-primary)",
+        "variable-collection-priamry": "var(--variable-collection-priamry)",
         "variable-collection-primaryBd": "var(--variable-collection-primaryBd)",
         "variable-collection-primaryText":
           "var(--variable-collection-primaryText)",
