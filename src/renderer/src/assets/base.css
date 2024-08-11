@@ -8,6 +8,14 @@
   }
 }
 
+body {
+  /* 중요!!! 에디터랑 글 영역에는 적용안되게 미래의 이준호가 할거라고 믿음 */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 :root {
   --variable-collection-blue60: rgba(66, 97, 234, 1);
   --variable-collection-green60: rgba(106, 195, 88, 1);

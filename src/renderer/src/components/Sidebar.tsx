@@ -64,20 +64,89 @@ import { Sidebaritemicon5 } from "@assets/img/Sidebaritemicon5";
 import { SidebarItem } from "./SidebarItem";
 import logoImg from "@assets/img/logo.svg";
 import textImg from "@assets/img/logoText.svg";
-import { useState } from "react";
+import Editor from "@assets/img/NewStart/1.svg";
+import OCR from "@assets/img/NewStart/2.svg";
+import Extension from "@assets/img/NewStart/3.svg";
+import React, { useState } from "react";
+import "@assets/hover.css";
+import Modal from "react-modal";
 
-export const Dropdown = (): JSX.Element => {
-  return (
-    <>
-      <div className="flex border-variable-collection-primaryBd border-2">
-        <div className="p-2">에디터</div>
-        <div className="p-2">OCR</div>
-        <div className="p-2">확장</div>
-      </div>
-    </>
-  );
+const customStyles = {
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+  },
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "var(--variable-collection-primarybg)",
+    border: "solid 1px var(--variable-collection-primaryBd)",
+    borderRadius: "22px",
+    padding: "10px",
+  },
 };
 
+// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
+Modal.setAppElement("#root");
+
+function Dropdown() {
+  let subtitle;
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#f00";
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+  return (
+    <div className="w-full">
+      <div
+        onClick={openModal}
+        className="flex items-center justify-center px-[50px] py-[13px] relative self-stretch w-full flex-[0_0_auto] bg-variable-collection-priamry rounded-[78px] overflow-hidden"
+      >
+        <div className="w-fit mt-[-1.00px] [font-family:'Pretendard_Variable-Bold',Helvetica] font-bold text-white text-xs whitespace-nowrap relative tracking-[0] leading-[normal]">
+          시작하기
+        </div>
+      </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <div className="flex justify-between px-2">
+          <h2 className="px-1">시작하기</h2>
+          <h2 onClick={closeModal} className="cursor-pointer">
+            ✕
+          </h2>
+        </div>
+
+        <div className="flex justify-between">
+          <div onClick={closeModal} className="newStart p-2 cursor-pointer">
+            <img src={Editor} alt="에디터" />
+          </div>
+          <div onClick={closeModal} className="newStart p-2 cursor-pointer">
+            <img src={OCR} alt="OCR" />
+          </div>
+          <div onClick={closeModal} className="newStart p-2 cursor-pointer">
+            <img src={Extension} alt="확장" />
+          </div>
+        </div>
+      </Modal>
+    </div>
+  );
+}
 interface Props {
   className: string;
 }
@@ -113,19 +182,7 @@ export const Sidebar = ({ className }: Props): JSX.Element => {
             link="/saved"
           />
         </div>
-        <div className="w-full">
-          <div
-            className="flex items-center justify-center px-[50px] py-[13px] relative self-stretch w-full flex-[0_0_auto] bg-variable-collection-priamry rounded-[78px] overflow-hidden"
-            onClick={() => {
-              setDropdownView(!isDropdownView);
-            }}
-          >
-            <div className="w-fit mt-[-1.00px] [font-family:'Pretendard_Variable-Bold',Helvetica] font-bold text-white text-xs whitespace-nowrap relative tracking-[0] leading-[normal]">
-              시작하기
-            </div>
-          </div>
-          {isDropdownView && <Dropdown />}
-        </div>
+        <Dropdown />
       </div>
       <div className="flex flex-col items-start justify-center gap-2.5 px-0 py-[19px] relative self-stretch w-full flex-[0_0_auto]">
         <div className="flex items-center gap-2.5 p-2 relative self-stretch w-full flex-[0_0_auto] rounded-[11px]">
