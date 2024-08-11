@@ -64,12 +64,26 @@ import { Sidebaritemicon5 } from "@assets/img/Sidebaritemicon5";
 import { SidebarItem } from "./SidebarItem";
 import logoImg from "@assets/img/logo.svg";
 import textImg from "@assets/img/logoText.svg";
+import { useState } from "react";
+
+export const Dropdown = (): JSX.Element => {
+  return (
+    <>
+      <div className="flex border-variable-collection-primaryBd border-2">
+        <div className="p-2">에디터</div>
+        <div className="p-2">OCR</div>
+        <div className="p-2">확장</div>
+      </div>
+    </>
+  );
+};
 
 interface Props {
   className: string;
 }
 
 export const Sidebar = ({ className }: Props): JSX.Element => {
+  const [isDropdownView, setDropdownView] = useState(false);
   return (
     <div
       className={`flex flex-col w-[200px] h-[calc(100vh-2.25rem)] items-start pt-2 pb-0 px-[11px] relative bg-variable-collection-primarybg border-r [border-right-style:solid] border-variable-collection-primaryborder ${className}`}
@@ -99,10 +113,18 @@ export const Sidebar = ({ className }: Props): JSX.Element => {
             link="/saved"
           />
         </div>
-        <div className="flex items-center justify-center gap-2.5 px-[50px] py-[13px] relative self-stretch w-full flex-[0_0_auto] bg-variable-collection-priamry rounded-[78px] overflow-hidden">
-          <div className="w-fit mt-[-1.00px] [font-family:'Pretendard_Variable-Bold',Helvetica] font-bold text-white text-xs whitespace-nowrap relative tracking-[0] leading-[normal]">
-            시작하기
+        <div className="w-full">
+          <div
+            className="flex items-center justify-center px-[50px] py-[13px] relative self-stretch w-full flex-[0_0_auto] bg-variable-collection-priamry rounded-[78px] overflow-hidden"
+            onClick={() => {
+              setDropdownView(!isDropdownView);
+            }}
+          >
+            <div className="w-fit mt-[-1.00px] [font-family:'Pretendard_Variable-Bold',Helvetica] font-bold text-white text-xs whitespace-nowrap relative tracking-[0] leading-[normal]">
+              시작하기
+            </div>
           </div>
+          {isDropdownView && <Dropdown />}
         </div>
       </div>
       <div className="flex flex-col items-start justify-center gap-2.5 px-0 py-[19px] relative self-stretch w-full flex-[0_0_auto]">
