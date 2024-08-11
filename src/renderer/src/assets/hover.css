@@ -38,3 +38,13 @@
   -webkit-animation-iteration-count: 1;
   animation-iteration-count: 1;
 }
+
+.sideBar:hover {
+  background-color: var(--variable-collection-secondarybg);
+  transition: all 0.3s;
+}
+
+.newStartBtn:hover {
+  background-color: #216bffaf;
+  transition: all 0.3s;
+}

@@ -67,6 +67,7 @@ import textImg from "@assets/img/logoText.svg";
 import Editor from "@assets/img/NewStart/1.svg";
 import OCR from "@assets/img/NewStart/2.svg";
 import Extension from "@assets/img/NewStart/3.svg";
+import setSvg from "@assets/img/set.svg";
 import React, { useState } from "react";
 import "@assets/hover.css";
 import Modal from "react-modal";
@@ -112,7 +113,7 @@ function Dropdown() {
     <div className="w-full">
       <div
         onClick={openModal}
-        className="flex items-center justify-center px-[50px] py-[13px] relative self-stretch w-full flex-[0_0_auto] bg-variable-collection-priamry rounded-[78px] overflow-hidden"
+        className="newStartBtn flex items-center justify-center px-[50px] py-[13px] relative self-stretch w-full flex-[0_0_auto] bg-variable-collection-priamry rounded-[78px] overflow-hidden cursor-pointer"
       >
         <div className="w-fit mt-[-1.00px] [font-family:'Pretendard_Variable-Bold',Helvetica] font-bold text-white text-xs whitespace-nowrap relative tracking-[0] leading-[normal]">
           시작하기
@@ -170,13 +171,13 @@ export const Sidebar = ({ className }: Props): JSX.Element => {
       <div className="flex flex-col items-start gap-[23px] px-0 py-[21px] relative flex-1 self-stretch w-full grow rounded-[27px]">
         <div className="flex flex-col items-start relative self-stretch w-full flex-[0_0_auto]">
           <SidebarItem
-            className="!self-stretch !flex-[0_0_auto]"
+            className="!self-stretch !flex-[0_0_auto] sideBar"
             icon={<Sidebaritemicon5 />}
             sidebarTitle="홈"
             link="/"
           />
           <SidebarItem
-            className="!self-stretch !flex-[0_0_auto]"
+            className="!self-stretch !flex-[0_0_auto] sideBar"
             icon={<Sidebaritemicon1 />}
             sidebarTitle="저장됨"
             link="/saved"
@@ -187,12 +188,8 @@ export const Sidebar = ({ className }: Props): JSX.Element => {
       <div className="flex flex-col items-start justify-center gap-2.5 px-0 py-[19px] relative self-stretch w-full flex-[0_0_auto]">
         <div className="flex items-center gap-2.5 p-2 relative self-stretch w-full flex-[0_0_auto] rounded-[11px]">
           <div className="inline-flex items-center gap-2 relative flex-[0_0_auto]">
-            <div className="flex w-6 h-6 items-center justify-center gap-2.5 px-[5px] py-0.5 relative">
-              <img
-                className="relative w-6 h-6 mt-[-2.00px] mb-[-2.00px] ml-[-5.00px] mr-[-5.00px]"
-                alt="Settings"
-                src="/img/settings.png"
-              />
+            <div className="flex items-center justify-center gap-2.5 px-[5px] py-0.5 relative">
+              <img alt="Settings" src={setSvg} />
             </div>
             <div className="w-fit [font-family:'Pretendard_Variable-Bold',Helvetica] font-bold text-[#f9f4f4] text-xs whitespace-nowrap relative tracking-[0] leading-[normal]">
               설정
