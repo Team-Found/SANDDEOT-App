@@ -1,96 +1,227 @@
-import React, { useState } from "react";
 import Tesseract from "tesseract.js";
+import { useRef } from "react";
+
+const defaultSrc =
+  "https://raw.githubusercontent.com/roadmanfong/react-cropper/master/example/img/child.jpg";
+
+import Webcam from "react-webcam";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import Cropper, { ReactCropperElement } from "react-cropper";
+import "cropperjs/dist/cropper.css";
+import React, { useState, createRef } from "react";
+import noImageImg from "@assets/img/noImage.svg";
+
 export const Ocr: React.FC = () => {
   const [progress, setProgress] = useState<number>(0);
-  const [image, setImage] = useState<string | ArrayBuffer | null>(null);
+  const [image, setImage] = useState<string | ArrayBuffer | null>();
+  const [deviceId, setDeviceId] = React.useState({});
+  const [devices, setDevices] = React.useState([]);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (): void => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+  const [cropData, setCropData] = useState("#");
+  const cropperRef = createRef<ReactCropperElement>();
+
+  const handleDevices = React.useCallback(
+    (mediaDevices) =>
+      setDevices(mediaDevices.filter(({ kind }) => kind === "videoinput")),
+    [setDevices],
+  );
+
+  React.useEffect(() => {
+    navigator.mediaDevices.enumerateDevices().then(handleDevices);
+  }, [handleDevices]);
+
+  // console.log(devices[0]);
+
+  const webcamRef = React.useRef(null);
+  const capture = React.useCallback(() => {
+    const imageSrc = webcamRef.current.getScreenshot();
+    console.log(imageSrc);
+    setImage(imageSrc);
+  }, [webcamRef]);
+
+  const onChange = (e: any) => {
+    e.preventDefault();
+    let files;
+    if (e.dataTransfer) {
+      files = e.dataTransfer.files;
+    } else if (e.target) {
+      files = e.target.files;
     }
+    const reader = new FileReader();
+    reader.onload = () => {
+      setImage(reader.result as any);
+    };
+    reader.readAsDataURL(files[0]);
+  };
+
+  const getCropData = (): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      if (typeof cropperRef.current?.cropper !== "undefined") {
+        const croppedImageData = cropperRef.current?.cropper
+          .getCroppedCanvas()
+          .toDataURL();
+        if (croppedImageData) {
+          resolve(croppedImageData);
+        } else {
+          reject("Failed to get cropped image data.");
+        }
+      } else {
+        reject("Cropper is undefined.");
+      }
+    });
+  };
+
+  const checkImageLoaded = (imageData: string): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.src = imageData;
+      img.onload = () => resolve();
+      img.onerror = () => reject("Image failed to load.");
+    });
   };
 
   const handleClick = (): void => {
-    if (!image) {
-      console.error("No image selected!");
-      return;
-    }
+    getCropData()
+      .then((imageData) => {
+        return checkImageLoaded(imageData).then(() => imageData);
+      })
+      .then((imageData) => {
+        return Tesseract.recognize(imageData, "eng+kor", {
+          logger: (m) => {
+            if (m.status === "recognizing text") {
+              const progressValue = (m.progress * 100).toFixed(2);
+              setProgress(Number(progressValue));
+            }
+          },
+        });
+      })
+      .then(({ data: { text } }) => {
+        console.log(text);
+      })
+      .catch((error) => {
+        console.error("Error occurred:", error);
+      });
+  };
 
-    Tesseract.recognize(image as string, "eng+kor", {
-      logger: (m) => {
-        if (m.status === "recognizing text") {
-          const progressValue = (m.progress * 100).toFixed(2);
-          setProgress(Number(progressValue));
-        }
-      },
-    }).then(({ data: { text } }) => {
-      console.log(text);
-    });
+  const uploadImg = (): void => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/*";
+    input.onchange = onChange;
+    input.click();
   };
   return (
     <>
-      <div className="flex flex-col items-center justify-center h-screen p-4">
-        <h1 className="text-2xl font-bold mb-4">OCR with Tesseract.js</h1>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageChange}
-          className="mb-4"
-        />
-        {image && (
-          <img
-            src={image as string}
-            alt="Selected"
-            className="max-w-full max-h-64 mb-4 border border-gray-300"
-          />
-        )}
-        <progress
-          value={progress}
-          max="100"
-          className="w-full mb-4 h-4 bg-gray-200 rounded-full"
-        ></progress>
-        <button
-          onClick={handleClick}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          텍스트 인식 시작
-        </button>
-      </div>
       <div className="self-stretch mt-[-0.85px] [font-family:'Pretendard_Variable-Bold',Helvetica] font-bold text-2xl tracking-[0] leading-[normal]">
         OCR
       </div>
-      <div className="self-stretch w-full h-96 rounded-lg bg-[url(/frame-56.png)] bg-cover bg-[50%_50%]" />
-      <div className="flex items-start justify-between  self-stretch w-full flex-[0_0_auto]">
-        <div className=" w-[195px] h-px" />
-        <div className="flex w-[50px] h-[50px] items-center justify-center gap-2.5 px-3.5 py-[11px]  bg-white rounded-full overflow-hidden">
-          <img
-            className="w-6 h-6 ml-[-1.00px] mr-[-1.00px]"
-            alt="Center focus weak"
-            src="center-focus-weak.png"
-          />
-        </div>
-        <div className="flex flex-col w-[195px] items-start ">
-          <div className="#1b1918">
-            <div className="relative w-fit mt-[-1.00px] [font-family:'Pretendard_Variable-Regular',Helvetica] font-normal text-xs tracking-[0] leading-[normal] whitespace-nowrap">
-              FaceTime HD Camera
-            </div>
-            <img
-              className="relative w-[12.14px] h-[6.69px]"
-              alt="Arrow back ios"
-              src="arrow-back-ios.svg"
+      <div className="self-stretch w-full gap-4 flex flex-col">
+        <div className="self-stretch w-full rounded-lg relative overflow-clip">
+          {/* <Webcam audio={false} width="100%" screenshotFormat="image/jpeg" /> */}
+          {image ? (
+            <Cropper
+              ref={cropperRef}
+              style={{ height: 400, width: "100%" }}
+              zoomTo={0.5}
+              initialAspectRatio={1}
+              preview=".img-preview"
+              src={image}
+              viewMode={1}
+              minCropBoxHeight={10}
+              minCropBoxWidth={10}
+              background={false}
+              responsive={true}
+              autoCropArea={1}
+              checkOrientation={false} // https://github.com/fengyuanchen/cropperjs/issues/671
+              guides={true}
             />
+          ) : deviceId == "uploadFile" ? (
+            <img src={noImageImg} alt="이미지 업로드" onClick={uploadImg} />
+          ) : (
+            <Webcam
+              audio={false}
+              videoConstraints={{
+                deviceId: deviceId,
+                facingMode: "environment",
+                width: 1280,
+                height: 720,
+              }}
+              width="100%"
+              screenshotFormat="image/jpeg"
+              ref={webcamRef}
+            />
+          )}
+          <div className="absolute bottom-2 right-2">
+            {devices.length > 0 ? (
+              <Select
+                defaultValue={devices[0].deviceId}
+                onValueChange={(e) => {
+                  if (e === "uploadFile" && !image) {
+                    uploadImg();
+                  }
+                  setDeviceId(e);
+                }}
+              >
+                <SelectTrigger className="w-[200px]">
+                  <SelectValue placeholder="카메라 선택" />
+                </SelectTrigger>
+                <SelectContent>
+                  {devices.map((device) => (
+                    <SelectItem key={device.deviceId} value={device.deviceId}>
+                      {device.label}
+                    </SelectItem>
+                  ))}
+                  <SelectItem value="uploadFile">파일 업로드</SelectItem>
+                </SelectContent>
+              </Select>
+            ) : null}
           </div>
-          <div className="flex flex-col items-start gap-[15px] p-2.5 self-stretch w-full flex-[0_0_auto] bg-variable-collection-secondarybg rounded-[10px] overflow-hidden">
-            <div className="#5d5450">홍길동 iPhone Camera</div>
-            <p className="#5d5450">홍길동 iPhone Desk View Camera</p>
-            <div className="#5d5450">홍길동 iPad Camera</div>
-            <div className="#5d5450">OBS Virtual Camera</div>
-          </div>
+        </div>
+        <div className="flex w-full h-14 justify-between">
+          {image ? (
+            <>
+              <button
+                className="bg-red-500 text-black px-4 py-2 rounded-full"
+                onClick={() => {
+                  setImage(null);
+                  setProgress(0);
+                }}
+              >
+                Reset
+              </button>
+              <progress
+                value={progress}
+                max="100"
+                className="w-50 mb-4 h-4 bg-gray-200 rounded-full"
+              ></progress>
+              <button
+                onClick={handleClick}
+                className="px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600"
+              >
+                다음
+              </button>
+            </>
+          ) : (
+            <button
+              className="bg-white text-black px-4 py-2 rounded-full"
+              onClick={capture}
+            >
+              Capture
+            </button>
+          )}
+          {/* <label
+            htmlFor="file"
+            className="cursor-pointer border-2 rounded-lg p-4"
+          >
+            파일 업로드
+          </label>
+          <input id="file" type="file" onChange={onChange} className="w-0 h-0" /> */}
         </div>
       </div>
     </>

@@ -48,10 +48,6 @@ const router = createHashRouter([
             element: <Article />,
           },
           {
-            path: "ocr",
-            element: <Ocr />,
-          },
-          {
             path: "input",
             element: <Outlet />,
             children: [
