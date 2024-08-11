@@ -71,6 +71,7 @@ import setSvg from "@assets/img/set.svg";
 import React, { useState } from "react";
 import "@assets/hover.css";
 import Modal from "react-modal";
+import { Link } from "react-router-dom";
 
 const customStyles = {
   overlay: {
@@ -135,13 +136,19 @@ function Dropdown() {
 
         <div className="flex justify-between">
           <div onClick={closeModal} className="newStart p-2 cursor-pointer">
-            <img src={Editor} alt="에디터" />
+            <Link to="/">
+              <img src={Editor} alt="에디터" />
+            </Link>
           </div>
           <div onClick={closeModal} className="newStart p-2 cursor-pointer">
-            <img src={OCR} alt="OCR" />
+            <Link to="/ocr">
+              <img src={OCR} alt="OCR" />
+            </Link>
           </div>
           <div onClick={closeModal} className="newStart p-2 cursor-pointer">
-            <img src={Extension} alt="확장" />
+            <Link to="/">
+              <img src={Extension} alt="확장" />
+            </Link>
           </div>
         </div>
       </Modal>

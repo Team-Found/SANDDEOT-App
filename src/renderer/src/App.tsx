@@ -28,6 +28,10 @@ const router = createHashRouter([
         element: <Saved />,
       },
       {
+        path: "ocr",
+        element: <Ocr />,
+      },
+      {
         path: "getting-started",
         element: <HomeScreen />,
       },
