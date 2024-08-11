@@ -1,4 +1,5 @@
 import Photo from "./Photo";
+import PostActionBlock from "./PostActionBlock";
 
 export default function Post(props: {
   title: string;
@@ -8,16 +9,13 @@ export default function Post(props: {
   date: string;
 }): JSX.Element {
   return (
-    <div className="self-stretch p-3.5 bg-secondaryBG rounded-lg justify-start items-start gap-6 inline-flex">
+    <div className="self-stretch p-3.5 border-variable-collection-primaryBd border-[1px] rounded-lg justify-start items-start gap-6 inline-flex">
       <div className="grow shrink basis-0 flex-col justify-center items-start gap-2 inline-flex">
         <div className="self-stretch flex-col justify-start items-start flex">
           <div className="w-96 justify-between items-center inline-flex">
             <div className="justify-center items-center gap-1 flex">
               <div className="w-3.5 h-3.5 rounded-full justify-center items-center flex overflow-clip">
-                <img
-                  className="w-10 h-10"
-                  src="https://via.placeholder.com/40x40"
-                />
+                <img className="w-10 h-10" src={props.favicon} />
               </div>
               <div className="text-gray-200 text-xs font-medium leading-3">
                 {props.blogName}
@@ -61,6 +59,7 @@ export default function Post(props: {
             </div>
           </div>
         </div>
+        <PostActionBlock />
       </div>
     </div>
   );
