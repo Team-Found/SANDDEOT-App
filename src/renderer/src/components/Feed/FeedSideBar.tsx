@@ -2,29 +2,81 @@ import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { RssBlock } from "./RssBlock";
 import search from "./search.svg";
+import ReactDOM from "react-dom";
+import Modal from "react-modal";
 
-export const PromptModal: React.FC = () => {
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
+// Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
+Modal.setAppElement("#root");
+
+function PromptModal({
+  RSSBlockPropertyDefaultClassNameOverride,
+}: {
+  RSSBlockPropertyDefaultClassNameOverride: string;
+}) {
+  let subtitle;
+  const [modalIsOpen, setIsOpen] = React.useState(false);
   const [inputValue, setInputValue] = useState("");
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
+  function openModal() {
+    setIsOpen(true);
+  }
 
-  const handleSubmit = () => {
-    alert(`You entered: ${inputValue}`);
-    setInputValue(""); // Clear input field
-  };
+  function afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    subtitle.style.color = "#f00";
+  }
 
+  function closeModal() {
+    setIsOpen(false);
+  }
   return (
     <div>
-      <input type="text" placeholder="RSS Link"></input>
-      <div>
-        <button>취소</button>
-        <button>확인</button>
+      <div onClick={openModal}>
+        <RssBlock
+          className={RSSBlockPropertyDefaultClassNameOverride}
+          property1="variant-2"
+        />
       </div>
+      <Modal
+        isOpen={modalIsOpen}
+        onAfterOpen={afterOpenModal}
+        onRequestClose={closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <div>
+          <input
+            type="text"
+            placeholder="RSS Link"
+            onChange={(e) => {
+              setInputValue(e.target.value);
+              console.log(inputValue);
+            }}
+          ></input>
+        </div>
+        <div className="flex justify-between">
+          <button onClick={closeModal} className="bg-red-400">
+            취소
+          </button>
+          <button onClick={closeModal} className="bg-green-400">
+            확인
+          </button>
+        </div>
+      </Modal>
     </div>
   );
-};
+}
 
 interface Props {
   search: string;
@@ -76,17 +128,13 @@ const FrameWrapper = ({
               followProperty1="variant-2"
               property1="default"
             />
-            <div
-              onClick={() => {
-                setModal(!modal);
-              }}
-            >
-              <RssBlock
-                className={RSSBlockPropertyDefaultClassNameOverride}
-                property1="variant-2"
+            <div>
+              <PromptModal
+                RSSBlockPropertyDefaultClassNameOverride={
+                  RSSBlockPropertyDefaultClassNameOverride
+                }
               />
             </div>
-            {modal ? <PromptModal /> : null}
           </div>
         </div>
         <div className="flex flex-col items-start gap-2.5 relative self-stretch w-full flex-[0_0_auto]">
