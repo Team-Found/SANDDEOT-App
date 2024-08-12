@@ -6,7 +6,14 @@
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src * data:; connect-src 'self' https://cdn.jsdelivr.net data: blob:; worker-src 'self' blob:;"
+      content="default-src 'self'; 
+      script-src 'self' 'unsafe-eval' 'unsafe-inline'; 
+      style-src 'self' 
+      'sha256-3V5u5KFXwbQg7tvsXE6sooGvnrcubSmZihFZRYh+OGY=' 'sha256-Ff0g5dgi6QwpxwV/T7F0OftoX5sZZXEvualP3iMGeWg=' 'sha256-X2rEfLT8j/WS+mW8eGPIbQ/rz40qsFTMehpX3X6SHgc=' 
+      'sha256-9H/rIDB3wXP3cJAlzGohwgWh/4e7+3XXcgSRpaDYkg4='
+      'sha256-+IOowTZ1/cUJs67c8dLZxNkG0+/g1brV3ZajaOMRSzI='; 
+      img-src * data:;
+      connect-src 'self' data: blob:; worker-src 'self' blob:;"
     />
   </head>
 

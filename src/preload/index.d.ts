@@ -4,7 +4,9 @@ import { Modules } from "../main/utils/db/types/modules.d.ts";
 declare global {
   interface Window {
     electron: ElectronAPI;
-    api: unknown;
+    api: {
+      resolveRequire: (module: string) => string;
+    };
     dbApi: Modules;
   }
 }

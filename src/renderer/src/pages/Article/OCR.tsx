@@ -63,7 +63,7 @@ export const Ocr: React.FC = () => {
       files = e.target.files;
     }
     const reader = new FileReader();
-    reader.onload = () => {
+    reader.onload = (): void => {
       setImage(reader.result as any);
     };
     reader.readAsDataURL(files[0]);
@@ -95,17 +95,25 @@ export const Ocr: React.FC = () => {
   };
 
   const handleClick = (): void => {
+    setProgress(0.1);
     getCropData()
       .then((imageData) => {
         return checkImageLoaded(imageData).then(() => imageData);
       })
       .then((imageData) => {
         return Tesseract.recognize(imageData, "eng+kor", {
+          corePath: `${window.electron.process.env.ELECTRON_RENDERER_URL}/tesseract.js-core/tesseract-core-simd-lstm.wasm.js`,
+          workerPath: `${window.electron.process.env.ELECTRON_RENDERER_URL}/tesseract-worker.min.js`,
+          // workerBlobURL: true,
           logger: (m) => {
             if (m.status === "recognizing text") {
               const progressValue = (m.progress * 100).toFixed(2);
-              setProgress(Number(progressValue));
+              setProgress(Number(progressValue) ? Number(progressValue) : 0.1);
             }
+          },
+          errorHandler: (e) => {
+            console.error(e);
+            setProgress(0);
           },
         });
       })

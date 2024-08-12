@@ -1,0 +1,3 @@
+[submodule "src/renderer/public/tesseract.js-core"]
+	path = src/renderer/public/tesseract.js-core
+	url = https://github.com/naptha/tesseract.js-core.git

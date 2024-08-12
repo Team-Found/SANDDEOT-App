@@ -3,6 +3,8 @@ import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
 
+// process.env.ELECTRON_RENDERER_URL
+
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -21,7 +23,7 @@ function createWindow(): void {
     },
   });
 
-  mainWindow.setVibrancy("sidebar");
+  // mainWindow.setVibrancy("sidebar");
 
   mainWindow.on("ready-to-show", () => {
     mainWindow.show();
@@ -34,11 +36,13 @@ function createWindow(): void {
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
+  if (!(is.dev && process.env["ELECTRON_RENDERER_URL"])) {
+    process.env["ELECTRON_RENDERER_URL"] = join(__dirname, "../renderer");
+    // mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
+  }
+  mainWindow.loadURL(process.env["ELECTRON_RENDERER_URL"]);
   if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
-    mainWindow.loadURL(process.env["ELECTRON_RENDERER_URL"]);
     mainWindow.webContents.openDevTools();
-  } else {
-    mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
 }
 

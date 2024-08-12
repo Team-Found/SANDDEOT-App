@@ -1,6 +1,7 @@
 import { contextBridge } from "electron";
 import { electronAPI } from "@electron-toolkit/preload";
 import db from "../main/utils/db/index.ts";
+import fs from "fs";
 // import path from "path";
 
 // const path = require("node:path");
@@ -11,7 +12,17 @@ console.log(db);
 
 // Custom APIs for renderer
 const api = {
-  // db: db,
+  resolveRequire: (module: string): string => {
+    try {
+      const blob = new Blob([fs.readFileSync(require.resolve(module))], {
+        type: "application/javascript",
+      });
+      return URL.createObjectURL(blob);
+    } catch (error) {
+      console.error(error);
+    }
+    return "";
+  },
 };
 
 // Use `contextBridge` APIs to expose Electron APIs to
