@@ -24,6 +24,26 @@ html {
   scrollbar-color: #6b6b6b #2b2b2b;
 }
 
+/* background: */
+progress::-webkit-progress-bar {
+  background-color: var(--variable-collection-primarybg);
+  width: 100%;
+}
+progress {
+  background-color: var(--variable-collection-primarybg);
+}
+
+/* value: */
+progress::-webkit-progress-value {
+  background-color: var(--variable-collection-priamry) !important;
+}
+progress::-moz-progress-bar {
+  background-color: var(--variable-collection-priamry) !important;
+}
+progress {
+  color: var(--variable-collection-priamry);
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

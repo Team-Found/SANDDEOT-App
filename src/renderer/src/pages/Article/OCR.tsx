@@ -16,6 +16,9 @@ import Cropper, { ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import React, { useState, createRef } from "react";
 import noImageImg from "@assets/img/noImage.svg";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setBody, RootState } from "../../utils/store";
 
 export const Ocr: React.FC = () => {
   const [progress, setProgress] = useState<number>(0);
@@ -25,7 +28,9 @@ export const Ocr: React.FC = () => {
 
   const [cropData, setCropData] = useState("#");
   const cropperRef = createRef<ReactCropperElement>();
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const body = useSelector((state: RootState) => state.textData.body);
   const handleDevices = React.useCallback(
     (mediaDevices) =>
       setDevices(mediaDevices.filter(({ kind }) => kind === "videoinput")),
@@ -76,7 +81,6 @@ export const Ocr: React.FC = () => {
       }
     });
   };
-
   const checkImageLoaded = (imageData: string): Promise<void> => {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -102,11 +106,19 @@ export const Ocr: React.FC = () => {
         });
       })
       .then(({ data: { text } }) => {
-        console.log(text);
+        dispatch(setBody(text));
+        console.log(body);
+      })
+      .then(() => {
+        linkTo();
       })
       .catch((error) => {
         console.error("Error occurred:", error);
       });
+  };
+
+  const linkTo = (): void => {
+    navigate("../editor");
   };
 
   const uploadImg = (): void => {
@@ -195,11 +207,20 @@ export const Ocr: React.FC = () => {
               >
                 Reset
               </button>
-              <progress
-                value={progress}
-                max="100"
-                className="w-50 mb-4 h-4 bg-gray-200 rounded-full"
-              ></progress>
+              {progress && progress != 100 ? (
+                <div className="absolute w-[100dvw] h-[100dvh] top-0 left-0 bg-black bg-opacity-60 backdrop-blur-sm z-50 flex justify-center items-center border-variable-collection-primaryBd border-[1px]">
+                  <div className="bg-primaryBG p-4 rounded-lg flex flex-col gap-2">
+                    <h3 className="font-bold">OCR 작업 중...</h3>
+                    <div className="rounded-full overflow-clip h-2 w-[400px] relative border-variable-collection-primaryBd border-[1px]">
+                      <progress
+                        value={progress}
+                        max="100"
+                        className="w-[400px] h-2 bg-gray-600 m-0 absolute top-0 left-0"
+                      ></progress>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
               <button
                 onClick={handleClick}
                 className="px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600"
