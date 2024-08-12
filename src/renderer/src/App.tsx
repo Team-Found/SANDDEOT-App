@@ -33,7 +33,17 @@ const router = createHashRouter([
       },
       {
         path: "editor",
-        element: <Input />,
+        element: <Outlet />,
+        children: [
+          {
+            index: true,
+            element: <Input />,
+          },
+          {
+            path: "detail",
+            element: <FormDetail />,
+          },
+        ],
       },
       {
         path: "getting-started",
@@ -50,20 +60,6 @@ const router = createHashRouter([
           {
             index: true,
             element: <Article />,
-          },
-          {
-            path: "input",
-            element: <Outlet />,
-            children: [
-              {
-                index: true,
-                element: <Input />,
-              },
-              {
-                path: "detail",
-                element: <FormDetail />,
-              },
-            ],
           },
         ],
       },
