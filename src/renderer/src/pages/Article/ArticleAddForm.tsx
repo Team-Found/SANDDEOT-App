@@ -84,11 +84,21 @@ import {
 import { Button } from "@/components/ui/button";
 
 function ButtonDemo(): JSX.Element {
-  return <Button className="px-8">다음</Button>;
+  const title = useSelector((state: RootState) => state.textData.title);
+  const body = useSelector((state: RootState) => state.textData.body);
+  return (
+    <Button
+      className="px-8"
+      onClick={() => {
+        window.dbApi.article.add(title, new Date(), body, "", 2, "나");
+      }}
+    >
+      등록
+    </Button>
+  );
 }
 
 // import translations from "ckeditor5/translations/ko.js";
-
 import "ckeditor5/ckeditor5.css";
 
 import "./ckeditor.css";
@@ -425,12 +435,13 @@ export default function Input(): JSX.Element {
                   editor={BalloonEditor}
                   config={editorConfig}
                   onChange={(event, editor) => {
-                    setTextData(editor.getData());
-                    dispatch(setBody(textData));
-                    const regex = /<h1[^>]*>(.*?)<\/h1>/i;
+                    const data = editor.getData(); // HTML 데이터를 가져옴
 
-                    // 정규식을 사용하여 매칭
-                    const match = textData.match(regex);
+                    // HTML 데이터를 body에 저장
+                    dispatch(setBody(data));
+
+                    const regex = /<h1[^>]*>(.*?)<\/h1>/i;
+                    const match = data.match(regex);
 
                     if (match) {
                       console.log("<h1> content:", match[1]);
@@ -446,10 +457,8 @@ export default function Input(): JSX.Element {
         </div>
       </div>
       <div className="flex flex-row-reverse w-full max-w-[1000px] mx-auto my-0">
-        <Link2 to="./detail">
-          <div>
-            <ButtonDemo />
-          </div>
+        <Link2 to="../../">
+          <ButtonDemo />
         </Link2>
       </div>
     </>

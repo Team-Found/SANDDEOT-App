@@ -236,13 +236,6 @@ export const Ocr: React.FC = () => {
               Capture
             </button>
           )}
-          {/* <label
-            htmlFor="file"
-            className="cursor-pointer border-2 rounded-lg p-4"
-          >
-            파일 업로드
-          </label>
-          <input id="file" type="file" onChange={onChange} className="w-0 h-0" /> */}
         </div>
       </div>
     </>

@@ -2,7 +2,6 @@ import HomeScreen from "@pages/Home";
 import { Ocr } from "@pages/Article/OCR";
 import Article from "@pages/Article/Article";
 import Input from "@pages/Article/ArticleAddForm";
-import { FormDetail } from "@pages/Article/ArticleAddForm2";
 import ErrorPage from "@pages/error";
 import Root from "@renderer/routes/Root";
 import Explore from "@pages/Explore";
@@ -38,10 +37,6 @@ const router = createHashRouter([
           {
             index: true,
             element: <Input />,
-          },
-          {
-            path: "detail",
-            element: <FormDetail />,
           },
         ],
       },
