@@ -11,9 +11,6 @@ export default function FeedRouter(): JSX.Element {
         <div className="grow shrink basis-0 flex-col justify-start items-start gap-4 inline-flex w-full">
           <TabBar />
           <div className="px-[30px] w-full">
-            <div className="self-stretch text-white text-2xl font-bold">
-              피드
-            </div>
             <Outlet />
           </div>
         </div>
