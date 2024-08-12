@@ -136,7 +136,7 @@ function Dropdown(): void {
 
         <div className="flex justify-between">
           <div onClick={closeModal} className="newStart p-2 cursor-pointer">
-            <Link to="/">
+            <Link to="/editor">
               <img src={Editor} alt="에디터" />
             </Link>
           </div>

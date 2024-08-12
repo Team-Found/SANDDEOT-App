@@ -6,16 +6,18 @@ import ErrorPage from "@pages/error";
 import Root from "@renderer/routes/Root";
 import Explore from "@pages/Explore";
 import Saved from "@pages/Saved";
+import Following from "@pages/Following";
 import { Outlet } from "react-router-dom";
 // import { Routes, Route } from "react-router-dom";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import { ThemeProvider } from "@components/theme-provider";
 import Feed from "@pages/Feed";
+import FeedRouter from "./routes/Feed";
 
 const router = createHashRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <FeedRouter />,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -23,9 +25,23 @@ const router = createHashRouter([
         element: <Feed />,
       },
       {
+        path: "following",
+        element: <Following />,
+      },
+      // {
+      //   path: "search",
+      //   element: <Search />,
+      // },
+      {
         path: "saved",
         element: <Saved />,
       },
+    ],
+  },
+  {
+    path: "/",
+    element: <Root />,
+    children: [
       {
         path: "ocr",
         element: <Ocr />,
@@ -41,14 +57,6 @@ const router = createHashRouter([
         ],
       },
       {
-        path: "getting-started",
-        element: <HomeScreen />,
-      },
-      {
-        path: "explore",
-        element: <Explore />,
-      },
-      {
         path: "article",
         element: <Outlet />,
         children: [
@@ -57,10 +65,6 @@ const router = createHashRouter([
             element: <Article />,
           },
         ],
-      },
-      {
-        path: "word",
-        element: <div className="text-white">wordwordword</div>,
       },
     ],
   },

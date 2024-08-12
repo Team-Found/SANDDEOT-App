@@ -21,12 +21,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { setBody, RootState } from "../../utils/store";
 
 export const Ocr: React.FC = () => {
+  interface Devices {
+    kind: string;
+    deviceId: string;
+    label: string;
+  }
+
   const [progress, setProgress] = useState<number>(0);
   const [image, setImage] = useState<string | ArrayBuffer | null>();
   const [deviceId, setDeviceId] = React.useState({});
-  const [devices, setDevices] = React.useState([]);
-
-  const [cropData, setCropData] = useState("#");
+  const [devices, setDevices] = React.useState([] as Devices[]);
   const cropperRef = createRef<ReactCropperElement>();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -45,7 +49,7 @@ export const Ocr: React.FC = () => {
 
   const webcamRef = React.useRef(null);
   const capture = React.useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
+    const imageSrc = webcamRef.current?.getScreenshot();
     console.log(imageSrc);
     setImage(imageSrc);
   }, [webcamRef]);
