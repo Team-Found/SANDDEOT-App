@@ -5,9 +5,9 @@ export default function TabBar(): JSX.Element {
   const dispatch = useDispatch();
   const num = useSelector((state: RootState) => state.pages.num);
   return (
-    <div className="flex w-full border-b-[1px] py-4 border-primaryBd">
+    <div className="flex w-full border-b-[1px] border-primaryBd">
       <div
-        className={`w-full flex justify-center align-middle text-[0.9rem] ${!(num % 2) ? "font-bold" : null}`}
+        className={`w-full flex justify-center align-middle text-[0.9rem] py-4 ${!(num % 2) ? "font-bold" : null}`}
         onClick={() => {
           if (num < 2) {
             dispatch(setNumber(0));
@@ -19,7 +19,7 @@ export default function TabBar(): JSX.Element {
         {num < 2 ? "추천" : "내 글"}
       </div>
       <div
-        className={`w-full flex justify-center align-middle text-[0.9rem] ${num % 2 ? "font-bold" : null}`}
+        className={`w-full flex justify-center align-middle text-[0.9rem] py-4 ${num % 2 ? "font-bold" : null}`}
         onClick={() => {
           if (num < 2) {
             dispatch(setNumber(1));
