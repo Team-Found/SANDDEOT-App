@@ -1,5 +1,7 @@
 import { Sidebaritemicon5 } from "@assets/img/Sidebaritemicon5";
 import { Link, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setNumber, RootState } from "../utils/store";
 
 interface Props {
   sidebarTitle: string;
@@ -14,10 +16,18 @@ export const SidebarItem = ({
   icon = <Sidebaritemicon5 className="!relative !w-6 !h-6" color="#F5F5F5" />,
   link,
 }: Props): JSX.Element => {
+  const dispatch = useDispatch();
   const location = useLocation();
   return (
     <Link to={link} className="w-full">
       <div
+        onClick={() => {
+          if (sidebarTitle == "홈") {
+            dispatch(setNumber(0));
+          } else {
+            dispatch(setNumber(2));
+          }
+        }}
         className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-lg relative ${
           location.pathname.split("/")[1] !== link.split("/")[1]
             ? "bg-variable-collection-primarybg"
