@@ -6,12 +6,14 @@ interface Props {
   blogTitle: string;
   property1?: "variant-2" | "default";
   followProperty1: "variant-2" | "default";
+  imageUri?: string;
 }
 
 export const RssBlock = ({
-  blogTitle = "Obtuse의 테크 블로그",
+  blogTitle = "",
   property1 = "default",
   followProperty1 = "default",
+  imageUri,
 }: Props): JSX.Element => {
   return (
     <div
@@ -21,7 +23,10 @@ export const RssBlock = ({
         <>
           <div className="flex items-center gap-2 relative flex-1 grow">
             <div
-              className={`relative w-[30px] h-[30px] rounded-[999px] bg-[url(/static/img/frame-60-5.png)] bg-cover bg-[50%_50%] `}
+              className="relative w-[30px] h-[30px] rounded-[999px] bg-cover bg-[50%_50%]"
+              style={{
+                backgroundImage: `url(${imageUri})`,
+              }}
             />
             <div
               className={`relative flex-1 [font-family:'Pretendard_Variable-Medium',Helvetica] font-medium text-white text-xs tracking-[0] leading-[normal] overflow-hidden text-ellipsis [display:-webkit-box] [-webkit-line-clamp:1] [-webkit-box-orient:vertical]`}
