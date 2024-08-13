@@ -1,11 +1,11 @@
 import db from "../../db";
 
-export function rssEdit(
+const edit = (
   RSSID: number,
   RSSURL?: string,
   RSSName?: string,
   RSSImageUrl?: string,
-): Promise<void> {
+): Promise<void> => {
   return new Promise((resolve, reject) => {
     console.log(
       `UPDATE RSS SET ${RSSURL ? "RSSURL = ?," : ""} ${RSSName ? "RSSName = ?," : ""} ${RSSImageUrl ? "RSSImageUrl = ?," : ""} WHERE RSSID = ?`,
@@ -25,7 +25,9 @@ export function rssEdit(
       },
     );
   });
-}
+};
+
+export default edit;
 
 //test code
 

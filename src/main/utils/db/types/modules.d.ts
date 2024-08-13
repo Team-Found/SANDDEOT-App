@@ -6,6 +6,7 @@ import { LearnAddEdit } from "../../types/Learn";
 import { Learn, LearnAnalytics } from "../../types/Learn";
 import LearnEdit from "./learnEdit";
 import { LeanEdit } from "../../types/Learn";
+import { RSS } from "../../types/Rss";
 import WordDetail from "../../types/WordDetail";
 interface Modules {
 article: {
@@ -34,6 +35,16 @@ learn: {
     analytics(anStartDate: Date = new Date(0), anEndDate: Date = new Date(),): Promise<LearnAnalytics[]>;
 
     edit(learnID?: number): Promise<LeanEdit[]>;
+
+};
+rss: {
+    add(rss: RSS): Promise<void>;
+
+    edit(RSSID: number, RSSURL?: string, RSSName?: string, RSSImageUrl?: string,): Promise<void>;
+
+    list(): Promise<RSS[]>;
+
+    remove(RSSID: number): Promise<void>;
 
 };
 word: {

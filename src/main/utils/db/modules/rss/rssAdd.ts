@@ -1,7 +1,7 @@
 import db from "../../db";
 import { RSS } from "../../types/Rss";
 
-export default function rssAdd(rss: RSS): Promise<void> {
+const add = (rss: RSS): Promise<void> => {
   const sql =
     "INSERT INTO RSS (RSSID, RSSURL, RSSName, RSSImageUrl) VALUES (?, ?, ?, ?)";
   return new Promise((resolve, reject) => {
@@ -18,7 +18,9 @@ export default function rssAdd(rss: RSS): Promise<void> {
       },
     );
   });
-}
+};
+
+export default add;
 
 // test code
 

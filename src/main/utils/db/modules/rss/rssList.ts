@@ -1,7 +1,7 @@
 import db from "../../db";
 import { RSS } from "../../types/Rss";
 
-export default function rssList(): Promise<RSS[]> {
+const list = (): Promise<RSS[]> => {
   return new Promise((resolve, reject) => {
     db.all("SELECT * FROM RSS", (err, rows: RSS[]) => {
       if (err) {
@@ -12,7 +12,9 @@ export default function rssList(): Promise<RSS[]> {
       }
     });
   });
-}
+};
+
+export default list;
 
 // test code
 

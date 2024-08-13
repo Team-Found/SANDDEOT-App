@@ -1,4 +1,4 @@
-import FeedSideBar from "@renderer/components/Feed/FeedSideBar";
+import FeedSideBar from "@renderer/components/Feed/FeedSideBar/FeedSideBar";
 import PostList from "@renderer/components/Feed/Post/PostList";
 import { Outlet } from "react-router-dom";
 import Root from "./Root";

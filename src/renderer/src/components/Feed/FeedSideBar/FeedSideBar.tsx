@@ -1,9 +1,10 @@
 import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { RssBlock } from "./RssBlock";
-import search from "./search.svg";
+import { RssBlock } from "../RssBlock";
+import search from "@assets/img/search.svg";
 import ReactDOM from "react-dom";
 import Modal from "react-modal";
+import FollowedRSSList from "./FollowedRSSList";
 
 const customStyles = {
   content: {
@@ -19,21 +20,21 @@ const customStyles = {
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement("#root");
 
-function PromptModal() {
+function PromptModal(): JSX.Element {
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [inputValue, setInputValue] = useState("");
 
-  function openModal() {
+  function openModal(): void {
     setIsOpen(true);
   }
 
-  function afterOpenModal() {
+  function afterOpenModal(): void {
     // references are now sync'd and can be accessed.
     subtitle.style.color = "#f00";
   }
 
-  function closeModal() {
+  function closeModal(): void {
     setIsOpen(false);
   }
   return (
@@ -94,12 +95,7 @@ const FrameWrapper = (): JSX.Element => {
               구독한 RSS
             </div>
             <div className="flex flex-col items-start gap-0 self-stretch w-full flex-[0_0_auto] box-border">
-              <RssBlock
-                blogTitle="Obtuse의 테크 블로그"
-                // divClassName="!text-variable-collection-primarytext"
-                followProperty1="variant-2"
-                property1="default"
-              />
+              <FollowedRSSList />
               <PromptModal />
             </div>
           </div>
