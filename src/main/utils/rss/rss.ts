@@ -42,9 +42,29 @@ export async function getRssFeedsItems(urls: string[]): Promise<Parser.Item[]> {
   return items;
 }
 
-getRssFeedsItems(["https://www.reddit.com/.rss"]).then((items) => {
-  console.log(items);
-});
+export async function getRssFeedsItemsAfterDatetime(
+  urls: string[],
+  datetime: Date,
+): Promise<Parser.Item[]> {
+  const items = await getRssFeedsItems(urls);
+  return items.filter((item) => {
+    return new Date(item.isoDate as string) > datetime;
+  });
+}
+
+const ISODatetoDate = (isoDate: string): Date => {
+  return new Date(isoDate);
+};
+const ISODatetoUnix = (isoDate: string): number => {
+  return Math.floor(ISODatetoDate(isoDate).getTime() / 1000);
+};
+
+
+
+
+// getRssFeedsItems(["https://www.reddit.com/.rss"]).then((items) => {
+//   console.log(items);
+// });
 
 // getRssFeed("https://www.reddit.com/.rss").then((feed) => {
 //   console.log(feed.title);

@@ -1,3 +1,5 @@
+import db from "../../../db";
+
 const add = async (
   bodyID: number,
   RSSID: number,
@@ -8,7 +10,7 @@ const add = async (
   author: string,
 ): Promise<void> => {
   const query = `
-    INSERT INTO rssArticles (bodyID, RSSID, title, date, body, chat, author)
+    INSERT INTO rssArticles (articleID, RSSID, title, date, body, chat, author)
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
   return new Promise((resolve, reject) => {
@@ -23,3 +25,5 @@ const add = async (
     });
   });
 };
+
+export default add;
