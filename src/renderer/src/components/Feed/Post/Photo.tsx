@@ -9,7 +9,8 @@ const PhotoCollage: React.FC<PhotoCollageProps> = ({ photos }) => {
   const [showExtraPhotosModal, setShowExtraPhotosModal] =
     useState<boolean>(false);
 
-  const handleExtraPhotosClick = () => {
+  const handleExtraPhotosClick = (e) => {
+    e.preventDefault();
     setShowExtraPhotosModal(true);
   };
 
@@ -23,7 +24,10 @@ const PhotoCollage: React.FC<PhotoCollageProps> = ({ photos }) => {
             src={photos[0]}
             alt="1"
             className="w-full h-full object-cover cursor-pointer"
-            onClick={() => setSelectedPhoto(photos[0])}
+            onClick={(e) => {
+              e.preventDefault();
+              setSelectedPhoto(photos[0]);
+            }}
           />
         </div>
       );
@@ -38,7 +42,10 @@ const PhotoCollage: React.FC<PhotoCollageProps> = ({ photos }) => {
                 src={photo}
                 alt={`Photo ${index + 1}`}
                 className="w-full h-full object-cover cursor-pointer"
-                onClick={() => setSelectedPhoto(photo)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedPhoto(photo);
+                }}
               />
             </div>
           ))}
@@ -54,7 +61,10 @@ const PhotoCollage: React.FC<PhotoCollageProps> = ({ photos }) => {
               src={photos[0]}
               alt="Photo 1"
               className="h-full w-full object-cover cursor-pointer"
-              onClick={() => setSelectedPhoto(photos[0])}
+              onClick={(e) => {
+                e.preventDefault();
+                setSelectedPhoto(photos[0]);
+              }}
             />
           </div>
           <div className="flex-1 flex flex-col gap-2 h-60">
@@ -67,7 +77,10 @@ const PhotoCollage: React.FC<PhotoCollageProps> = ({ photos }) => {
                   src={photo}
                   alt={`Photo ${index + 2}`}
                   className="h-full w-full object-cover cursor-pointer"
-                  onClick={() => setSelectedPhoto(photo)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedPhoto(photo);
+                  }}
                 />
               </div>
             ))}
@@ -84,7 +97,10 @@ const PhotoCollage: React.FC<PhotoCollageProps> = ({ photos }) => {
               src={photos[0]}
               alt="Photo 1"
               className="h-full w-full object-cover cursor-pointer"
-              onClick={() => setSelectedPhoto(photos[0])}
+              onClick={(e) => {
+                e.preventDefault();
+                setSelectedPhoto(photos[0]);
+              }}
             />
           </div>
           <div className="flex-1 flex flex-col gap-2 h-60">
@@ -93,7 +109,10 @@ const PhotoCollage: React.FC<PhotoCollageProps> = ({ photos }) => {
                 src={photos[1]}
                 alt="Photo 2"
                 className="h-full w-full object-cover cursor-pointer"
-                onClick={() => setSelectedPhoto(photos[1])}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedPhoto(photos[1]);
+                }}
               />
             </div>
             <div className="relative flex-1 w-full h-1/2 rounded-lg overflow-hidden">
@@ -101,7 +120,10 @@ const PhotoCollage: React.FC<PhotoCollageProps> = ({ photos }) => {
                 src={photos[2]}
                 alt="Photo 3"
                 className="h-full w-full object-cover cursor-pointer"
-                onClick={() => setSelectedPhoto(photos[2])}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSelectedPhoto(photos[2]);
+                }}
               />
               <div
                 className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center text-white text-2xl cursor-pointer"
@@ -124,7 +146,10 @@ const PhotoCollage: React.FC<PhotoCollageProps> = ({ photos }) => {
       {selectedPhoto && (
         <div
           className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
-          onClick={() => setSelectedPhoto(null)}
+          onClick={(e) => {
+            e.preventDefault();
+            setSelectedPhoto(null);
+          }}
         >
           <img
             src={selectedPhoto}
@@ -136,7 +161,10 @@ const PhotoCollage: React.FC<PhotoCollageProps> = ({ photos }) => {
       {showExtraPhotosModal && (
         <div
           className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
-          onClick={() => setShowExtraPhotosModal(false)}
+          onClick={(e) => {
+            e.preventDefault();
+            setShowExtraPhotosModal(false);
+          }}
         >
           <div className="bg-black p-4 rounded-lg overflow-auto max-w-lg max-h-screen">
             <h2 className="text-xl font-bold mb-2">More Photos</h2>
@@ -147,7 +175,10 @@ const PhotoCollage: React.FC<PhotoCollageProps> = ({ photos }) => {
                   src={photo}
                   alt={`Extra Photo ${index + 1}`}
                   className="w-[calc(50%-0.25rem)] h-full object-cover cursor-pointer rounded-lg"
-                  onClick={() => setSelectedPhoto(photo)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSelectedPhoto(photo);
+                  }}
                   key={index}
                 />
                 // </div>

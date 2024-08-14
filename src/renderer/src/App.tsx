@@ -5,6 +5,7 @@ import Input from "@pages/Article/ArticleAddForm";
 import ErrorPage from "@pages/error";
 import Root from "@renderer/routes/Root";
 import Explore from "@pages/Explore";
+import Detail from "@pages/Detail";
 import Saved from "@pages/Saved";
 import Following from "@pages/Following";
 import { Outlet } from "react-router-dom";
@@ -42,6 +43,10 @@ const router = createHashRouter([
     path: "/",
     element: <Root />,
     children: [
+      {
+        path: "detail/:id",
+        element: <Detail />,
+      },
       {
         path: "ocr",
         element: <Ocr />,

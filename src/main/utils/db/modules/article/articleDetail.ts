@@ -2,7 +2,7 @@ import ArticleDetail from "../../types/ArticleDetail";
 import db from "../../db";
 // db.serialize(() => {
 const detail = (bodyID: number): Promise<ArticleDetail> => {
-  const sql = "SELECT * FROM Body WHERE bodyID = ?";
+  const sql = "SELECT * FROM RSSArticle WHERE bodyID = ?";
   return new Promise((resolve, reject) => {
     db.get(sql, [bodyID], (err, row: ArticleDetail) => {
       if (err) {

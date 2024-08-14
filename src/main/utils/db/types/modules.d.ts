@@ -39,8 +39,7 @@ learn: {
 };
 rss: {
   article: {
-      add(bodyID: number, RSSID: number, title: string, date: Date, body: string, chat: object, author: string,): Promise<void>;
-
+    
   };
     add(rss: RSS): Promise<void>;
 
