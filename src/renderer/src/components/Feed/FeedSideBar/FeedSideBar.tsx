@@ -7,6 +7,9 @@ import Modal from "react-modal";
 import FollowedRSSList from "./FollowedRSSList";
 
 const customStyles = {
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.4)",
+  },
   content: {
     top: "50%",
     left: "50%",
@@ -14,6 +17,10 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
+    backgroundColor: "var(--variable-collection-primarybg)",
+    border: "solid 1px var(--variable-collection-primaryBd)",
+    borderRadius: "22px",
+    padding: "10px",
   },
 };
 
@@ -32,6 +39,10 @@ function PromptModal(): JSX.Element {
   function afterOpenModal(): void {
     // references are now sync'd and can be accessed.
     subtitle.style.color = "#f00";
+  }
+  function insertRss(): void {
+    window.api.insertRss(inputValue);
+    closeModal();
   }
 
   function closeModal(): void {
@@ -63,7 +74,7 @@ function PromptModal(): JSX.Element {
           <button onClick={closeModal} className="bg-red-400">
             취소
           </button>
-          <button onClick={closeModal} className="bg-green-400">
+          <button onClick={insertRss} className="bg-green-400">
             확인
           </button>
         </div>

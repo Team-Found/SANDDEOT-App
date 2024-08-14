@@ -6,12 +6,16 @@
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta
       http-equiv="Content-Security-Policy"
-      content="default-src 'self'; 
-      script-src 'self' 'unsafe-eval' 'unsafe-inline'; 
-      style-src 'self' 
-      'unsafe-inline'; 
-      img-src * data:;
-      connect-src 'self' data: blob:; worker-src 'self' blob:;"
+      content="
+    default-src 'self'; 
+    script-src 'self' 'unsafe-eval' 'unsafe-inline' 'nodejs:';
+    style-src 'self' 'unsafe-inline'; 
+    img-src * data:; 
+    connect-src 'self' http://localhost:8000 data: blob:; 
+    worker-src 'self' blob:; 
+    frame-src 'self';
+    object-src 'none';
+  "
     />
   </head>
 
