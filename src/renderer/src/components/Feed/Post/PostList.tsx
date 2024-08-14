@@ -8,7 +8,7 @@ export default function PostList(): JSX.Element {
       blogName="obtuse의 테크 블로그"
       favicon=""
       date="2days ago"
-      bodyID={1}
+      articleID={1}
     />
   );
 }

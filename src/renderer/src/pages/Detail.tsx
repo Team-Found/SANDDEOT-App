@@ -7,15 +7,26 @@ export default function Detail(): JSX.Element {
     useState<Awaited<ReturnType<typeof window.dbApi.article.detail>>>();
 
   useEffect(() => {
-    window.dbApi.article.detail(Number(id)).then((data) => {
-      setArticle(data);
-      console.log(article);
-    });
-  }, []);
+    const fetchArticle = async () => {
+      try {
+        const data = await window.dbApi.article.detail(Number(id));
+        setArticle(data);
+      } catch (error) {
+        console.error("Error fetching article:", error);
+      }
+    };
+
+    fetchArticle();
+  }, [id]);
 
   return (
-    <>
-      <div>{article?.title}</div>
-    </>
+    <div className="prose prose-basic dark:prose-invert ">
+      <div>
+        <h1>{article?.title}</h1>
+      </div>
+      {article?.body && (
+        <div dangerouslySetInnerHTML={{ __html: article.body }} />
+      )}
+    </div>
   );
 }

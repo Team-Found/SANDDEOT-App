@@ -13,7 +13,7 @@ interface Modules {
 article: {
     add(title: string, date: Date, body: string, translated: string, origin: number, author: string, RSSID?: number,): Promise<number>;
 
-    detail(bodyID: number): Promise<ArticleDetail>;
+    detail(ArticleID: number): Promise<ArticleDetail>;
 
     list(startLevel: number = 1, endLevel: number = 6, categoryID?: number,): Promise<Article[]>;
 

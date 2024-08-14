@@ -8,10 +8,10 @@ export default function Post(props: {
   blogName: string;
   favicon: string;
   date: string;
-  bodyID: number;
+  articleID: number;
 }): JSX.Element {
   return (
-    <Link to={`/detail/${props.bodyID}`}>
+    <Link to={`/detail/${props.articleID}`}>
       <div className="self-stretch p-3.5 border-variable-collection-primaryBd border-[1px] rounded-lg justify-start items-start gap-6 inline-flex">
         <div className="grow shrink basis-0 flex-col justify-center items-start gap-2 inline-flex">
           <div className="self-stretch flex-col justify-start items-start flex">

@@ -1,10 +1,10 @@
 import ArticleDetail from "../../types/ArticleDetail";
 import db from "../../db";
 // db.serialize(() => {
-const detail = (bodyID: number): Promise<ArticleDetail> => {
-  const sql = "SELECT * FROM RSSArticle WHERE bodyID = ?";
+const detail = (ArticleID: number): Promise<ArticleDetail> => {
+  const sql = "SELECT * FROM RSSArticle WHERE ArticleID = ?";
   return new Promise((resolve, reject) => {
-    db.get(sql, [bodyID], (err, row: ArticleDetail) => {
+    db.get(sql, [ArticleID], (err, row: ArticleDetail) => {
       if (err) {
         console.error("SQL error:", err.message);
         reject();
@@ -12,7 +12,7 @@ const detail = (bodyID: number): Promise<ArticleDetail> => {
         // console.log("Article detail:", row);
         resolve(row);
       } else {
-        console.log(`No article found with bodyID ${bodyID}`);
+        console.log(`No article found with ArticleID ${ArticleID}`);
         reject();
       }
     });
