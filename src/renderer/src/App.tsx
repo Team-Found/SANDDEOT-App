@@ -1,26 +1,65 @@
 import HomeScreen from "@pages/Home";
 import { Ocr } from "@pages/Article/OCR";
 import Article from "@pages/Article/Article";
+import Input from "@pages/Article/ArticleAddForm";
 import ErrorPage from "@pages/error";
 import Root from "@renderer/routes/Root";
 import Explore from "@pages/Explore";
+import Detail from "@pages/Detail";
+import Saved from "@pages/Saved";
+import Following from "@pages/Following";
 import { Outlet } from "react-router-dom";
 // import { Routes, Route } from "react-router-dom";
 import { createHashRouter, RouterProvider } from "react-router-dom";
+import { ThemeProvider } from "@components/theme-provider";
+import Feed from "@pages/Feed";
+import FeedRouter from "./routes/Feed";
 
 const router = createHashRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <FeedRouter />,
     errorElement: <ErrorPage />,
     children: [
       {
         index: true,
-        element: <HomeScreen />,
+        element: <Feed />,
       },
       {
-        path: "explore",
-        element: <Explore />,
+        path: "following",
+        element: <Following />,
+      },
+      // {
+      //   path: "search",
+      //   element: <Search />,
+      // },
+      {
+        path: "saved",
+        element: <Saved />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      {
+        path: "detail/:id",
+        element: <Detail />,
+      },
+      {
+        path: "ocr",
+        element: <Ocr />,
+      },
+      {
+        path: "editor",
+        element: <Outlet />,
+        children: [
+          {
+            index: true,
+            element: <Input />,
+          },
+        ],
       },
       {
         path: "article",
@@ -30,22 +69,20 @@ const router = createHashRouter([
             index: true,
             element: <Article />,
           },
-          {
-            path: "ocr",
-            element: <Ocr />,
-          },
         ],
-      },
-      {
-        path: "word",
-        element: <div className="text-white">wordwordword</div>,
       },
     ],
   },
 ]);
 
 function App(): JSX.Element {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <RouterProvider router={router} />
+      </ThemeProvider>
+    </>
+  );
 }
 
 export default App;

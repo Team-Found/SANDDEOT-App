@@ -5,9 +5,16 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   main: {
     plugins: [externalizeDepsPlugin()],
+    envPrefix: "VITE_",
   },
   preload: {
     plugins: [externalizeDepsPlugin()],
+    build: {
+      lib: {
+        entry: resolve(__dirname, "src/preload/index.ts"),
+        formats: ["cjs"],
+      },
+    },
   },
   renderer: {
     resolve: {
@@ -17,6 +24,7 @@ export default defineConfig({
         "@assets": resolve("src/renderer/src/assets"),
         "@pages": resolve("src/renderer/src/pages"),
         "@routes": resolve("src/renderer/src/routes"),
+        "@": resolve("src/renderer/src/@"),
       },
     },
     plugins: [react()],

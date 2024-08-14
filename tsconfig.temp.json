@@ -1,0 +1,63 @@
+// {
+//   "compilerOptions": {
+//     "target": "ES2020",            // Modern JavaScript features
+//     "module": "ESNext",          // Module system used by Node.js
+//     "lib": ["ES2020"],             // Library files to include in the compilation
+//     "strict": true,                // Enable all strict type-checking options
+//     "esModuleInterop": true,       // Allow default imports from modules with no default export
+//     "skipLibCheck": true,          // Skip type checking of declaration files (optional)
+//     "forceConsistentCasingInFileNames": true, // Ensure consistent casing of filenames
+//     "outDir": "./dist",            // Output directory for compiled files
+//     "rootDir": "./src",            // Root directory of source files
+//     "resolveJsonModule": true,     // Allow importing JSON modules
+//     "moduleResolution": "node",    // Module resolution strategy
+//     "baseUrl": ".",                // Base directory to resolve non-relative module names
+//     "paths": {
+//       "*": ["node_modules/*"]      // Path mappings
+//     }
+//   },
+//   "include": [
+//     "src/**/*.ts"                  // Include all TypeScript files in the src directory
+//   ],
+//   "exclude": [
+//     "node_modules",                // Exclude node_modules directory
+//     "**/*.test.ts"                 // Exclude test files if any
+//   ],
+//   "ts-node": {
+//     "esm": true
+//   }
+// }
+
+
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "rootDir": "./src",
+    "outDir": "./.ts-node",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "declaration": false,
+    "sourceMap": true,
+    "inlineSources": true,
+    "types": [
+      "node"
+    ],
+    "stripInternal": true,
+    "incremental": true,
+    "skipLibCheck": true,
+    "importsNotUsedAsValues": "error",
+    "inlineSourceMap": false,
+    "noEmit": false
+  },
+  "ts-node": {
+    "cwd": "/",
+    "projectSearchDir": "/",
+    "require": [],
+    "project": "/tssconfig.temp.json"
+  }
+}
