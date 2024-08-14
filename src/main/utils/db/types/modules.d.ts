@@ -6,6 +6,7 @@ import { LearnAddEdit } from "../../types/Learn";
 import { Learn, LearnAnalytics } from "../../types/Learn";
 import LearnEdit from "./learnEdit";
 import { LeanEdit } from "../../types/Learn";
+import db from "../../../db";
 import { RSS } from "../../types/Rss";
 import WordDetail from "../../types/WordDetail";
 interface Modules {
@@ -42,6 +43,8 @@ rss: {
       add(bodyID: number, RSSID: number, title: string, date: Date, body: string, chat: object, author: string,): Promise<void>;
 
   };
+    getLastRssUpdate(): Promise<Date>;
+
     add(rss: RSS): Promise<void>;
 
     edit(RSSID: number, RSSURL?: string, RSSName?: string, RSSImageUrl?: string,): Promise<void>;

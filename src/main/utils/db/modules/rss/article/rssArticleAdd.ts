@@ -10,7 +10,7 @@ const add = async (
   author: string,
 ): Promise<void> => {
   const query = `
-    INSERT INTO rssArticles (bodyID, RSSID, title, date, body, chat, author)
+    INSERT INTO rssArticles (articleID, RSSID, title, date, body, chat, author)
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
   return new Promise((resolve, reject) => {
