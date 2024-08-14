@@ -1,3 +1,5 @@
+import db from "../../../db";
+
 const add = async (
   bodyID: number,
   RSSID: number,
@@ -23,3 +25,5 @@ const add = async (
     });
   });
 };
+
+export default add;
