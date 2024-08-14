@@ -1,7 +1,16 @@
-import { app, shell, BrowserWindow, ipcMain, session } from "electron";
+import {
+  app,
+  shell,
+  BrowserWindow,
+  ipcMain,
+  // session,
+  Menu,
+  Tray,
+} from "electron";
 import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
+import trayIcon from "../../resources/trayIcon.png?asset";
 
 // process.env.ELECTRON_RENDERER_URL
 
@@ -50,6 +59,19 @@ function createWindow(): void {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
+  const tray = new Tray(trayIcon);
+  const contextMenu = Menu.buildFromTemplate([
+    {
+      label: "산뜻 앱 보이기",
+      click: (): void => createWindow(),
+      type: "normal",
+    },
+    { type: "separator" },
+    { label: "종료", click: (): void => app.quit(), type: "normal" },
+  ]);
+  tray.setToolTip("산뜻");
+  tray.setContextMenu(contextMenu);
+
   // Set app user model id for windows
   electronApp.setAppUserModelId("com.electron");
 
@@ -100,3 +122,5 @@ app.on("window-all-closed", app.dock.hide);
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
+
+// background process
