@@ -8,6 +8,7 @@ interface Props {
   className: string;
   icon: JSX.Element;
   link: string;
+  link2: string;
 }
 
 export const SidebarItem = ({
@@ -15,6 +16,7 @@ export const SidebarItem = ({
   className,
   icon = <Sidebaritemicon5 className="!relative !w-6 !h-6" color="#F5F5F5" />,
   link,
+  link2,
 }: Props): JSX.Element => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -29,9 +31,10 @@ export const SidebarItem = ({
           }
         }}
         className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-lg relative ${
-          location.pathname.split("/")[1] !== link.split("/")[1]
-            ? "bg-variable-collection-primarybg"
-            : "bg-variable-collection-secondarybg"
+          location.pathname.split("/")[1] == link.split("/")[1] ||
+          location.pathname.split("/")[1] == link2.split("/")[1]
+            ? "bg-variable-collection-secondarybg"
+            : "bg-variable-collection-primarybg"
         } ${className}`}
       >
         <div className="flex items-center grow gap-2 flex-1 relative">

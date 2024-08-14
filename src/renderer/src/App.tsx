@@ -1,13 +1,11 @@
-import HomeScreen from "@pages/Home";
 import { Ocr } from "@pages/Article/OCR";
-import Article from "@pages/Article/Article";
 import Input from "@pages/Article/ArticleAddForm";
 import ErrorPage from "@pages/error";
 import Root from "@renderer/routes/Root";
-import Explore from "@pages/Explore";
 import Detail from "@pages/Detail";
 import Saved from "@pages/Saved";
 import Following from "@pages/Following";
+import Mine from "@pages/Mine";
 import { Outlet } from "react-router-dom";
 // import { Routes, Route } from "react-router-dom";
 import { createHashRouter, RouterProvider } from "react-router-dom";
@@ -37,6 +35,10 @@ const router = createHashRouter([
         path: "saved",
         element: <Saved />,
       },
+      {
+        path: "mine",
+        element: <Mine />,
+      },
     ],
   },
   {
@@ -58,16 +60,6 @@ const router = createHashRouter([
           {
             index: true,
             element: <Input />,
-          },
-        ],
-      },
-      {
-        path: "article",
-        element: <Outlet />,
-        children: [
-          {
-            index: true,
-            element: <Article />,
           },
         ],
       },

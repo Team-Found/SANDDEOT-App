@@ -116,12 +116,14 @@ export const Sidebar = (): JSX.Element => {
             icon={<Sidebaritemicon5 />}
             sidebarTitle="홈"
             link="/"
+            link2="/following"
           />
           <SidebarItem
             className="!self-stretch !flex-[0_0_auto] sideBar"
             icon={<Sidebaritemicon1 />}
             sidebarTitle="저장됨"
             link="/saved"
+            link2="/mine"
           />
         </div>
         <Dropdown />
