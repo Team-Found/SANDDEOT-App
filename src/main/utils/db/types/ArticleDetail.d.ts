@@ -1,5 +1,5 @@
 export default interface ArticleDetail {
-  ArticleID: number;
+  articleID: number;
   title: string;
   date: number;
   body: string;

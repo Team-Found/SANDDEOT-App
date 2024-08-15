@@ -25,7 +25,7 @@ export default function Mine(): JSX.Element {
       {list?.map((a, i) => {
         console.log(a);
         return (
-          <Link to={`/detail2/${a.articleID}`}>
+          <Link to={`/detail2/${a.articleID}`} key={i}>
             <Post
               title={a.title}
               description={a.body}
