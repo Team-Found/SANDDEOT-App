@@ -124,3 +124,34 @@ app.on("window-all-closed", app.dock.hide);
 // code. You can also put them in separate files and require them here.
 
 // background process
+
+import { getRssFeedsItemsAfterDatetime } from "./utils/rss/rss";
+import lastUpdate from "./utils/db/modules/rss/lastUpdate";
+import db from "./utils/db/index";
+
+const dbApi = db;
+
+const updateRSSArticleDB = async (): Promise<Array<object>> => {
+  const lastUpdateDate = await lastUpdate();
+  const RSSs = await dbApi.rss.list();
+  console.log(RSSs);
+  const items = await getRssFeedsItemsAfterDatetime(RSSs, lastUpdateDate);
+  items.map(async (item) => {
+    dbApi.rss.article.add(
+      item.RSSID,
+      item.title,
+      new Date(item.isoDate),
+      item.content,
+      {},
+    );
+  });
+  console.log(items);
+};
+
+const background = setInterval(() => {
+  updateRSSArticleDB();
+}, 1000 * 10); // 10 sec
+
+app.on("before-quit", () => {
+  clearInterval(background);
+});

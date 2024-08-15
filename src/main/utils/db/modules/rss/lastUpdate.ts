@@ -1,8 +1,8 @@
 import db from "../../db";
 
-const getLastRssUpdate = (): Promise<Date> => {
-  const sql = "SELECT MAX(date) as date FROM Body";
-  return new Promise((resolve, reject) => {
+const lastUpdate = (): Promise<Date> => {
+  const sql = "SELECT MAX(date) as date FROM RSSArticle";
+  return new Promise((resolve) => {
     db.get(sql, (err, row: { date: number }) => {
       if (err) {
         console.error("SQL error:", err.message);
@@ -13,4 +13,4 @@ const getLastRssUpdate = (): Promise<Date> => {
   });
 };
 
-export default getLastRssUpdate;
+export default lastUpdate;
