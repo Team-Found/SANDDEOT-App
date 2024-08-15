@@ -3,7 +3,6 @@ import { electronAPI } from "@electron-toolkit/preload";
 import db from "../main/utils/db/index.ts";
 import fs from "fs";
 import insertRss from "../main/utils/api/modules/insert/rss.ts";
-import addUserRSS from "../main/utils/api/modules/insert/userArticle.ts";
 // import path from "path";
 
 // const path = require("node:path");
@@ -26,7 +25,6 @@ const api = {
     return "";
   },
   insertRss,
-  addUserRSS,
 };
 
 // Use `contextBridge` APIs to expose Electron APIs to

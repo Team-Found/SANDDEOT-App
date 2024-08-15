@@ -90,7 +90,7 @@ function ButtonDemo(): JSX.Element {
     <Button
       className="px-8"
       onClick={() => {
-        window.dbApi.article.add(title, new Date(), body, "", 2, "나");
+        window.dbApi.article.addUserArticle(title, new Date(), body);
       }}
     >
       등록

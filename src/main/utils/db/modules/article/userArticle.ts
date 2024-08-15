@@ -1,12 +1,12 @@
-import db from "../../../db/db";
+import db from "../../db";
 
-const addUserRSS = async (
+const addUserArticle = async (
   title: string,
   date: Date,
   body: string,
 ): Promise<void> => {
   const query = `
-    INSERT INTO rssArticles (title, date, body)
+    INSERT INTO UserArticle (title, date, body)
     VALUES (?, ?, ?)
   `;
   const unixTime = Math.floor(date.getTime() / 1000);
@@ -23,4 +23,4 @@ const addUserRSS = async (
   });
 };
 
-export default addUserRSS;
+export default addUserArticle;
