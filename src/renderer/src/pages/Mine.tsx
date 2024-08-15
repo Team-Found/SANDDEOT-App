@@ -29,7 +29,7 @@ export default function Mine(): JSX.Element {
             <Post
               title={a.title}
               description={a.body}
-              rssID={2}
+              rssID={0}
               date={a.date}
               articleID={a.articleID}
             />

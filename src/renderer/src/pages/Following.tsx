@@ -26,7 +26,7 @@ export default function Following(): JSX.Element {
             <Post
               title={a.title}
               description={a.body}
-              rssID={2}
+              rssID={a.RSSID}
               date={a.date}
               articleID={a.articleID}
             />
