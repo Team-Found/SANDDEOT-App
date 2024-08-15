@@ -35,6 +35,7 @@
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.0",
     "@reduxjs/toolkit": "^2.2.7",
+    "@tailwindcss/line-clamp": "^0.4.4",
     "@types/react-modal": "^3.16.3",
     "@types/react-redux": "^7.1.33",
     "@types/sqlite3": "^3.1.11",

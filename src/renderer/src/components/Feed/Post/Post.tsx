@@ -37,7 +37,7 @@ export default function Post(props: {
                   <div className="self-stretch text-white text-base font-semibold leading-snug">
                     {props.title}
                   </div>
-                  <div className="self-stretch text-neutral-400 text-xs font-normal leading-none">
+                  <div className="self-stretch text-neutral-400 text-xs font-normal leading-none whitespace-normal break-all">
                     {props.description}
                   </div>
                 </div>

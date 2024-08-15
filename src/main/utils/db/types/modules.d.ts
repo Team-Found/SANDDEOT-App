@@ -23,6 +23,8 @@ article: {
 
     addUserArticle(title: string, date: Date, body: string,): Promise<void>;
 
+    userArticleList(): Promise<Article[]>;
+
 };
 category: {
     add(categoryName: string): Promise<number>;
