@@ -22,6 +22,11 @@ export const Detail3 = (): JSX.Element => {
 
   return (
     <div className="flex">
+      {/* <iframe
+        src="https://obtuse.kr"
+        className="w-3/4 h-3/4 border-2 border-gray-300"
+        title="Example Site"
+      /> */}
       <div className="prose prose-basic dark:prose-invert min-w-full">
         {article?.body && (
           <div dangerouslySetInnerHTML={{ __html: article.body }} />
