@@ -2,7 +2,7 @@ import db from "../../db";
 import Article from "../../types/Article";
 
 const rssArticleList = (): Promise<Article[]> => {
-  const sql = `SELECT articleID, title, date, body FROM RSSArticle WHERE RSSID IN (SELECT RSSID FROM RSS)`;
+  const sql = `SELECT articleID, RSSID, title, date, body FROM RSSArticle WHERE RSSID IN (SELECT RSSID FROM RSS)`;
   return new Promise((resolve, reject) => {
     db.all(sql, (err, rows: Article[]) => {
       if (err) {

@@ -21,14 +21,12 @@ export default function Following(): JSX.Element {
   return (
     <div>
       {list?.map((a, i) => {
-        console.log(a);
         return (
           <Link to={`/detail/${a.articleID}`} key={i}>
             <Post
               title={a.title}
               description={a.body}
-              blogName="나"
-              favicon="#"
+              rssID={2}
               date={a.date}
               articleID={a.articleID}
             />

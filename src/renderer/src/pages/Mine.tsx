@@ -20,17 +20,16 @@ export default function Mine(): JSX.Element {
     articleList();
   }, []);
 
+  const reverseList = list ? [...list].reverse() : null;
   return (
     <div>
-      {list?.map((a, i) => {
-        console.log(a);
+      {reverseList?.map((a, i) => {
         return (
           <Link to={`/detail2/${a.articleID}`} key={i}>
             <Post
               title={a.title}
               description={a.body}
-              blogName="나"
-              favicon="#"
+              rssID={2}
               date={a.date}
               articleID={a.articleID}
             />

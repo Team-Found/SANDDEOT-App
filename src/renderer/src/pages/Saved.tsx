@@ -23,14 +23,12 @@ export default function Saved(): JSX.Element {
   return (
     <div>
       {list?.map((a, i) => {
-        console.log(a);
         return (
           <Link to={`/detail3/${a.articleID}`} key={i}>
             <Post
               title={a.title}
               description={a.body}
-              blogName="나"
-              favicon="#"
+              rssID={a.RSSID}
               date={a.date}
               articleID={a.articleID}
             />

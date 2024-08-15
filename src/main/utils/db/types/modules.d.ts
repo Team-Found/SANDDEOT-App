@@ -1,13 +1,13 @@
 import db from "../../db";
 import ArticleDetail from "../../types/ArticleDetail";
 import Article from "../../types/Article";
+import { RSS } from "../../types/Rss";
 import Category from "../../types/Category";
 import { LearnAddEdit } from "../../types/Learn";
 import { Learn, LearnAnalytics } from "../../types/Learn";
 import LearnEdit from "./learnEdit";
 import { LeanEdit } from "../../types/Learn";
 import db from "../../../db";
-import { RSS } from "../../types/Rss";
 import WordDetail from "../../types/WordDetail";
 interface Modules {
 article: {
@@ -22,6 +22,8 @@ article: {
     update(bodyID: number, option: { title?: string; body?: string; image?: Blob; translated?: string; feedback?: string; score?: number; editDate?: Date; IMPP?: string; level?: number; },): Promise<number>;
 
     rssArticleList(): Promise<Article[]>;
+
+    RSSDetail(RSSID: number): Promise<RSS>;
 
     detail3(articleID: number): Promise<ArticleDetail>;
 

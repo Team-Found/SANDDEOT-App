@@ -1,29 +1,45 @@
 import { Link } from "react-router-dom";
 import Photo from "./Photo";
 import PostActionBlock from "./PostActionBlock";
+import { useEffect, useState } from "react";
 
 export default function Post(props: {
   title: string;
   description: string;
-  blogName: string;
-  favicon: string;
+  rssID: number;
   date: string;
   articleID: number;
 }): JSX.Element {
   function removeHTMLTags(str) {
     return str.replace(/<\/?[^>]+(>|$)/g, "");
   }
-  return (
+
+  const [rss, setRss] =
+    useState<Awaited<ReturnType<typeof window.dbApi.article.RSSDetail>>>();
+  useEffect(() => {
+    const articleList = async () => {
+      try {
+        console.log(props.rssID);
+        const data = await window.dbApi.article.RSSDetail(props.rssID);
+        setRss(data);
+        console.log(data);
+      } catch (error) {
+        console.log("Mine page error", error);
+      }
+    };
+    articleList();
+  }, []);
+  return rss ? (
     <div className="self-stretch p-3.5 border-variable-collection-primaryBd border-[1px] rounded-lg justify-start items-start gap-6 inline-flex">
       <div className="grow shrink basis-0 flex-col justify-center items-start gap-2 inline-flex">
         <div className="self-stretch flex-col justify-start items-start flex">
           <div className="w-96 justify-between items-center inline-flex">
             <div className="justify-center items-center gap-1 flex">
               <div className="w-3.5 h-3.5 rounded-full justify-center items-center flex overflow-clip">
-                <img className="w-10 h-10" src={props.favicon} />
+                <img className="w-10 h-10" src={rss[0].RSSImageURL} />
               </div>
               <div className="text-gray-200 text-xs font-medium leading-3">
-                {props.blogName}
+                {rss[0].RSSName}
               </div>
               <div className="text-stone-300 text-xs font-normal leading-3">
                 {props.date}
@@ -39,7 +55,7 @@ export default function Post(props: {
                 <div className="self-stretch text-white text-base font-semibold leading-snug">
                   {props.title}
                 </div>
-                <div className="self-stretch text-neutral-400 text-xs font-normal leading-none whitespace-normal break-all">
+                <div className="self-stretch text-neutral-400 text-xs font-normal leading-none whitespace-normal break-all line-clamp-3">
                   {removeHTMLTags(props.description)}
                 </div>
               </div>
@@ -68,5 +84,7 @@ export default function Post(props: {
         <PostActionBlock />
       </div>
     </div>
+  ) : (
+    <></>
   );
 }
