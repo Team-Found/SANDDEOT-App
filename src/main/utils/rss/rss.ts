@@ -1,5 +1,5 @@
 import Parser from "rss-parser";
-
+import { RSS } from "../db/types/Rss";
 // type CustomFeed = { foo: string };
 // type CustomItem = { bar: number };
 
@@ -17,18 +17,19 @@ export type Feed = {
   [key: string]: any;
 } & Parser.Output<{ [key: string]: any }>;
 
-export async function getRssFeed(url: string): Promise<Feed> {
-  const feed = await parser.parseURL(url);
+export async function getRssFeed(rss: RSS): Promise<Feed> {
+  const feed = await parser.parseURL(rss.RSSURL);
+  feed["RSSID"] = rss.RSSID;
   return feed;
 }
 
-export async function getRssFeeds(urls: string[]): Promise<Feed[]> {
-  const feeds = await Promise.all(urls.map((url) => getRssFeed(url)));
+export async function getRssFeeds(rsss: RSS[]): Promise<Feed[]> {
+  const feeds = await Promise.all(rsss.map((rss) => getRssFeed(rss)));
   return feeds;
 }
 
-export async function getRssFeedsItems(urls: string[]): Promise<Parser.Item[]> {
-  const feeds = await getRssFeeds(urls);
+export async function getRssFeedsItems(rsss: RSS[]): Promise<Parser.Item[]> {
+  const feeds = await getRssFeeds(rsss);
 
   //order by time
   const items = feeds.flatMap((feed) => feed.items);
@@ -43,28 +44,25 @@ export async function getRssFeedsItems(urls: string[]): Promise<Parser.Item[]> {
 }
 
 export async function getRssFeedsItemsAfterDatetime(
-  urls: string[],
+  rsss: RSS[],
   datetime: Date,
 ): Promise<Parser.Item[]> {
-  const items = await getRssFeedsItems(urls);
+  const items = await getRssFeedsItems(rsss);
   return items.filter((item) => {
-    return new Date(item.isoDate as string) > datetime;
+    return ISODatetoDate(item.isoDate) > datetime;
   });
 }
 
-const ISODatetoDate = (isoDate: string): Date => {
+const ISODatetoDate = (isoDate?: string): Date => {
   return new Date(isoDate);
 };
 const ISODatetoUnix = (isoDate: string): number => {
   return Math.floor(ISODatetoDate(isoDate).getTime() / 1000);
 };
 
-
-
-
-// getRssFeedsItems(["https://www.reddit.com/.rss"]).then((items) => {
-//   console.log(items);
-// });
+getRssFeedsItems(["https://www.reddit.com/.rss"]).then((items) => {
+  console.log(items);
+});
 
 // getRssFeed("https://www.reddit.com/.rss").then((feed) => {
 //   console.log(feed.title);
