@@ -23,6 +23,8 @@ article: {
 
     addUserArticle(title: string, date: Date, body: string,): Promise<void>;
 
+    detail2(articleID: number): Promise<ArticleDetail>;
+
     userArticleList(): Promise<Article[]>;
 
 };

@@ -3,6 +3,7 @@ import Input from "@pages/Article/ArticleAddForm";
 import ErrorPage from "@pages/error";
 import Root from "@renderer/routes/Root";
 import Detail from "@pages/Detail";
+import Detail2 from "@pages/Detail2";
 import Saved from "@pages/Saved";
 import Following from "@pages/Following";
 import Mine from "@pages/Mine";
@@ -48,6 +49,10 @@ const router = createHashRouter([
       {
         path: "detail/:id",
         element: <Detail />,
+      },
+      {
+        path: "detail2/:id",
+        element: <Detail2 />,
       },
       {
         path: "ocr",

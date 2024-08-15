@@ -14,61 +14,59 @@ export default function Post(props: {
     return str.replace(/<\/?[^>]+(>|$)/g, "");
   }
   return (
-    <Link to={`/detail/${props.articleID}`}>
-      <div className="self-stretch p-3.5 border-variable-collection-primaryBd border-[1px] rounded-lg justify-start items-start gap-6 inline-flex">
-        <div className="grow shrink basis-0 flex-col justify-center items-start gap-2 inline-flex">
-          <div className="self-stretch flex-col justify-start items-start flex">
-            <div className="w-96 justify-between items-center inline-flex">
-              <div className="justify-center items-center gap-1 flex">
-                <div className="w-3.5 h-3.5 rounded-full justify-center items-center flex overflow-clip">
-                  <img className="w-10 h-10" src={props.favicon} />
-                </div>
-                <div className="text-gray-200 text-xs font-medium leading-3">
-                  {props.blogName}
-                </div>
-                <div className="text-stone-300 text-xs font-normal leading-3">
-                  {props.date}
-                </div>
+    <div className="self-stretch p-3.5 border-variable-collection-primaryBd border-[1px] rounded-lg justify-start items-start gap-6 inline-flex">
+      <div className="grow shrink basis-0 flex-col justify-center items-start gap-2 inline-flex">
+        <div className="self-stretch flex-col justify-start items-start flex">
+          <div className="w-96 justify-between items-center inline-flex">
+            <div className="justify-center items-center gap-1 flex">
+              <div className="w-3.5 h-3.5 rounded-full justify-center items-center flex overflow-clip">
+                <img className="w-10 h-10" src={props.favicon} />
               </div>
-              <div className="opacity-0 justify-start items-center gap-1 flex">
-                <div className="w-4 h-4 py-0.5 justify-center items-center flex" />
+              <div className="text-gray-200 text-xs font-medium leading-3">
+                {props.blogName}
+              </div>
+              <div className="text-stone-300 text-xs font-normal leading-3">
+                {props.date}
               </div>
             </div>
-            <div className="self-stretch justify-start items-center inline-flex">
-              <div className="grow shrink basis-0 flex-col justify-center items-start gap-2.5 inline-flex">
-                <div className="self-stretch h-16 flex-col justify-start items-start gap-0.5 flex">
-                  <div className="self-stretch text-white text-base font-semibold leading-snug">
-                    {props.title}
-                  </div>
-                  <div className="self-stretch text-neutral-400 text-xs font-normal leading-none whitespace-normal break-all">
-                    {removeHTMLTags(props.description)}
-                  </div>
+            <div className="opacity-0 justify-start items-center gap-1 flex">
+              <div className="w-4 h-4 py-0.5 justify-center items-center flex" />
+            </div>
+          </div>
+          <div className="self-stretch justify-start items-center inline-flex">
+            <div className="grow shrink basis-0 flex-col justify-center items-start gap-2.5 inline-flex">
+              <div className="self-stretch h-16 flex-col justify-start items-start gap-0.5 flex">
+                <div className="self-stretch text-white text-base font-semibold leading-snug">
+                  {props.title}
                 </div>
+                <div className="self-stretch text-neutral-400 text-xs font-normal leading-none whitespace-normal break-all">
+                  {removeHTMLTags(props.description)}
+                </div>
+              </div>
 
-                <div className="self-stretch justify-start items-start gap-1.5 inline-flex w-full h-60">
-                  <Photo
-                    photos={[
-                      "https://pbs.twimg.com/media/GTyLq4la0AAXpet?format=jpg&name=large",
-                      "https://pbs.twimg.com/media/GTyLq4jbIAAJ_3G?format=jpg&name=large",
-                      "https://pbs.twimg.com/media/GTyLq4hbwAUpyNW?format=jpg&name=large",
-                      "https://pbs.twimg.com/media/GTyLq4jbwAAdZSZ?format=jpg&name=large",
-                      "https://pbs.twimg.com/media/GTyLq4la0AAXpet?format=jpg&name=large",
-                      "https://pbs.twimg.com/media/GTyLq4jbIAAJ_3G?format=jpg&name=large",
-                      "https://pbs.twimg.com/media/GTyLq4hbwAUpyNW?format=jpg&name=large",
-                      "https://pbs.twimg.com/media/GTyLq4jbwAAdZSZ?format=jpg&name=large",
-                      "https://pbs.twimg.com/media/GTyLq4la0AAXpet?format=jpg&name=large",
-                      "https://pbs.twimg.com/media/GTyLq4jbIAAJ_3G?format=jpg&name=large",
-                      "https://pbs.twimg.com/media/GTyLq4hbwAUpyNW?format=jpg&name=large",
-                      "https://pbs.twimg.com/media/GTyLq4jbwAAdZSZ?format=jpg&name=large",
-                    ]}
-                  />
-                </div>
+              <div className="self-stretch justify-start items-start gap-1.5 inline-flex w-full h-60">
+                <Photo
+                  photos={[
+                    "https://pbs.twimg.com/media/GTyLq4la0AAXpet?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GTyLq4jbIAAJ_3G?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GTyLq4hbwAUpyNW?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GTyLq4jbwAAdZSZ?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GTyLq4la0AAXpet?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GTyLq4jbIAAJ_3G?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GTyLq4hbwAUpyNW?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GTyLq4jbwAAdZSZ?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GTyLq4la0AAXpet?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GTyLq4jbIAAJ_3G?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GTyLq4hbwAUpyNW?format=jpg&name=large",
+                    "https://pbs.twimg.com/media/GTyLq4jbwAAdZSZ?format=jpg&name=large",
+                  ]}
+                />
               </div>
             </div>
           </div>
-          <PostActionBlock />
         </div>
+        <PostActionBlock />
       </div>
-    </Link>
+    </div>
   );
 }

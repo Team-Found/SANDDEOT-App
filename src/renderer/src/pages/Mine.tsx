@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Post from "@renderer/components/Feed/Post/Post";
+import { Link } from "react-router-dom";
 
 export default function Mine(): JSX.Element {
   const [list, setList] =
@@ -22,15 +23,18 @@ export default function Mine(): JSX.Element {
   return (
     <div className="inline-block">
       {list?.map((a, i) => {
+        console.log(a);
         return (
-          <Post
-            title={a.title}
-            description={a.body}
-            blogName={a.author}
-            favicon="#"
-            date={a.date}
-            articleID={a.articleID}
-          />
+          <Link to={`/detail2/${a.articleID}`}>
+            <Post
+              title={a.title}
+              description={a.body}
+              blogName={a.author}
+              favicon="#"
+              date={a.date}
+              articleID={a.articleID}
+            />
+          </Link>
         );
       })}
     </div>

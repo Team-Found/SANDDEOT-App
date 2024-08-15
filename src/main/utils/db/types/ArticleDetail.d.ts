@@ -1,17 +1,8 @@
 export default interface ArticleDetail {
-  bodyID: number;
+  ArticleID: number;
   title: string;
-  body: string;
-  progress: number;
   date: number;
-  translated: string;
-  origin: number;
-  image: string | null;
-  feedback: string | null;
-  score: number | null;
-  editDate: number | null;
-  IMPP: number | null;
-  categoryID: number;
-  level: number;
+  body: string;
+  chat: string;
   author: string;
 }
