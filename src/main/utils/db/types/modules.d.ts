@@ -46,18 +46,22 @@ learn: {
 };
 rss: {
   article: {
-      add(bodyID: number, RSSID: number, title: string, date: Date, body: string, chat: object, author: string,): Promise<void>;
+      add(RSSID: number, title: string, date: Date, body: string, chat: object,): Promise<void>;
 
   };
-    getLastRssUpdate(): Promise<Date>;
+    lastUpdate(): Promise<Date>;
 
     add(rss: RSS): Promise<void>;
+
+    detail(RSSID: number,): { RSSID: number; RSSURL: string; RSSName: string; RSSImage: string };
 
     edit(RSSID: number, RSSURL?: string, RSSName?: string, RSSImageUrl?: string,): Promise<void>;
 
     list(): Promise<RSS[]>;
 
     remove(RSSID: number): Promise<void>;
+
+    urlToId(url: string): Promise<number>;
 
 };
 word: {
