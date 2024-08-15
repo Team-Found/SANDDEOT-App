@@ -10,6 +10,9 @@ export default function Post(props: {
   date: string;
   articleID: number;
 }): JSX.Element {
+  function removeHTMLTags(str) {
+    return str.replace(/<\/?[^>]+(>|$)/g, "");
+  }
   return (
     <Link to={`/detail/${props.articleID}`}>
       <div className="self-stretch p-3.5 border-variable-collection-primaryBd border-[1px] rounded-lg justify-start items-start gap-6 inline-flex">
@@ -38,7 +41,7 @@ export default function Post(props: {
                     {props.title}
                   </div>
                   <div className="self-stretch text-neutral-400 text-xs font-normal leading-none whitespace-normal break-all">
-                    {props.description}
+                    {removeHTMLTags(props.description)}
                   </div>
                 </div>
 
