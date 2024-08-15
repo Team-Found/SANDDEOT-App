@@ -2,7 +2,7 @@ import db from "../../db";
 import Article from "../../types/Article";
 
 const userArticleList = (): Promise<Article[]> => {
-  const sql = `SELECT articleID, title, date, body, author FROM UserArticle`;
+  const sql = `SELECT articleID, title, date, body FROM UserArticle`;
   return new Promise((resolve, reject) => {
     db.all(sql, (err, rows: Article[]) => {
       if (err) {

@@ -29,7 +29,7 @@ export default function Mine(): JSX.Element {
             <Post
               title={a.title}
               description={a.body}
-              blogName={a.author}
+              blogName="나"
               favicon="#"
               date={a.date}
               articleID={a.articleID}
