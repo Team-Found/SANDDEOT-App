@@ -21,6 +21,8 @@ article: {
 
     update(bodyID: number, option: { title?: string; body?: string; image?: Blob; translated?: string; feedback?: string; score?: number; editDate?: Date; IMPP?: string; level?: number; },): Promise<number>;
 
+    savedArticleList(): Promise<Article[]>;
+
     addUserArticle(title: string, date: Date, body: string,): Promise<void>;
 
     detail2(articleID: number): Promise<ArticleDetail>;

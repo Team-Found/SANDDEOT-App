@@ -4,5 +4,4 @@ export default interface ArticleDetail {
   date: number;
   body: string;
   chat: string;
-  author: string;
 }

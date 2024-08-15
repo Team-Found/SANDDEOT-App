@@ -21,7 +21,7 @@ export default function Mine(): JSX.Element {
   }, []);
 
   return (
-    <div className="inline-block">
+    <div>
       {list?.map((a, i) => {
         console.log(a);
         return (
