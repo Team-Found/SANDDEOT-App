@@ -22,10 +22,7 @@ export default function Detail2(): JSX.Element {
 
   return (
     <div className="flex">
-      <div className="prose prose-basic dark:prose-invert ">
-        <div>
-          <h1>{article?.title}</h1>
-        </div>
+      <div className="prose prose-basic dark:prose-invert min-w-full">
         {article?.body && (
           <div dangerouslySetInnerHTML={{ __html: article.body }} />
         )}
