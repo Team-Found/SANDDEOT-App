@@ -58,9 +58,9 @@ export const Controls: React.FC<ControlsProps> = ({
             </div>
           </div>
           <div className="w-full justify-center items-center inline-flex">
-            <div className="w-full text-toolSecondary text-sm font-normal leading-none flex justify-between">
-              <div className="flex justify-between">중요 문장 하이라이팅</div>
-              <div className="flex items-center">
+            <div className="w-full text-toolSecondary text-sm font-normal leading-none flex flex-col">
+              <div className="flex justify-between">
+                중요 문장 하이라이팅
                 <label className="inline-flex relative items-center cursor-pointer">
                   <input
                     type="checkbox"
@@ -71,11 +71,9 @@ export const Controls: React.FC<ControlsProps> = ({
                   <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-[#974EAF] dark:peer-focus:ring-[#974EAF] dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#974EAF]"></div>
                 </label>
               </div>
-
               {showControls && (
                 <div>
                   <div className="mb-4">
-                    <label className="mr-2">Highlight Percentage:</label>
                     <input
                       type="range"
                       min="0"
@@ -98,13 +96,14 @@ export const Controls: React.FC<ControlsProps> = ({
             </div>
 
             <div className="mb-4">
-              <label className="flex items-center">
+              <label className="inline-flex relative items-center cursor-pointer">
                 <input
                   type="checkbox"
                   checked={focus}
                   onChange={handleFocusToggle}
-                  className="mr-2 accent-[#974EAF]"
+                  className="sr-only peer"
                 />
+                <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-[#974EAF] dark:peer-focus:ring-[#974EAF] dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-[#974EAF]"></div>
               </label>
             </div>
           </div>
