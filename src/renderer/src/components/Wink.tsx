@@ -7,7 +7,7 @@ import { quantile, interpolateRgb } from "d3";
 const nlp = winkNLP(model);
 const its = nlp.its;
 
-const App: React.FC = () => {
+const Wink: React.FC = () => {
   const [text, setText] = useState<string>(
     "Children living in Japan’s hottest city will be given specially designed umbrellas to protect them from the heat, after a summer that saw record-breaking temperatures in many parts of the country.",
   );
@@ -105,4 +105,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Wink;

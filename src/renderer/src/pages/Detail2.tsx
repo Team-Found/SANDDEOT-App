@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Chat } from "@renderer/components/Chat";
-import SentenceHighlighter from "@renderer/components/Wink";
+import Wink from "@renderer/components/Wink";
 
 export default function Detail2(): JSX.Element {
   let { id } = useParams();
@@ -28,7 +28,7 @@ export default function Detail2(): JSX.Element {
         className="w-3/4 h-3/4 border-2 border-gray-300"
         title="Example Site"
       /> */}
-      <SentenceHighlighter />
+      <Wink />
       <div className="prose prose-basic dark:prose-invert min-w-full">
         {article?.body && (
           <div dangerouslySetInnerHTML={{ __html: article.body }} />
