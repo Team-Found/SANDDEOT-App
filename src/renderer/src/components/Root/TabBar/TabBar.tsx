@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setNumber, RootState } from "../../utils/store";
-import { Link, useNavigate } from "react-router-dom";
+import { setNumber, RootState } from "../../../utils/store";
+import { useNavigate } from "react-router-dom";
 
 export default function TabBar(): JSX.Element {
   const dispatch = useDispatch();

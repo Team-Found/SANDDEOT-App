@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { RssBlock } from "../RssBlock";
+import { RssBlock } from "./RssBlock";
 export default function FollowedRSSList(): JSX.Element {
   const [rssList, setRssList] = useState<
     Awaited<ReturnType<typeof window.dbApi.rss.list>>

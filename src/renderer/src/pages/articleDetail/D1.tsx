@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Detail from "@components/Detail";
+import Detail from "@renderer/components/Detail/Detail";
 
 export default function D1(): JSX.Element {
   let { id } = useParams();

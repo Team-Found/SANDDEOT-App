@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-import React from "react";
 
 interface Props {
   property1: "variant-2" | "default";

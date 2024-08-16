@@ -1,8 +1,7 @@
-import FeedSideBar from "@renderer/components/Feed/FeedSideBar/FeedSideBar";
-import PostList from "@renderer/components/Feed/Post/PostList";
+import FeedSideBar from "@renderer/components/Root/RightSideBar/FeedSideBar";
 import { Outlet } from "react-router-dom";
 import Root from "./Root";
-import TabBar from "@renderer/components/Feed/TabBar";
+import TabBar from "@renderer/components/Root/TabBar/TabBar";
 
 export default function FeedRouter(): JSX.Element {
   return (

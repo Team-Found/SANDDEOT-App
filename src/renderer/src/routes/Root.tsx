@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { Sidebar } from "@components/Sidebar";
-import Statusbar from "@components/Statusbar";
+import { Sidebar } from "@renderer/components/Root/LeftSideBar/SideBar";
+import Statusbar from "@renderer/components/Root/Set/Statusbar";
 import { useLocation } from "react-router-dom";
 import { ReactNode } from "react";
 

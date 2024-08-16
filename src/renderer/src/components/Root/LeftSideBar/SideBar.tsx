@@ -1,13 +1,13 @@
 import { Sidebaritemicon1 } from "@assets/img/Sidebaritemicon1";
 import { Sidebaritemicon5 } from "@assets/img/Sidebaritemicon5";
-import { SidebarItem } from "./SidebarItem";
+import { SidebarItem } from "./SideBarItem";
 import logoImg from "@assets/img/logo.svg";
 import textImg from "@assets/img/logoText.svg";
 import Editor from "@assets/img/NewStart/1.svg";
 import OCR from "@assets/img/NewStart/2.svg";
 import Extension from "@assets/img/NewStart/3.svg";
 import setSvg from "@assets/img/set.svg";
-import React, { useState } from "react";
+import React from "react";
 import "@assets/hover.css";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
@@ -33,7 +33,7 @@ const customStyles = {
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement("#root");
 
-function Dropdown(): void {
+function Dropdown(): JSX.Element {
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
 

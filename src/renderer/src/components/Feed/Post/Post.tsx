@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import Photo from "./Photo";
 import PostActionBlock from "./PostActionBlock";
 import { useEffect, useState } from "react";
@@ -81,7 +80,7 @@ export default function Post(props: {
             </div>
           </div>
         </div>
-        <PostActionBlock />
+        <PostActionBlock title="" URL="" />
       </div>
     </div>
   ) : (

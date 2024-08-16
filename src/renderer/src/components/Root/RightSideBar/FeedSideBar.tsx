@@ -1,8 +1,6 @@
-import PropTypes from "prop-types";
-import React, { useEffect, useState } from "react";
-import { RssBlock } from "../RssBlock";
+import React, { useState } from "react";
+import { RssBlock } from "./RssBlock";
 import search from "@assets/img/search.svg";
-import ReactDOM from "react-dom";
 import Modal from "react-modal";
 import FollowedRSSList from "./FollowedRSSList";
 
@@ -51,7 +49,11 @@ function PromptModal(): JSX.Element {
   return (
     <>
       <div onClick={openModal} className="w-full">
-        <RssBlock property1="variant-2" />
+        <RssBlock
+          blogTitle="#"
+          followProperty1="default"
+          property1="variant-2"
+        />
       </div>
       <Modal
         isOpen={modalIsOpen}
@@ -84,7 +86,6 @@ function PromptModal(): JSX.Element {
 }
 
 const FrameWrapper = (): JSX.Element => {
-  const [modal, setModal] = useState(false);
   return (
     <div className="flex flex-col w-[295px] h-[810px] items-start gap-[17px] pt-2 pb-[45px] px-0 border-l-[1px] border-primaryBd">
       <div className="px-4 w-full box-border">

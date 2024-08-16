@@ -1,6 +1,5 @@
 import { Mark } from "./Icons";
 import Share from "@assets/img/share.svg";
-import { url } from "inspector";
 import { useState } from "react";
 import {
   EmailShareButton,
@@ -39,7 +38,7 @@ export default function PostActionBlock({
       </div>
       {shareShow ? (
         <div className="absolute top-6 left-6 flex gap-2 bg-primaryBG p-2 rounded-sm border-variable-collection-primaryBd border-[1px]">
-          <EmailShareButton subject={title} body={body}>
+          <EmailShareButton subject={title} url={body}>
             <EmailIcon size={24} round={true} />
           </EmailShareButton>
           <FacebookShareButton hashtag="SANDDEOT" url={URL}>

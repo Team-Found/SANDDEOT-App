@@ -1,7 +1,7 @@
 import { Sidebaritemicon5 } from "@assets/img/Sidebaritemicon5";
 import { Link, useLocation } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setNumber, RootState } from "../utils/store";
+import { useDispatch } from "react-redux";
+import { setNumber } from "../../../utils/store";
 
 interface Props {
   sidebarTitle: string;
@@ -14,7 +14,7 @@ interface Props {
 export const SidebarItem = ({
   sidebarTitle = "홈",
   className,
-  icon = <Sidebaritemicon5 className="!relative !w-6 !h-6" color="#F5F5F5" />,
+  icon = <Sidebaritemicon5 />,
   link,
   link2,
 }: Props): JSX.Element => {
