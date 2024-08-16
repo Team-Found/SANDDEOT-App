@@ -7,43 +7,42 @@ import { interpolateRgb } from "d3";
 const nlp = winkNLP(model);
 const its = nlp.its;
 
-const Wink: React.FC<{ body: string }> = ({ body }) => {
+const Wink: React.FC<{
+  body: string;
+  highlightPercentage: number;
+  focus: boolean;
+  showControls: boolean;
+}> = ({ body, highlightPercentage, focus, showControls }) => {
   const [text, setText] = useState<string>("");
-  const [highlightPercentage, setHighlightPercentage] = useState<number>(20);
-  const [focus, setFocus] = useState<boolean>(false);
-  const [showControls, setShowControls] = useState<boolean>(false);
 
   useEffect(() => {
     setText(body);
   }, [body]);
 
-  // 문장별 중요도 계산 함수
   const sentenceWiseNormalizedWeights = (doc: any, its: any) => {
     return doc.out(its.sentenceWiseImportance).map((e: any) => e.importance);
   };
 
   const highlightText = (importance: number, maxImportance: number) => {
-    if (!showControls || highlightPercentage === 0) {
-      // 하이라이팅 비활성화 시 빈 스타일 반환
-      return { backgroundColor: "transparent", color: "white", opacity: 1 };
-    }
+    const isHighlightActive = showControls && highlightPercentage > 0;
 
-    // 하이라이팅 색상의 투명도 조절
-    const normalizedImportance = importance / maxImportance; // 중요도 정규화
-    const opacity = Math.min(1, highlightPercentage / 100); // 슬라이더 값에 따라 최대 투명도 설정
+    const normalizedImportance = importance / maxImportance;
+    const opacity = Math.min(1, highlightPercentage / 100);
     const colorScale = interpolateRgb(
-      `rgba(151, 78, 175, 0)`, // 투명한 색상
-      `rgba(151, 78, 175, ${opacity})`, // 완전한 색상
+      `rgba(151, 78, 175, 0)`,
+      `rgba(151, 78, 175, ${opacity})`,
     );
-    const backgroundColor = colorScale(normalizedImportance);
+    const backgroundColor = isHighlightActive
+      ? colorScale(normalizedImportance)
+      : "transparent";
 
     const baseOpacity = focus ? 0.2 : 1;
 
     return {
-      backgroundColor: backgroundColor,
-      color: "white", // 글자색을 흰색으로 설정
+      backgroundColor,
+      color: "white",
       opacity: baseOpacity,
-      transition: "opacity 0.1s ease-in-out", // 깜빡임 문제 해결
+      transition: "opacity 0.3s ease",
       display: "inline",
     };
   };
@@ -59,7 +58,6 @@ const Wink: React.FC<{ body: string }> = ({ body }) => {
       const importance = sentenceWeights[index];
       const style = highlightText(importance, maxImportance);
 
-      // HTML 파싱 및 하이라이팅 적용
       const parser = new DOMParser();
       const docFragment = parser.parseFromString(sentence, "text/html");
       const elements = Array.from(docFragment.body.childNodes);
@@ -98,7 +96,7 @@ const Wink: React.FC<{ body: string }> = ({ body }) => {
                     },
                   },
                 ),
-                null,
+                undefined,
                 child.textContent,
               );
             } else {
@@ -106,12 +104,11 @@ const Wink: React.FC<{ body: string }> = ({ body }) => {
             }
           });
 
-          // 블록 요소 유지 및 인라인 하이라이팅 적용
           return React.createElement(
             TagName,
             {
               key: i,
-              style: { display: "block" }, // 블록 속성 유지
+              style: { display: "block" },
             },
             children,
           );
@@ -137,61 +134,9 @@ const Wink: React.FC<{ body: string }> = ({ body }) => {
     });
   };
 
-  const handleFocusToggle = () => {
-    setFocus((prevFocus) => !prevFocus);
-  };
-
-  const handleControlToggle = () => {
-    if (showControls) {
-      setFocus(false); // 컨트롤 비활성화 시 포커스 모드도 비활성화
-    }
-    setShowControls(!showControls);
-  };
-
   return (
-    <div>
-      <div className="mb-4 flex items-center">
-        <label className="mr-2">Enable Controls</label>
-        <label className="inline-flex relative items-center cursor-pointer">
-          <input
-            type="checkbox"
-            checked={showControls}
-            onChange={handleControlToggle}
-            className="sr-only peer"
-          />
-          <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-        </label>
-      </div>
-
-      {showControls && (
-        <div>
-          <div className="mb-4">
-            <label className="mr-2">Highlight Percentage:</label>
-            <input
-              type="range"
-              min="0"
-              max="100"
-              value={highlightPercentage}
-              onChange={(e) => setHighlightPercentage(Number(e.target.value))}
-              className="w-full"
-            />
-            <span className="ml-2">{highlightPercentage}%</span>
-          </div>
-          <div className="mb-4">
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                checked={focus}
-                onChange={handleFocusToggle}
-                className="mr-2"
-              />
-              Focus Mode
-            </label>
-          </div>
-        </div>
-      )}
-
-      <div className="prose prose-basic dark:prose-invert">{processText()}</div>
+    <div className="prose prose-basic dark:prose-invert min-w-full flex-grow overflow-y-auto">
+      {processText()}
     </div>
   );
 };

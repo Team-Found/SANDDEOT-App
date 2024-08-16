@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Chat } from "@renderer/components/Chat";
+import Detail from "@components/Detail";
 
-export default function Detail(): JSX.Element {
+export default function D1(): JSX.Element {
   let { id } = useParams();
   const [article, setArticle] =
     useState<Awaited<ReturnType<typeof window.dbApi.article.detail>>>();
@@ -21,18 +21,15 @@ export default function Detail(): JSX.Element {
   }, [id]);
 
   return (
-    <div className="flex">
+    <div className="flex w-full max-h-[calc(100dvh-2.5rem)] overflow-hidden flex-1 flex-grow">
       {/* <iframe
         src="https://obtuse.kr"
         className="w-3/4 h-3/4 border-2 border-gray-300"
         title="Example Site"
       /> */}
-      <div className="prose prose-basic dark:prose-invert min-w-full">
-        {article?.body && (
-          <div dangerouslySetInnerHTML={{ __html: article.body }} />
-        )}
+      <div className="prose prose-basic !max-w-full dark:prose-invert w-full">
+        {article?.body && <Detail body={article.body} />}
       </div>
-      <Chat />
     </div>
   );
 }
