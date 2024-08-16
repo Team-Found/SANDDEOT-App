@@ -54,15 +54,22 @@ export async function getRssFeedsItemsAfterDatetime(
 }
 
 const ISODatetoDate = (isoDate?: string): Date => {
-  return new Date(isoDate);
+  return new Date(isoDate ?? '');
 };
 const ISODatetoUnix = (isoDate: string): number => {
   return Math.floor(ISODatetoDate(isoDate).getTime() / 1000);
 };
 
-getRssFeedsItems(["https://www.reddit.com/.rss"]).then((items) => {
+getRssFeedsItems([{
+  RSSID: 1,
+  RSSURL: "https://www.reddit.com/.rss",
+  RSSName: "Reddit",
+  RSSImageUrl: "https://www.reddit.com/favicon.ico",
+} as RSS]).then((items) => {
   console.log(items);
 });
+
+
 
 // getRssFeed("https://www.reddit.com/.rss").then((feed) => {
 //   console.log(feed.title);

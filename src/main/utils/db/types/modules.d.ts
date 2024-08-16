@@ -40,7 +40,7 @@ learn: {
 };
 rss: {
   article: {
-      add(RSSID: number, title: string, date: Date, body: string, chat: object,): Promise<void>;
+      add(articleID: number, RSSID: number, title: string, date: Date, body: string, chat?: object = {},): Promise<void>;
 
   };
     lastUpdate(): Promise<Date>;

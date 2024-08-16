@@ -1,18 +1,19 @@
 import db from "../../../db";
 
 const add = async (
+  articleID: number,
   RSSID: number,
   title: string,
   date: Date,
   body: string,
-  chat: object,
+  chat?: object = {},
 ): Promise<void> => {
   const query = `
-    INSERT INTO RSSArticle (RSSID, title, date, body, chat)
+    INSERT INTO RSSArticle (articleID, RSSID, title, date, body, chat)
     VALUES (?, ?, ?, ?, ?, ?)
   `;
   return new Promise((resolve, reject) => {
-    db.run(query, [RSSID, title, date, body, chat], (err) => {
+    db.run(query, [articleID, RSSID, title, date, body, chat], (err) => {
       if (err) {
         console.error("SQL error3:", err.message);
         reject();

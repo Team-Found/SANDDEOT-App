@@ -129,23 +129,43 @@ import { getRssFeedsItemsAfterDatetime } from "./utils/rss/rss";
 import lastUpdate from "./utils/db/modules/rss/lastUpdate";
 import db from "./utils/db/index";
 
+import newArticle from "./utils/api/modules/article/newArticle";
+import { rawArticle } from "./utils/api/modules/article/newArticle";
+
 const dbApi = db;
 
-const updateRSSArticleDB = async (): Promise<Array<object>> => {
+const updateRSSArticleDB = async (): Promise<void> => {
   const lastUpdateDate = await lastUpdate();
   const RSSs = await dbApi.rss.list();
   console.log(RSSs);
   const items = await getRssFeedsItemsAfterDatetime(RSSs, lastUpdateDate);
-  items.map(async (item) => {
-    dbApi.rss.article.add(
-      item.RSSID,
-      item.title,
-      new Date(item.isoDate),
-      item.content,
-      {},
-    );
-  });
-  console.log(items);
+
+  if (items.length === 0) {
+    return [];
+  }
+  console.log(items.map((item) => ({
+    rssID: item.RSSID,
+    title: item.title,
+    description: item.description,
+    summary: item.summary,
+    date: Math.floor(new Date(item.isoDate).getTime() / 1000),
+    content: [{ value: item.content }],
+    link: item.link,
+    media_thumbnail: item.media_thumbnail,
+  } as rawArticle)) );
+
+  newArticle(
+    items.map((item) => ({
+      rssID: item.RSSID,
+      title: item.title,
+      description: item.description,
+      summary: item.summary,
+      date: Math.floor(new Date(item.isoDate).getTime() / 1000),
+      content: [{ value: item.content }],
+      link: item.link,
+      media_thumbnail: item.media_thumbnail,
+    } as rawArticle)) 
+  );
 };
 
 const background = setInterval(() => {
