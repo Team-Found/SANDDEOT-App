@@ -22,18 +22,14 @@ export default function Detail2(): JSX.Element {
   }, [id]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex">
       {/* <iframe
         src="https://obtuse.kr"
         className="w-3/4 h-3/4 border-2 border-gray-300"
         title="Example Site"
       /> */}
-      <Wink />
-      <div className="prose prose-basic dark:prose-invert min-w-full">
-        {article?.body && (
-          <div dangerouslySetInnerHTML={{ __html: article.body }} />
-        )}
-      </div>
+      {article?.body && <Wink body={article.body} />}
+
       <Chat />
     </div>
   );
