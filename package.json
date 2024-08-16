@@ -44,6 +44,8 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "d3": "^7.9.0",
+    "d3-array": "^3.2.4",
     "electron-fetch": "^1.9.1",
     "electron-updater": "^6.1.7",
     "esm": "^3.2.25",
@@ -59,7 +61,9 @@
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "tesseract.js": "^5.1.0",
-    "tesseract.js-core": "^5.1.0"
+    "tesseract.js-core": "^5.1.0",
+    "wink-eng-lite-web-model": "^1.8.0",
+    "wink-nlp": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
