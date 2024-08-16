@@ -1,0 +1,24 @@
+
+
+mark.hi-1 { 
+  background-color: #974EAFaf
+}
+mark.hi-2 { 
+  /* background-color: #ffcf3ebf;  */
+  background-color: #974EAF96
+}
+mark.hi-3 { 
+  /* background-color: #ffcf3e91;  */
+  /* @apply bg-opacity-60; */
+  background-color: #974EAF6a
+}
+mark.hi-4 { 
+  /* background-color: #ffcf3e51;  */
+  /* @apply bg-opacity-40; */
+  background-color: #974EAF51
+}
+
+mark {
+  background-color: var(--variable-collection-priamry);
+  color: white;
+}
