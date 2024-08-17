@@ -43,7 +43,7 @@ export default function Post(props: {
     articleList();
   }, []);
   return rss ? (
-    <div className="self-stretch p-3.5 border-variable-collection-primaryBd border-[1px] rounded-lg justify-start items-start gap-6 inline-flex">
+    <div className="w-full self-stretch p-3.5 border-variable-collection-primaryBd border-[1px] rounded-lg justify-start items-start gap-6 inline-flex mb-4">
       <div className="grow shrink basis-0 flex-col justify-center items-start gap-2 inline-flex">
         <div className="self-stretch flex-col justify-start items-start flex">
           <div className="w-96 justify-between items-center inline-flex">
