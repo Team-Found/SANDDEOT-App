@@ -84,6 +84,7 @@ import {
 import { Button } from "@/components/ui/button";
 
 function ButtonDemo(): JSX.Element {
+  const dispatch = useDispatch();
   const title = useSelector((state: RootState) => state.textData.title);
   const body = useSelector((state: RootState) => state.textData.body);
   return (
@@ -91,6 +92,8 @@ function ButtonDemo(): JSX.Element {
       className="px-8"
       onClick={() => {
         window.dbApi.article.addUserArticle(title, new Date(), body);
+        dispatch(setBody(""));
+        dispatch(setTitle(""));
       }}
     >
       등록
@@ -111,7 +114,6 @@ export default function Input(): JSX.Element {
   const editorContainerRef = useRef(null);
   const editorRef = useRef(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
-  const [textData, setTextData] = useState("");
 
   useEffect(() => {
     setIsLayoutReady(true);

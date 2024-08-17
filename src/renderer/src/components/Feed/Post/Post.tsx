@@ -13,6 +13,20 @@ export default function Post(props: {
     return str.replace(/<\/?[^>]+(>|$)/g, "");
   }
 
+  function extractionImg(str: string): string[] {
+    const regex = /<img[^>]*\bsrc=["']?([^"'\s>]+)["']?[^>]*>/g;
+    const matches = str.matchAll(regex);
+    const srcArray: string[] = [];
+
+    for (const match of matches) {
+      if (match[1]) {
+        srcArray.push(match[1]);
+      }
+    }
+
+    return srcArray;
+  }
+
   const [rss, setRss] =
     useState<Awaited<ReturnType<typeof window.dbApi.article.RSSDetail>>>();
   useEffect(() => {
@@ -60,22 +74,7 @@ export default function Post(props: {
               </div>
 
               <div className="self-stretch justify-start items-start gap-1.5 inline-flex w-full h-60">
-                <Photo
-                  photos={[
-                    "https://pbs.twimg.com/media/GTyLq4la0AAXpet?format=jpg&name=large",
-                    "https://pbs.twimg.com/media/GTyLq4jbIAAJ_3G?format=jpg&name=large",
-                    "https://pbs.twimg.com/media/GTyLq4hbwAUpyNW?format=jpg&name=large",
-                    "https://pbs.twimg.com/media/GTyLq4jbwAAdZSZ?format=jpg&name=large",
-                    "https://pbs.twimg.com/media/GTyLq4la0AAXpet?format=jpg&name=large",
-                    "https://pbs.twimg.com/media/GTyLq4jbIAAJ_3G?format=jpg&name=large",
-                    "https://pbs.twimg.com/media/GTyLq4hbwAUpyNW?format=jpg&name=large",
-                    "https://pbs.twimg.com/media/GTyLq4jbwAAdZSZ?format=jpg&name=large",
-                    "https://pbs.twimg.com/media/GTyLq4la0AAXpet?format=jpg&name=large",
-                    "https://pbs.twimg.com/media/GTyLq4jbIAAJ_3G?format=jpg&name=large",
-                    "https://pbs.twimg.com/media/GTyLq4hbwAUpyNW?format=jpg&name=large",
-                    "https://pbs.twimg.com/media/GTyLq4jbwAAdZSZ?format=jpg&name=large",
-                  ]}
-                />
+                <Photo photos={extractionImg(props.description)} />
               </div>
             </div>
           </div>
