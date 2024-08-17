@@ -1,7 +1,8 @@
 import Post from "@components/Feed/Post/Post";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-
 export default function PostList(): JSX.Element {
+  const [reRender, setReRender] = useState(false);
   return (
     <Link to={`/detail/${1}`}>
       <Post
@@ -11,6 +12,8 @@ export default function PostList(): JSX.Element {
         date="2days ago"
         articleID={1}
         saved={0}
+        reRender={reRender}
+        setReRender={setReRender}
       />
     </Link>
   );

@@ -1,16 +1,32 @@
 export function Mark({
   saved,
   articleID,
+  reRender,
+  setReRender,
 }: {
   saved: number;
   articleID: number;
+  reRender: boolean;
+  setReRender: React.Dispatch<React.SetStateAction<boolean>>;
 }): JSX.Element {
+  const dbUpdate = (): Promise<void> => {
+    return new Promise((resolve) => {
+      window.dbApi.article.save(articleID, saved == 0 ? 1 : 0);
+      resolve();
+    });
+  };
+
+  const runFunction = async () => {
+    await dbUpdate();
+    setReRender(!reRender);
+  };
+
   return (
     <div
       className="cursor-pointer"
       onClick={(e) => {
         e.preventDefault();
-        window.dbApi.article.save(articleID, saved == 0 ? 1 : 0);
+        runFunction();
       }}
     >
       <svg

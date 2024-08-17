@@ -7,7 +7,7 @@ export default function Saved(): JSX.Element {
     useState<
       Awaited<ReturnType<typeof window.dbApi.article.savedArticleList>>
     >();
-
+  const [reRender, setReRender] = useState(false);
   useEffect(() => {
     const articleList = async () => {
       try {
@@ -18,7 +18,7 @@ export default function Saved(): JSX.Element {
       }
     };
     articleList();
-  }, []);
+  }, [reRender]);
 
   return (
     <div>
@@ -32,6 +32,8 @@ export default function Saved(): JSX.Element {
               date={a.date}
               articleID={a.articleID}
               saved={a.saved}
+              reRender={reRender}
+              setReRender={setReRender}
             />
           </Link>
         );

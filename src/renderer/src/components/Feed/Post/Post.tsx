@@ -9,6 +9,8 @@ export default function Post(props: {
   date: string;
   articleID: number;
   saved: number;
+  reRender: boolean;
+  setReRender: React.Dispatch<React.SetStateAction<boolean>>;
 }): JSX.Element {
   function removeHTMLTags(str) {
     return str.replace(/<\/?[^>]+(>|$)/g, "");
@@ -27,7 +29,6 @@ export default function Post(props: {
 
     return srcArray;
   }
-
   const [rss, setRss] =
     useState<Awaited<ReturnType<typeof window.dbApi.article.RSSDetail>>>();
   useEffect(() => {
@@ -42,7 +43,8 @@ export default function Post(props: {
       }
     };
     articleList();
-  }, []);
+  }, [props.reRender]);
+
   return rss ? (
     <div className="w-full self-stretch p-3.5 border-variable-collection-primaryBd border-[1px] rounded-lg justify-start items-start gap-6 inline-flex mb-4">
       <div className="grow shrink basis-0 flex-col justify-center items-start gap-2 inline-flex">
@@ -85,6 +87,8 @@ export default function Post(props: {
           URL=""
           saved={props.saved}
           articleID={props.articleID}
+          reRender={props.reRender}
+          setReRender={props.setReRender}
         />
       </div>
     </div>

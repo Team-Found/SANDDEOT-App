@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function Following(): JSX.Element {
   const [list, setList] =
     useState<Awaited<ReturnType<typeof window.dbApi.article.rssArticleList>>>();
-
+  const [reRender, setReRender] = useState(false);
   useEffect(() => {
     const articleList = async () => {
       try {
@@ -16,7 +16,7 @@ export default function Following(): JSX.Element {
       }
     };
     articleList();
-  }, []);
+  }, [reRender]);
 
   return (
     <div>
@@ -30,6 +30,8 @@ export default function Following(): JSX.Element {
               date={a.date}
               articleID={a.articleID}
               saved={a.saved}
+              reRender={reRender}
+              setReRender={setReRender}
             />
           </Link>
         );
