@@ -166,7 +166,7 @@ const Wink: React.FC<{
   };
 
   return (
-    <div className="prose prose-basic dark:prose-invert !max-w-full w-full flex-grow overflow-y-auto h-full">
+    <div className="prose prose-basic dark:prose-invert !max-w-full w-full flex-grow overflow-y-auto h-full p-8">
       {processText()}
     </div>
   );
