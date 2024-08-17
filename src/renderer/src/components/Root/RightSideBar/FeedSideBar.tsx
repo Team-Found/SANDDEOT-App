@@ -18,7 +18,8 @@ const customStyles = {
     backgroundColor: "var(--variable-collection-primarybg)",
     border: "solid 1px var(--variable-collection-primaryBd)",
     borderRadius: "22px",
-    padding: "10px",
+    padding: "20px",
+    width: "400px",
   },
 };
 
@@ -70,13 +71,20 @@ function PromptModal(): JSX.Element {
               setInputValue(e.target.value);
               console.log(inputValue);
             }}
+            className="w-full bg-transparent focus:outline-none mb-8 border-primaryBd border-[1px] rounded-md p-3"
           ></input>
         </div>
         <div className="flex justify-between">
-          <button onClick={closeModal} className="bg-red-400">
+          <button
+            onClick={closeModal}
+            className="py-2 px-4 rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 bg-gray-200 text-gray-700 hover:bg-gray-300 focus:ring-gray-500"
+          >
             취소
           </button>
-          <button onClick={insertRss} className="bg-green-400">
+          <button
+            onClick={insertRss}
+            className="py-2 px-4 rounded-md font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500"
+          >
             확인
           </button>
         </div>
