@@ -31,7 +31,8 @@ export default function PostActionBlock({
           src={Share}
           alt="공유하기"
           className="cursor-pointer"
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             setShareShow(!shareShow);
           }}
         />
