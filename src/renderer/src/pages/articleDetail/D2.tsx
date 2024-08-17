@@ -21,15 +21,13 @@ export default function D2(): JSX.Element {
   }, [id]);
 
   return (
-    <div className="flex w-full max-h-[calc(100dvh-2.5rem)] flex-1 flex-grow">
+    <div className="flex w-full h-[calc(100dvh-2.5rem)] overflow-hidden flex-1 flex-grow">
       {/* <iframe
         src="https://obtuse.kr"
         className="w-3/4 h-3/4 border-2 border-gray-300"
         title="Example Site"
       /> */}
-      <div className="prose prose-basic !max-w-full dark:prose-invert w-full">
-        {article?.body && <Detail body={article.body} />}
-      </div>
+      {article?.body && <Detail body={article.body} />}
     </div>
   );
 }
