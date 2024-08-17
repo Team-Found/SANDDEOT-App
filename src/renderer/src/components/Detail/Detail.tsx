@@ -8,13 +8,15 @@ const App: React.FC<{ body: string }> = ({ body }) => {
   const [showControls, setShowControls] = useState<boolean>(false);
 
   return (
-    <div className="grid grid-cols-[1fr_auto] h-screen">
-      <Wink
-        body={body}
-        highlightPercentage={highlightPercentage}
-        focus={focus}
-        showControls={showControls}
-      />
+    <div className="grid grid-cols-[1fr_auto] h-full w-full">
+      <div className="prose prose-basic !max-w-full h-full dark:prose-invert w-full overflow-auto">
+        <Wink
+          body={body}
+          highlightPercentage={highlightPercentage}
+          focus={focus}
+          showControls={showControls}
+        />
+      </div>
       <Controls
         highlightPercentage={highlightPercentage}
         setHighlightPercentage={setHighlightPercentage}

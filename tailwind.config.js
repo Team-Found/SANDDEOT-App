@@ -33,6 +33,7 @@ module.exports = {
           "var(--variable-collection-secondaryText)",
         "variable-collection-secondarybg":
           "var(--variable-collection-secondarybg)",
+        AIPurple: "var(--variable-collection-AIPurple)",
         blue60: "var(--variable-collection-blue60)",
         green60: "var(--variable-collection-green60)",
         orange60: "var(--variable-collection-orange60)",

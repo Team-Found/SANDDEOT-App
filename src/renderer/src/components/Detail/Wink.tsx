@@ -32,11 +32,24 @@ const Wink: React.FC<{
       `rgba(151, 78, 175, 0)`,
       `rgba(151, 78, 175, ${opacity})`,
     );
-    const backgroundColor = isHighlightActive
-      ? colorScale(normalizedImportance)
-      : "transparent";
+    console.log(
+      colorScale(normalizedImportance).split(",")[3]?.split(")")[0],
+      colorScale(normalizedImportance),
+    );
+    const backgroundColor =
+      isHighlightActive &&
+      colorScale(normalizedImportance).split(",")[3]?.split(")")[0] > 0.3
+        ? colorScale(normalizedImportance)
+        : "transparent";
 
-    const baseOpacity = focus ? 0.2 : 1;
+    const baseOpacity =
+      focus &&
+      !(
+        isHighlightActive &&
+        colorScale(normalizedImportance).split(",")[3]?.split(")")[0] > 0.3
+      )
+        ? 0.2
+        : 1;
 
     return {
       backgroundColor,
@@ -65,6 +78,7 @@ const Wink: React.FC<{
       return elements.map((element, i) => {
         if (element.nodeType === Node.ELEMENT_NODE) {
           const TagName = (element as HTMLElement).tagName.toLowerCase();
+          console.log(style.backgroundColor);
           const children = Array.from(element.childNodes).map((child, j) => {
             if (child.nodeType === Node.TEXT_NODE) {
               return (
@@ -74,9 +88,15 @@ const Wink: React.FC<{
                   onMouseEnter={(e) => {
                     if (focus) e.currentTarget.style.opacity = "1";
                   }}
-                  onMouseLeave={(e) => {
-                    if (focus) e.currentTarget.style.opacity = "0.2";
-                  }}
+                  onMouseLeave={
+                    style.backgroundColor == "transparent"
+                      ? (e) => {
+                          if (focus) e.currentTarget.style.opacity = "0.2";
+                        }
+                      : (e) => {
+                          if (focus) e.currentTarget.style.opacity = "1";
+                        }
+                  }
                 >
                   {child.textContent}
                 </span>
@@ -91,9 +111,14 @@ const Wink: React.FC<{
                     onMouseEnter: (e) => {
                       if (focus) e.currentTarget.style.opacity = "1";
                     },
-                    onMouseLeave: (e) => {
-                      if (focus) e.currentTarget.style.opacity = "0.2";
-                    },
+                    onMouseLeave:
+                      style.backgroundColor == "transparent"
+                        ? (e) => {
+                            if (focus) e.currentTarget.style.opacity = "0.2";
+                          }
+                        : (e) => {
+                            e.currentTarget.style.opacity = "1";
+                          },
                   },
                 ),
                 undefined,
@@ -120,9 +145,15 @@ const Wink: React.FC<{
               onMouseEnter={(e) => {
                 if (focus) e.currentTarget.style.opacity = "1";
               }}
-              onMouseLeave={(e) => {
-                if (focus) e.currentTarget.style.opacity = "0.2";
-              }}
+              onMouseLeave={
+                style.backgroundColor == "transparent"
+                  ? (e) => {
+                      if (focus) e.currentTarget.style.opacity = "0.2";
+                    }
+                  : (e) => {
+                      if (focus) e.currentTarget.style.opacity = "1";
+                    }
+              }
             >
               {element.textContent}
             </span>
@@ -135,7 +166,7 @@ const Wink: React.FC<{
   };
 
   return (
-    <div className="prose prose-basic dark:prose-invert min-w-full flex-grow overflow-y-auto">
+    <div className="prose prose-basic dark:prose-invert !max-w-full w-full flex-grow overflow-y-auto h-full">
       {processText()}
     </div>
   );
