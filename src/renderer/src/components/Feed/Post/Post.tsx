@@ -73,7 +73,7 @@ export default function Post(props: {
                 </div>
               </div>
 
-              <div className="self-stretch justify-start items-start gap-1.5 inline-flex w-full h-60">
+              <div className="self-stretch justify-start items-start gap-1.5 inline-flex w-full">
                 <Photo photos={extractionImg(props.description)} />
               </div>
             </div>
