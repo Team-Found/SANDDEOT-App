@@ -8,7 +8,7 @@ const list = (): Promise<RSS[]> => {
         console.error("SQL error:", err.message);
         reject();
       } else {
-        resolve(rows);
+        resolve(rows.slice(1));
       }
     });
   });
