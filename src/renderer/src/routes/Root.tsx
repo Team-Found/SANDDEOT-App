@@ -26,7 +26,7 @@ export default function Root({
       <Statusbar title={`산뜻 - ${title}`} />
       <div className="flex items-center justify-between flex-1 grow overflow-hidden self-stretch">
         <Sidebar />
-        <div className="flex flex-col bg-background text-foreground items-start flex-1 self-stretch grow overflow-y-scroll h-[calc(100dvh-2.25rem)]">
+        <div className="flex flex-col bg-background text-foreground items-start flex-1 self-stretch grow overflow-y-auto h-[calc(100dvh-2.25rem)]">
           {children ? children : <Outlet />}
         </div>
       </div>

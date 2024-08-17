@@ -31,8 +31,8 @@ export const Controls: React.FC<ControlsProps> = ({
   };
 
   return (
-    <div className="flex flex-col border-l-[1px] w-96">
-      <div className="w-full pl-4 pr-3.5 py-5 border-b border-PrimaryBorder flex-col justify-start items-start inline-flex">
+    <div className="flex flex-col border-l-[1px] w-[500px] h-full box-border">
+      <div className="w-full pl-4 pr-3.5 py-5 border-b border-PrimaryBorder flex-col justify-start items-start inline-flex h-fit box-border">
         <div className="self-stretch flex-col justify-center items-start flex">
           <div className="justify-start items-center inline-flex">
             <img src={summation} alt="요약" />
@@ -50,7 +50,7 @@ export const Controls: React.FC<ControlsProps> = ({
           </div>
         </div>
       </div>
-      <div className="w-full pl-4 pr-3.5 py-5 border-b border-PrimaryBorder">
+      <div className="w-full pl-4 pr-3.5 py-5 border-b border-PrimaryBorder h-fit box-border">
         <div className="justify-start items-start gap-2 flex">
           <img src={equipment} alt="도구" />
           <div className="text-white text-xl font-semibold leading-normal">
@@ -114,8 +114,8 @@ export const Controls: React.FC<ControlsProps> = ({
           </div>
         </div>
       </div>
-      <div className="w-full pl-4 pr-3.5 py-5 flex-col justify-start items-start gap-2 inline-flex">
-        <div className="self-stretch flex-col justify-start items-start gap-2 flex">
+      <div className="w-full pl-4 pr-3.5 py-5 flex-col justify-start items-start gap-2 inline-flex h-full box-border">
+        <div className="self-stretch flex-col justify-start items-start gap-2 flex h-full">
           <div className="justify-start items-start gap-2 inline-flex">
             <img src={question} alt="도구" />
             <div className="text-white text-xl font-semibold leading-normal">
@@ -127,7 +127,7 @@ export const Controls: React.FC<ControlsProps> = ({
               남자의 음식을 탐내는 이준호 • 10줄
             </div>
           </div>
-          <div className="w-full max-h-64 overflow-y-auto">
+          <div className="w-full h-full overflow-y-auto">
             <div className="pl-1 justify-start items-start gap-1 inline-flex">
               <div className="text-toolSecondary text-sm font-extrabold leading-7">
                 Q.
