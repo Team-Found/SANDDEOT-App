@@ -42,7 +42,7 @@ const newArticle = async (articles: rawArticle[]) => {
         media_thumbnail: string;
       };
     }) => {
-      console.log(result);
+      // console.log(result);
       dbApi.rss.article.add(
         result.article.articleID,
         result.article.rssID,

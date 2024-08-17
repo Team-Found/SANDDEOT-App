@@ -3,6 +3,7 @@ import { RssBlock } from "./RssBlock";
 import search from "@assets/img/search.svg";
 import Modal from "react-modal";
 import FollowedRSSList from "./FollowedRSSList";
+import { toast } from "react-toastify";
 
 const customStyles = {
   overlay: {
@@ -40,8 +41,26 @@ function PromptModal(): JSX.Element {
     subtitle.style.color = "#f00";
   }
   function insertRss(): void {
-    window.api.insertRss(inputValue);
-    closeModal();
+    window.api
+      .insertRss(inputValue)
+      .then((res) => {
+        if (res.status === "success") {
+          window.dbApi.rss.add({
+            RSSID: res.rssID,
+            RSSURL: res.rssUrl,
+            RSSName: res.rssName,
+            RSSImageUrl: res.favicon,
+          });
+          toast.success("RSS가 추가되었습니다.");
+          closeModal();
+        } else {
+          toast.error("RSS 추가에 실패했습니다.");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error("RSS 추가에 실패했습니다.");
+      });
   }
 
   function closeModal(): void {

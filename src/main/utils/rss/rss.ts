@@ -11,7 +11,11 @@ import { RSS } from "../db/types/Rss";
 //   },
 // });
 
-const parser = new Parser();
+const parser = new Parser({
+  customFields: {
+    item: ["description", "summary", "media:thumbnail", "media:content"],
+  },
+});
 
 export type Feed = {
   [key: string]: any;
@@ -20,8 +24,9 @@ export type Feed = {
 export async function getRssFeed(rss: RSS): Promise<Feed> {
   console.log(rss.RSSURL);
   const feed = await parser.parseURL(rss.RSSURL);
-  feed["RSSID"] = rss.RSSID;
-  console.log(feed.title);
+  feed.items.forEach((item) => {
+    item.RSSID = rss.RSSID;
+  });
   return feed;
 }
 

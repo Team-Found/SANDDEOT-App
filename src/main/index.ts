@@ -125,9 +125,9 @@ app.on("window-all-closed", app.dock.hide);
 
 // background process
 
-// import { getRssFeedsItemsAfterDatetime } from "./utils/rss/rss";
-// import lastUpdate from "./utils/db/modules/rss/lastUpdate";
-// import db from "./utils/db/index";
+import { getRssFeedsItemsAfterDatetime } from "./utils/rss/rss";
+import lastUpdate from "./utils/db/modules/rss/lastUpdate";
+import db from "./utils/db/index";
 
 import newArticle from "./utils/api/modules/article/newArticle";
 import { rawArticle } from "./utils/api/modules/article/newArticle";
@@ -136,6 +136,7 @@ const dbApi = db;
 
 const updateRSSArticleDB = async (): Promise<void> => {
   const lastUpdateDate = await lastUpdate();
+  console.log(lastUpdateDate, "lastUpdateDate");
   const RSSs = await dbApi.rss.list();
   console.log(RSSs, "RSSs");
   const items = await getRssFeedsItemsAfterDatetime(RSSs, lastUpdateDate);
@@ -144,21 +145,22 @@ const updateRSSArticleDB = async (): Promise<void> => {
     console.log("already up to date");
     return [];
   }
-  console.log(
-    items.map(
-      (item) =>
-        ({
-          rssID: item.RSSID,
-          title: item.title,
-          description: item.description,
-          summary: item.summary,
-          date: Math.floor(new Date(item.isoDate).getTime() / 1000),
-          content: [{ value: item.content }],
-          link: item.link,
-          media_thumbnail: item.media_thumbnail,
-        }) as rawArticle,
-    ),
-  );
+  console.log(items);
+  // console.log(
+  //   items.map(
+  //     (item) =>
+  //       ({
+  //         rssID: item.RSSID,
+  //         title: item.title,
+  //         description: item.description,
+  //         summary: item.summary,
+  //         date: Math.floor(new Date(item.isoDate).getTime() / 1000),
+  //         content: [{ value: item.content }],
+  //         link: item.link,
+  //         media_thumbnail: item.media_thumbnail,
+  //       }) as rawArticle,
+  //   ),
+  // );
 
   newArticle(
     items.map(
@@ -177,10 +179,10 @@ const updateRSSArticleDB = async (): Promise<void> => {
   );
 };
 
-// const background = setInterval(() => {
-//   updateRSSArticleDB();
-// }, 1000 * 10); // 10 sec
+const background = setInterval(() => {
+  updateRSSArticleDB();
+}, 1000 * 10); // 10 sec
 
-// app.on("before-quit", () => {
-//   clearInterval(background);
-// });
+app.on("before-quit", () => {
+  clearInterval(background);
+});

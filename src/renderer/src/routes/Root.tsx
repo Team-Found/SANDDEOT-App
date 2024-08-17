@@ -3,6 +3,8 @@ import { Sidebar } from "@renderer/components/Root/LeftSideBar/SideBar";
 import Statusbar from "@renderer/components/Root/Set/Statusbar";
 import { useLocation } from "react-router-dom";
 import { ReactNode } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Root({
   children,
@@ -28,6 +30,7 @@ export default function Root({
         <Sidebar />
         <div className="flex flex-col bg-background text-foreground items-start flex-1 self-stretch grow overflow-y-auto h-[calc(100dvh-2.25rem)]">
           {children ? children : <Outlet />}
+          <ToastContainer />
         </div>
       </div>
     </>
