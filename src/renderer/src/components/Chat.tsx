@@ -3,9 +3,9 @@ import equipment from "@assets/img/Chat/equipment.svg";
 import question from "@assets/img/Chat/question.svg";
 import send from "@assets/img/Chat/send.svg";
 import React from "react";
-import { Switch } from "@/components/ui/switch"
+import { Switch } from "@/components/ui/switch";
 import { useState } from "react";
-import { Slider } from "@/components/ui/slider"
+import { Slider } from "@/components/ui/slider";
 
 interface ChatProps {
   setCutOff: React.Dispatch<React.SetStateAction<number>>;
@@ -35,7 +35,7 @@ export const Chat: React.FC<ChatProps> = ({ setCutOff, cutOff }) => {
         </div>
       </div>
       <div className="w-full pl-4 pr-3.5 py-5 border-b border-PrimaryBorder flex-col justify-start items-start gap-2 inline-flex">
-        <div className="self-stretch flex-col justify-start items-start gap-2 flex">
+        <div className="self-stretch flex-col justify-start items-start gap-4 flex">
           <div className="justify-start items-start gap-2 inline-flex">
             <img src={equipment} alt="도구" />
             <div className="text-white text-xl font-semibold leading-normal">
@@ -46,22 +46,27 @@ export const Chat: React.FC<ChatProps> = ({ setCutOff, cutOff }) => {
             <div className="w-full text-toolSecondary text-sm font-normal leading-none">
               <div className="flex justify-between">
                 중요문장 하이라이팅
-                <Switch defaultChecked={sentenceHighlight} onClick={()=>{setSentenceHighlight(!sentenceHighlight)}}/>
+                <Switch
+                  defaultChecked={sentenceHighlight}
+                  onClick={() => {
+                    setSentenceHighlight(!sentenceHighlight);
+                  }}
+                />
               </div>
-              {sentenceHighlight?
-              <Slider defaultValue={[cutOff]} max={0.6} step={0.05} onValueChange={(e) => setCutOff(parseFloat(e))} style={{width: "100%"}} />
-              // <input
-              //   type="range"
-              //   min="0"
-              //   max="0.6"
-              //   step="0.05"
-              //   value={cutOff}
-              //   onChange={(e) => setCutOff(parseFloat(e.target.value))}
-              // />
-              : ():JSX.Element=>{
-                setCutOff(0);
-                return (<></>)
-              }}
+              {sentenceHighlight ? (
+                <Slider
+                  defaultValue={[cutOff]}
+                  max={80}
+                  step={2}
+                  onValueChange={(e) => setCutOff(e)}
+                  style={{ width: "100%", padding: "1rem 0" }}
+                />
+              ) : (
+                ((): React.ReactNode => {
+                  setCutOff(0);
+                  return <></>;
+                })()
+              )}
             </div>
           </div>
           <div className="w-full shrink justify-center items-center inline-flex">
