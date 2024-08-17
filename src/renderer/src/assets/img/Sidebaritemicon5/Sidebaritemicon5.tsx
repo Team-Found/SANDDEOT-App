@@ -1,15 +1,6 @@
-interface Props {
-  color?: string;
-  className: string;
-}
-
-export const Sidebaritemicon5 = ({
-  color = "white",
-  className,
-}: Props): JSX.Element => {
+export const Sidebaritemicon5 = (): JSX.Element => {
   return (
     <svg
-      className={`${className}`}
       fill="none"
       height="24"
       viewBox="0 0 24 24"
@@ -18,14 +9,14 @@ export const Sidebaritemicon5 = ({
     >
       <path
         d="M14.6583 20.4179V13.329C14.6583 13.094 14.565 12.8686 14.3988 12.7024C14.2326 12.5362 14.0072 12.4429 13.7722 12.4429H10.2278C9.99276 12.4429 9.76737 12.5362 9.6012 12.7024C9.43502 12.8686 9.34166 13.094 9.34166 13.329V20.4179"
-        stroke={color}
+        stroke="white"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="2"
       />
       <path
         d="M4.02499 10.6705C4.02493 10.4127 4.08111 10.158 4.18962 9.9241C4.29813 9.69025 4.45635 9.48289 4.65325 9.31648L10.856 4.0007C11.1759 3.73036 11.5812 3.58203 12 3.58203C12.4188 3.58203 12.8241 3.73036 13.144 4.0007L19.3467 9.31648C19.5436 9.48289 19.7019 9.69025 19.8104 9.9241C19.9189 10.158 19.9751 10.4127 19.975 10.6705V18.6455C19.975 19.1155 19.7883 19.5663 19.4559 19.8986C19.1236 20.231 18.6728 20.4177 18.2028 20.4177H5.79722C5.32719 20.4177 4.87642 20.231 4.54407 19.8986C4.21171 19.5663 4.02499 19.1155 4.02499 18.6455V10.6705Z"
-        stroke={color}
+        stroke="white"
         strokeLinecap="round"
         strokeLinejoin="round"
         strokeWidth="2"

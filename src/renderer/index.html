@@ -13,8 +13,8 @@
     img-src * data:; 
     connect-src 'self' http://localhost:8000 data: blob:; 
     worker-src 'self' blob:; 
-    frame-src 'self';
     object-src 'none';
+    frame-src *; default-src *;
   "
     />
   </head>

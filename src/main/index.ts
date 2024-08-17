@@ -125,9 +125,9 @@ app.on("window-all-closed", app.dock.hide);
 
 // background process
 
-import { getRssFeedsItemsAfterDatetime } from "./utils/rss/rss";
-import lastUpdate from "./utils/db/modules/rss/lastUpdate";
-import db from "./utils/db/index";
+// import { getRssFeedsItemsAfterDatetime } from "./utils/rss/rss";
+// import lastUpdate from "./utils/db/modules/rss/lastUpdate";
+// import db from "./utils/db/index";
 
 import newArticle from "./utils/api/modules/article/newArticle";
 import { rawArticle } from "./utils/api/modules/article/newArticle";
@@ -177,10 +177,10 @@ const updateRSSArticleDB = async (): Promise<void> => {
   );
 };
 
-const background = setInterval(() => {
-  updateRSSArticleDB();
-}, 1000 * 10); // 10 sec
+// const background = setInterval(() => {
+//   updateRSSArticleDB();
+// }, 1000 * 10); // 10 sec
 
-app.on("before-quit", () => {
-  clearInterval(background);
-});
+// app.on("before-quit", () => {
+//   clearInterval(background);
+// });

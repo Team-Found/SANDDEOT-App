@@ -1,7 +1,8 @@
 export default interface Article {
+  articleID: number;
+  RSSID: number;
   title: string;
-  author: string;
-  level: number;
-  progress: number;
-  image: Blob;
+  date: Date;
+  body: string;
+  saved: number;
 }
