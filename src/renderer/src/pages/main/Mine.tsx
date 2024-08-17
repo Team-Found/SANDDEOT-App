@@ -32,6 +32,7 @@ export default function Mine(): JSX.Element {
               rssID={0}
               date={a.date}
               articleID={a.articleID}
+              saved={a.saved}
             />
           </Link>
         );

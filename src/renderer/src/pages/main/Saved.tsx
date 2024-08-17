@@ -31,6 +31,7 @@ export default function Saved(): JSX.Element {
               rssID={a.RSSID}
               date={a.date}
               articleID={a.articleID}
+              saved={a.saved}
             />
           </Link>
         );

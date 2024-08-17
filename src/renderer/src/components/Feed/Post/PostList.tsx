@@ -10,6 +10,7 @@ export default function PostList(): JSX.Element {
         rssID={0}
         date="2days ago"
         articleID={1}
+        saved={0}
       />
     </Link>
   );

@@ -13,20 +13,22 @@ import {
 } from "react-share";
 
 export default function PostActionBlock({
-  marked = false,
   title,
   URL,
+  saved,
+  articleID,
 }: {
-  marked?: boolean;
   title: string;
   URL: string;
+  saved: number;
+  articleID: number;
 }): JSX.Element {
   const body = `읽기 지원도구 '산뜻'과 함께 ${title} 글을 읽어보세요!\n${URL}`;
   const [shareShow, setShareShow] = useState(false);
   return (
     <div className="flex w-full justify-between relative">
       <div className="flex gap-2">
-        <Mark selected={marked} />
+        <Mark saved={saved} articleID={articleID} />
         <img
           src={Share}
           alt="공유하기"

@@ -8,6 +8,7 @@ export default function Post(props: {
   rssID: number;
   date: string;
   articleID: number;
+  saved: number;
 }): JSX.Element {
   function removeHTMLTags(str) {
     return str.replace(/<\/?[^>]+(>|$)/g, "");
@@ -37,7 +38,7 @@ export default function Post(props: {
         setRss(data);
         console.log(data);
       } catch (error) {
-        console.log("Mine page error", error);
+        console.log("Post component error", error);
       }
     };
     articleList();
@@ -79,7 +80,12 @@ export default function Post(props: {
             </div>
           </div>
         </div>
-        <PostActionBlock title="" URL="" />
+        <PostActionBlock
+          title=""
+          URL=""
+          saved={props.saved}
+          articleID={props.articleID}
+        />
       </div>
     </div>
   ) : (

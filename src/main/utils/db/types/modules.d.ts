@@ -25,6 +25,8 @@ article: {
 
     RSSDetail(RSSID: number): Promise<RSS>;
 
+    save(articleID: number, saved: number): Promise<void>;
+
     detail3(articleID: number): Promise<ArticleDetail>;
 
     savedArticleList(): Promise<Article[]>;
