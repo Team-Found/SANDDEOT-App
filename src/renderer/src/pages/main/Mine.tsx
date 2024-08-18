@@ -28,7 +28,7 @@ export default function Mine(): JSX.Element {
           <Link to={`/detail2/${a.articleID}`} key={i}>
             <Post
               title={a.title}
-              description={a.description}
+              description={a.body}
               body={a.body}
               rssID={0}
               date={a.date}
