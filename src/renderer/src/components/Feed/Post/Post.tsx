@@ -2,16 +2,26 @@ import Photo from "./Photo";
 import PostActionBlock from "./PostActionBlock";
 import { useEffect, useState } from "react";
 
+import TimeAgo from "javascript-time-ago";
+
+// English.
+import ko from "javascript-time-ago/locale/ko";
+
 export default function Post(props: {
   title: string;
   description: string;
   rssID: number;
-  date: string;
+  date: number;
   articleID: number;
   saved: number;
   reRender: boolean;
   setReRender: React.Dispatch<React.SetStateAction<boolean>>;
 }): JSX.Element {
+  TimeAgo.addDefaultLocale(ko);
+
+  // Create formatter (English).
+  const timeAgo = new TimeAgo("ko-KR");
+
   function removeHTMLTags(str) {
     return str.replace(/<\/?[^>]+(>|$)/g, "");
   }
@@ -58,7 +68,7 @@ export default function Post(props: {
                 {rss[0].RSSName}
               </div>
               <div className="text-stone-300 text-xs font-normal leading-3">
-                {props.date}
+                {timeAgo.format(new Date(props.date * 1000))}
               </div>
             </div>
             <div className="opacity-0 justify-start items-center gap-1 flex">
