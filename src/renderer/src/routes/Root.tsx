@@ -30,7 +30,7 @@ export default function Root({
         <Sidebar />
         <div className="flex flex-col bg-background text-foreground items-start flex-1 self-stretch grow overflow-y-auto h-[calc(100dvh-2.25rem)]">
           {children ? children : <Outlet />}
-          <ToastContainer />
+          <ToastContainer theme="dark" pauseOnHover />
         </div>
       </div>
     </>
