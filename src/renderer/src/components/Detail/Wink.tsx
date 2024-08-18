@@ -14,9 +14,11 @@ const Wink: React.FC<{
   showControls: boolean;
 }> = ({ body, highlightPercentage, focus, showControls }) => {
   const [text, setText] = useState<string>("");
+  const [nonContentElements, setNonContentElements] = useState<string[]>([]);
 
   useEffect(() => {
     setText(body);
+    extractNonContentTags(body); // 자식 요소를 가질 수 없는 태그 및 code 블록, figure 태그 처리
   }, [body]);
 
   const sentenceWiseNormalizedWeights = (doc: any, its: any) => {
@@ -32,10 +34,7 @@ const Wink: React.FC<{
       `rgba(151, 78, 175, 0)`,
       `rgba(151, 78, 175, ${opacity})`,
     );
-    console.log(
-      colorScale(normalizedImportance).split(",")[3]?.split(")")[0],
-      colorScale(normalizedImportance),
-    );
+
     const backgroundColor =
       isHighlightActive &&
       colorScale(normalizedImportance).split(",")[3]?.split(")")[0] > 0.3
@@ -60,12 +59,31 @@ const Wink: React.FC<{
     };
   };
 
+  const extractNonContentTags = (html: string) => {
+    const parser = new DOMParser();
+    const docFragment = parser.parseFromString(html, "text/html");
+    const removableElements = docFragment.querySelectorAll(
+      "img, input, br, hr, area, base, col, embed, source, track, wbr, figure, pre, code",
+    );
+    const extractedElements: string[] = [];
+
+    removableElements.forEach((element) => {
+      extractedElements.push(element.outerHTML);
+      element.remove(); // 텍스트에서 해당 태그 제거
+    });
+
+    setNonContentElements(extractedElements); // 태그들을 저장
+    setText(docFragment.body.innerHTML); // 해당 태그들을 제거한 텍스트로 설정
+  };
+
   const processText = () => {
     const doc = nlp.readDoc(text);
     const sentences = doc.sentences().out(its.value);
     const sentenceWeights = sentenceWiseNormalizedWeights(doc, its);
 
     const maxImportance = Math.max(...sentenceWeights);
+
+    let tagIndex = 0;
 
     return sentences.map((sentence, index) => {
       const importance = sentenceWeights[index];
@@ -75,10 +93,10 @@ const Wink: React.FC<{
       const docFragment = parser.parseFromString(sentence, "text/html");
       const elements = Array.from(docFragment.body.childNodes);
 
-      return elements.map((element, i) => {
+      const sentenceElements = elements.map((element, i) => {
         if (element.nodeType === Node.ELEMENT_NODE) {
           const TagName = (element as HTMLElement).tagName.toLowerCase();
-          console.log(style.backgroundColor);
+
           const children = Array.from(element.childNodes).map((child, j) => {
             if (child.nodeType === Node.TEXT_NODE) {
               return (
@@ -89,7 +107,7 @@ const Wink: React.FC<{
                     if (focus) e.currentTarget.style.opacity = "1";
                   }}
                   onMouseLeave={
-                    style.backgroundColor == "transparent"
+                    style.backgroundColor === "transparent"
                       ? (e) => {
                           if (focus) e.currentTarget.style.opacity = "0.2";
                         }
@@ -102,9 +120,57 @@ const Wink: React.FC<{
                 </span>
               );
             } else if (child.nodeType === Node.ELEMENT_NODE) {
-              return React.cloneElement(
-                React.createElement(
-                  (child as HTMLElement).tagName.toLowerCase(),
+              const ChildTagName = (child as HTMLElement).tagName.toLowerCase();
+
+              if (ChildTagName === "a") {
+                return (
+                  <a
+                    key={j}
+                    href={(child as HTMLAnchorElement).href}
+                    style={style}
+                    onMouseEnter={(e) => {
+                      if (focus) e.currentTarget.style.opacity = "1";
+                    }}
+                    onMouseLeave={
+                      style.backgroundColor === "transparent"
+                        ? (e) => {
+                            if (focus) e.currentTarget.style.opacity = "0.2";
+                          }
+                        : (e) => {
+                            if (focus) e.currentTarget.style.opacity = "1";
+                          }
+                    }
+                  >
+                    {(child as HTMLElement).innerHTML}
+                  </a>
+                );
+              } else if (ChildTagName === "pre" || ChildTagName === "code") {
+                // `pre` 및 `code` 블록 처리
+                return (
+                  <div
+                    key={j}
+                    style={{
+                      position: "relative",
+                      marginBottom: "1rem",
+                      backgroundColor: style.backgroundColor,
+                      padding: "8px",
+                      borderRadius: "4px",
+                    }}
+                  >
+                    <pre
+                      style={{
+                        margin: "0",
+                        overflow: "auto",
+                        maxHeight: "400px",
+                      }}
+                    >
+                      <code>{(child as HTMLElement).innerHTML}</code>
+                    </pre>
+                  </div>
+                );
+              } else {
+                return React.createElement(
+                  ChildTagName,
                   {
                     key: j,
                     style: style,
@@ -112,7 +178,7 @@ const Wink: React.FC<{
                       if (focus) e.currentTarget.style.opacity = "1";
                     },
                     onMouseLeave:
-                      style.backgroundColor == "transparent"
+                      style.backgroundColor === "transparent"
                         ? (e) => {
                             if (focus) e.currentTarget.style.opacity = "0.2";
                           }
@@ -120,10 +186,9 @@ const Wink: React.FC<{
                             e.currentTarget.style.opacity = "1";
                           },
                   },
-                ),
-                undefined,
-                child.textContent,
-              );
+                  (child as HTMLElement).innerHTML,
+                );
+              }
             } else {
               return null;
             }
@@ -133,7 +198,10 @@ const Wink: React.FC<{
             TagName,
             {
               key: i,
-              style: { display: "block" },
+              style: {
+                display: TagName === "h4" ? "block" : "inline",
+                fontSize: TagName === "h4" ? "1.25em" : "inherit",
+              },
             },
             children,
           );
@@ -146,7 +214,7 @@ const Wink: React.FC<{
                 if (focus) e.currentTarget.style.opacity = "1";
               }}
               onMouseLeave={
-                style.backgroundColor == "transparent"
+                style.backgroundColor === "transparent"
                   ? (e) => {
                       if (focus) e.currentTarget.style.opacity = "0.2";
                     }
@@ -162,6 +230,18 @@ const Wink: React.FC<{
           return null;
         }
       });
+
+      // 각 문장의 마지막에 자식 요소가 없는 태그 및 code, pre, figure 태그를 삽입 (원하는 위치에 삽입 가능)
+      if (tagIndex < nonContentElements.length) {
+        sentenceElements.push(
+          <span
+            key={`tag-${tagIndex}`}
+            dangerouslySetInnerHTML={{ __html: nonContentElements[tagIndex++] }}
+          />,
+        );
+      }
+
+      return sentenceElements;
     });
   };
 
