@@ -18,10 +18,15 @@ export default function Post(props: {
   reRender: boolean;
   setReRender: React.Dispatch<React.SetStateAction<boolean>>;
 }): JSX.Element {
-  TimeAgo.addDefaultLocale(ko);
+  const [timeState, setTimeState] = useState("");
+
+  useEffect(() => {
+    TimeAgo.addDefaultLocale(ko);
+    const timeAgo = new TimeAgo("ko-KR");
+    setTimeState(timeAgo.format(new Date(props.date * 1000)));
+  }, []);
 
   // Create formatter (English).
-  const timeAgo = new TimeAgo("ko-KR");
 
   function removeHTMLTags(str): string {
     return str.replace(/<\/?[^>]+(>|$)/g, "");
@@ -69,7 +74,7 @@ export default function Post(props: {
                 {rss[0].RSSName}
               </div>
               <div className="text-stone-300 text-xs font-normal leading-3">
-                {timeAgo.format(new Date(props.date * 1000))}
+                {timeState}
               </div>
             </div>
             <div className="opacity-0 justify-start items-center gap-1 flex">
