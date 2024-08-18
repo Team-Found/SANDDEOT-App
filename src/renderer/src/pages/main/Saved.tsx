@@ -27,7 +27,8 @@ export default function Saved(): JSX.Element {
           <Link to={`/detail3/${a.articleID}`} key={i}>
             <Post
               title={a.title}
-              description={a.body}
+              description={a.description}
+              body={a.body}
               rssID={a.RSSID}
               date={a.date}
               articleID={a.articleID}

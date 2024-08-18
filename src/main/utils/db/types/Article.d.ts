@@ -3,6 +3,7 @@ export default interface Article {
   RSSID: number;
   title: string;
   date: Date;
-  body: string;
+  body?: string;
   saved: number;
+  description: string;
 }

@@ -146,23 +146,7 @@ const updateRSSArticleDB = async (): Promise<void> => {
     return [];
   }
   console.log(items);
-  // console.log(
-  //   items.map(
-  //     (item) =>
-  //       ({
-  //         rssID: item.RSSID,
-  //         title: item.title,
-  //         description: item.description,
-  //         summary: item.summary,
-  //         date: Math.floor(new Date(item.isoDate).getTime() / 1000),
-  //         content: [{ value: item.content }],
-  //         link: item.link,
-  //         media_thumbnail: item.media_thumbnail,
-  //       }) as rawArticle,
-  //   ),
-  // );
-
-  newArticle(
+  console.log(
     items.map(
       (item) =>
         ({
@@ -171,9 +155,25 @@ const updateRSSArticleDB = async (): Promise<void> => {
           description: item.description,
           summary: item.summary,
           date: Math.floor(new Date(item.isoDate).getTime() / 1000),
-          content: [{ value: item.content }],
+          content: [{ value: item["content:encoded"] }],
           link: item.link,
-          media_thumbnail: item.media_thumbnail,
+          media_thumbnail: item["media:thumbnail"],
+        }) as rawArticle,
+    ),
+  );
+
+  newArticle(
+    items.map(
+      (item) =>
+        ({
+          rssID: item.RSSID,
+          title: item.title,
+          description: item.content || item.description,
+          summary: item.summary,
+          date: Math.floor(new Date(item.isoDate).getTime() / 1000),
+          content: [{ value: item["content:encoded"] }],
+          link: item.link,
+          media_thumbnail: item["media:thumbnail"],
         }) as rawArticle,
     ),
   );

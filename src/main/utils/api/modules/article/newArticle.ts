@@ -7,7 +7,7 @@ const dbApi = db;
 interface rawArticle {
   rssID: number;
   title: string;
-  description: string;
+  description?: string;
   summary?: string;
   date: number;
   content: { value: string }[];
@@ -42,17 +42,19 @@ const newArticle = async (articles: rawArticle[]) => {
         media_thumbnail: string;
       };
     }) => {
-      // console.log(result);
+      console.log(result);
       dbApi.rss.article.add(
         result.article.articleID,
         result.article.rssID,
         result.article.title,
         new Date(result.article.date),
         result.article.content[0].value,
+        {},
+        result.article.description || result.article.summary,
       );
     },
   );
-  console.log(response.data);
+  // console.log(response.data);
 };
 
 export default newArticle;

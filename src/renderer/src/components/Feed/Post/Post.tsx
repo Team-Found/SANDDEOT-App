@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 export default function Post(props: {
   title: string;
   description: string;
+  body?: string;
   rssID: number;
   date: string;
   articleID: number;
@@ -12,7 +13,7 @@ export default function Post(props: {
   reRender: boolean;
   setReRender: React.Dispatch<React.SetStateAction<boolean>>;
 }): JSX.Element {
-  function removeHTMLTags(str) {
+  function removeHTMLTags(str): string {
     return str.replace(/<\/?[^>]+(>|$)/g, "");
   }
 
@@ -77,7 +78,7 @@ export default function Post(props: {
               </div>
 
               <div className="self-stretch justify-start items-start gap-1.5 inline-flex w-full">
-                <Photo photos={extractionImg(props.description)} />
+                {props.body && <Photo photos={extractionImg(props.body)} />}
               </div>
             </div>
           </div>
