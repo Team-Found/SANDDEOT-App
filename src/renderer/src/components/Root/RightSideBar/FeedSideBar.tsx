@@ -81,6 +81,8 @@ function PromptModal({
           blogTitle="#"
           followProperty1="default"
           property1="variant-2"
+          reRender={reRender}
+          setReRender={setReRender}
         />
       </div>
       <Modal
@@ -143,7 +145,7 @@ const FrameWrapper = (): JSX.Element => {
               구독한 RSS
             </div>
             <div className="flex flex-col items-start gap-0 self-stretch w-full flex-[0_0_auto] box-border">
-              <FollowedRSSList reRender={reRender} />
+              <FollowedRSSList reRender={reRender} setReRender={setReRender} />
               <PromptModal reRender={reRender} setReRender={setReRender} />
             </div>
           </div>
@@ -152,26 +154,34 @@ const FrameWrapper = (): JSX.Element => {
               이런 RSS는 어때요?
             </div>
             <div className="flex flex-col items-start gap-[-3px] self-stretch w-full flex-[0_0_auto]">
-              <RssBlock
+              {/* <RssBlock
                 blogTitle="Apple"
                 followProperty1="default"
                 property1="default"
+                reRender={reRender}
+                setReRender={setReRender}
               />
               <RssBlock
                 blogTitle="Github Blog"
                 followProperty1="default"
                 property1="default"
+                reRender={reRender}
+                setReRender={setReRender}
               />
               <RssBlock
                 blogTitle="Billboard"
                 followProperty1="default"
                 property1="default"
+                reRender={reRender}
+                setReRender={setReRender}
               />
               <RssBlock
                 blogTitle="Fox News"
                 followProperty1="default"
                 property1="default"
-              />
+                reRender={reRender}
+                setReRender={setReRender}
+              /> */}
             </div>
           </div>
         </div>

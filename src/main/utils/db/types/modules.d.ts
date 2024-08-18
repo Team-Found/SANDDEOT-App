@@ -31,6 +31,8 @@ article: {
 
     savedArticleList(): Promise<Article[]>;
 
+    RSSArticleDel(RSSID: number): Promise<void>;
+
     addUserArticle(title: string, date: Date, body: string,): Promise<void>;
 
     detail2(articleID: number): Promise<ArticleDetail>;

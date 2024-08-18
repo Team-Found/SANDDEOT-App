@@ -3,17 +3,23 @@ import { Plus2 } from "./Plus2";
 import { Follow } from "./Follow";
 
 interface Props {
+  RSSID?: number;
   blogTitle: string;
   property1?: "variant-2" | "default";
   followProperty1: "variant-2" | "default";
   imageUri?: string;
+  reRender: boolean;
+  setReRender: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const RssBlock = ({
+  RSSID,
   blogTitle = "",
   property1 = "default",
   followProperty1 = "default",
   imageUri,
+  reRender,
+  setReRender,
 }: Props): JSX.Element => {
   return (
     <div
@@ -34,7 +40,13 @@ export const RssBlock = ({
               {blogTitle}
             </div>
           </div>
-          <Follow className="!flex-[0_0_auto]" property1={followProperty1} />
+          <Follow
+            className="!flex-[0_0_auto]"
+            property1={followProperty1}
+            RSSID={RSSID ? RSSID : 0}
+            reRender={reRender}
+            setReRender={setReRender}
+          />
         </>
       )}
 

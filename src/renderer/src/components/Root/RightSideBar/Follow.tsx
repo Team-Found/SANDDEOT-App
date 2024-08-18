@@ -3,9 +3,18 @@ import PropTypes from "prop-types";
 interface Props {
   property1: "variant-2" | "default";
   className: any;
+  RSSID: number;
+  reRender: boolean;
+  setReRender: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const Follow = ({ property1, className }: Props): JSX.Element => {
+export const Follow = ({
+  property1,
+  className,
+  RSSID,
+  reRender,
+  setReRender,
+}: Props): JSX.Element => {
   return (
     <div
       className={`inline-flex items-center gap-2.5 justify-center relative ${className}`}
@@ -16,6 +25,13 @@ export const Follow = ({ property1, className }: Props): JSX.Element => {
             ? "text-variable-collection-red60"
             : "text-variable-collection-blue60"
         }`}
+        onClick={() => {
+          if (property1 == "variant-2") {
+            window.dbApi.article.RSSArticleDel(RSSID).then(() => {
+              setReRender(!reRender);
+            });
+          }
+        }}
       >
         {property1 === "default" && <>Follow</>}
 
