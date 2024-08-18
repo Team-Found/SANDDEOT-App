@@ -27,11 +27,16 @@ const customStyles = {
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement("#root");
 
-function PromptModal(): JSX.Element {
+function PromptModal({
+  reRender,
+  setReRender,
+}: {
+  reRender: boolean;
+  setReRender: React.Dispatch<React.SetStateAction<boolean>>;
+}): JSX.Element {
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [inputValue, setInputValue] = useState("");
-
   function openModal(): void {
     setIsOpen(true);
   }
@@ -56,6 +61,9 @@ function PromptModal(): JSX.Element {
         } else {
           toast.error("RSS 추가에 실패했습니다.");
         }
+      })
+      .then(() => {
+        setReRender(!reRender);
       })
       .catch((err) => {
         console.log(err);
@@ -113,6 +121,7 @@ function PromptModal(): JSX.Element {
 }
 
 const FrameWrapper = (): JSX.Element => {
+  const [reRender, setReRender] = useState(false);
   return (
     <div className="flex flex-col w-[295px] h-[810px] items-start gap-[17px] pt-2 pb-[45px] px-0 border-l-[1px] border-primaryBd">
       <div className="px-4 w-full box-border">
@@ -134,8 +143,8 @@ const FrameWrapper = (): JSX.Element => {
               구독한 RSS
             </div>
             <div className="flex flex-col items-start gap-0 self-stretch w-full flex-[0_0_auto] box-border">
-              <FollowedRSSList />
-              <PromptModal />
+              <FollowedRSSList reRender={reRender} />
+              <PromptModal reRender={reRender} setReRender={setReRender} />
             </div>
           </div>
           <div className="flex flex-col items-start gap-2.5 self-stretch w-full flex-[0_0_auto]">

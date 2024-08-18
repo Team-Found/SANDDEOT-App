@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { RssBlock } from "./RssBlock";
-export default function FollowedRSSList(): JSX.Element {
+export default function FollowedRSSList({
+  reRender,
+}: {
+  reRender: boolean;
+}): JSX.Element {
   const [rssList, setRssList] = useState<
     Awaited<ReturnType<typeof window.dbApi.rss.list>>
   >([]);
@@ -8,8 +12,9 @@ export default function FollowedRSSList(): JSX.Element {
     window.dbApi.rss.list().then((rows) => {
       setRssList(rows);
       console.log(rows);
+      console.log("hi");
     });
-  }, []);
+  }, [reRender]);
   return (
     <>
       {rssList.map((rss) => (

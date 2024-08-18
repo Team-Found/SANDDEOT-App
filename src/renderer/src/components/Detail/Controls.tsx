@@ -133,7 +133,7 @@ export const Controls: React.FC<ControlsProps> = ({
                       <div className="my-2">
                         <Slider
                           min={0}
-                          max={100}
+                          max={99}
                           defaultValue={[highlightPercentage]}
                           onValueChange={(value) =>
                             setHighlightPercentage(Number(value[0]))
