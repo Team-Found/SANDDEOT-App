@@ -24,7 +24,7 @@ export default function Post(props: {
     TimeAgo.addDefaultLocale(ko);
     const timeAgo = new TimeAgo("ko-KR");
     setTimeState(timeAgo.format(new Date(props.date * 1000)));
-  }, []);
+  }, [props.reRender, props.rssID]);
 
   // Create formatter (English).
 
@@ -59,7 +59,7 @@ export default function Post(props: {
       }
     };
     articleList();
-  }, [props.reRender]);
+  }, [props.reRender, props.rssID]);
 
   return rss ? (
     <div className="w-full self-stretch p-3.5 border-variable-collection-primaryBd border-[1px] rounded-lg justify-start items-start gap-6 inline-flex mb-4">
