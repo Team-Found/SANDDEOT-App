@@ -18,7 +18,7 @@ const RSSArticleDel = (RSSID: number): Promise<void> => {
 };
 
 const RSSDel2 = (RSSID: number): Promise<void> => {
-  const sql = `DELETE FROM RSS WHERE RSSID = ?`;
+  const sql = `UPDATE RSS SET state = 1 WHERE RSSID = ?`;
   return new Promise((resolve, reject) => {
     db.run(sql, [RSSID], (err) => {
       if (err) {

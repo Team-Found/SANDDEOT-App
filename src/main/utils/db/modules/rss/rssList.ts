@@ -3,7 +3,7 @@ import { RSS } from "../../types/Rss";
 
 const list = (): Promise<RSS[]> => {
   return new Promise((resolve, reject) => {
-    db.all("SELECT * FROM RSS", (err, rows: RSS[]) => {
+    db.all("SELECT * FROM RSS WHERE state = 0", (err, rows: RSS[]) => {
       if (err) {
         console.error("SQL error:", err.message);
         reject();
