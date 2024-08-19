@@ -103,8 +103,6 @@ export default function Post(props: {
           URL=""
           saved={props.saved}
           articleID={props.articleID}
-          reRender={props.reRender}
-          setReRender={props.setReRender}
         />
       </div>
     </div>

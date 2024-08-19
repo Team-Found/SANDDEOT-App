@@ -17,27 +17,18 @@ export default function PostActionBlock({
   URL,
   saved,
   articleID,
-  reRender,
-  setReRender,
 }: {
   title: string;
   URL: string;
   saved: number;
   articleID: number;
-  reRender: boolean;
-  setReRender: React.Dispatch<React.SetStateAction<boolean>>;
 }): JSX.Element {
   const body = `읽기 지원도구 '산뜻'과 함께 ${title} 글을 읽어보세요!\n${URL}`;
   const [shareShow, setShareShow] = useState(false);
   return (
     <div className="flex w-full justify-between relative">
       <div className="flex gap-2">
-        <Mark
-          saved={saved}
-          articleID={articleID}
-          reRender={reRender}
-          setReRender={setReRender}
-        />
+        <Mark saved={saved} articleID={articleID} />
         <img
           src={Share}
           alt="공유하기"

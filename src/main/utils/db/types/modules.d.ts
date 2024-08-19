@@ -29,8 +29,6 @@ article: {
 
     save(articleID: number, saved: number): Promise<void>;
 
-    saveState(articleID: number): Promise<number>;
-
     detail3(articleID: number): Promise<ArticleDetail>;
 
     savedArticleList(): Promise<Article[]>;
