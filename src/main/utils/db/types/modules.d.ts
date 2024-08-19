@@ -25,11 +25,15 @@ article: {
 
     RSSDetail(RSSID: number): Promise<RSS>;
 
+    rssStateUp(RSSURL: string): Promise<void>;
+
     save(articleID: number, saved: number): Promise<void>;
 
     detail3(articleID: number): Promise<ArticleDetail>;
 
     savedArticleList(): Promise<Article[]>;
+
+    selectRSS(RSSURL: string): Promise<number>;
 
     RSSArticleDel(RSSID: number): Promise<void>;
 

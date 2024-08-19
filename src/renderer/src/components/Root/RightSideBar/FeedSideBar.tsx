@@ -46,28 +46,41 @@ function PromptModal({
     subtitle.style.color = "#f00";
   }
   function insertRss(): void {
-    window.api
-      .insertRss(inputValue)
-      .then((res) => {
-        if (res.status === "success") {
-          window.dbApi.rss.add({
-            RSSID: res.rssID,
-            RSSURL: res.rssUrl,
-            RSSName: res.rssName,
-            RSSImageUrl: res.favicon,
-          });
+    window.dbApi.article
+      .selectRSS(inputValue)
+
+      .then(() => {
+        window.dbApi.article.rssStateUp(inputValue).then(() => {
           toast.success("RSS가 추가되었습니다.");
           closeModal();
-        } else {
-          toast.error("RSS 추가에 실패했습니다.");
-        }
+          setReRender(!reRender);
+        });
       })
-      .then(() => {
-        setReRender(!reRender);
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error("RSS 추가에 실패했습니다.");
+
+      .catch(() => {
+        window.api
+          .insertRss(inputValue)
+          .then((res) => {
+            if (res.status === "success") {
+              window.dbApi.rss.add({
+                RSSID: res.rssID,
+                RSSURL: res.rssUrl,
+                RSSName: res.rssName,
+                RSSImageUrl: res.favicon,
+              });
+              toast.success("RSS가 추가되었습니다.");
+              closeModal();
+            } else {
+              toast.error("RSS 추가에 실패했습니다.");
+            }
+          })
+          .then(() => {
+            setReRender(!reRender);
+          })
+          .catch((err) => {
+            console.log(err);
+            toast.error("RSS 추가에 실패했습니다.");
+          });
       });
   }
 
