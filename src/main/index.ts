@@ -129,23 +129,54 @@ import { getRssFeedsItemsAfterDatetime } from "./utils/rss/rss";
 import lastUpdate from "./utils/db/modules/rss/lastUpdate";
 import db from "./utils/db/index";
 
+import newArticle from "./utils/api/modules/article/newArticle";
+import { rawArticle } from "./utils/api/modules/article/newArticle";
+
 const dbApi = db;
 
-const updateRSSArticleDB = async (): Promise<Array<object>> => {
+const updateRSSArticleDB = async (): Promise<void> => {
   const lastUpdateDate = await lastUpdate();
+  console.log(lastUpdateDate, "lastUpdateDate");
   const RSSs = await dbApi.rss.list();
-  console.log(RSSs);
+  console.log(RSSs, "RSSs");
   const items = await getRssFeedsItemsAfterDatetime(RSSs, lastUpdateDate);
-  items.map(async (item) => {
-    dbApi.rss.article.add(
-      item.RSSID,
-      item.title,
-      new Date(item.isoDate),
-      item.content,
-      {},
-    );
-  });
+
+  if (items.length === 0) {
+    console.log("already up to date");
+    return [];
+  }
   console.log(items);
+  console.log(
+    items.map(
+      (item) =>
+        ({
+          rssID: item.RSSID,
+          title: item.title,
+          description: item.description,
+          summary: item.summary,
+          date: Math.floor(new Date(item.isoDate).getTime() / 1000),
+          content: [{ value: item["content:encoded"] }],
+          link: item.link,
+          media_thumbnail: item["media:thumbnail"],
+        }) as rawArticle,
+    ),
+  );
+
+  newArticle(
+    items.map(
+      (item) =>
+        ({
+          rssID: item.RSSID,
+          title: item.title,
+          description: item.content || item.description,
+          summary: item.summary,
+          date: Math.floor(new Date(item.isoDate).getTime() / 1000),
+          content: [{ value: item["content:encoded"] }],
+          link: item.link,
+          media_thumbnail: item["media:thumbnail"],
+        }) as rawArticle,
+    ),
+  );
 };
 
 const background = setInterval(() => {

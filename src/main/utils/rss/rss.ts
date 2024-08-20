@@ -11,15 +11,22 @@ import { RSS } from "../db/types/Rss";
 //   },
 // });
 
-const parser = new Parser();
+const parser = new Parser({
+  customFields: {
+    item: ["description", "summary", "media:thumbnail", "media:content"],
+  },
+});
 
 export type Feed = {
   [key: string]: any;
 } & Parser.Output<{ [key: string]: any }>;
 
 export async function getRssFeed(rss: RSS): Promise<Feed> {
+  console.log(rss.RSSURL);
   const feed = await parser.parseURL(rss.RSSURL);
-  feed["RSSID"] = rss.RSSID;
+  feed.items.forEach((item) => {
+    item.RSSID = rss.RSSID;
+  });
   return feed;
 }
 
@@ -54,15 +61,20 @@ export async function getRssFeedsItemsAfterDatetime(
 }
 
 const ISODatetoDate = (isoDate?: string): Date => {
-  return new Date(isoDate);
+  return new Date(isoDate ?? "");
 };
 const ISODatetoUnix = (isoDate: string): number => {
   return Math.floor(ISODatetoDate(isoDate).getTime() / 1000);
 };
 
-getRssFeedsItems(["https://www.reddit.com/.rss"]).then((items) => {
-  console.log(items);
-});
+// getRssFeedsItems([{
+//   RSSID: 1,
+//   RSSURL: "https://www.reddit.com/.rss",
+//   RSSName: "Reddit",
+//   RSSImageUrl: "https://www.reddit.com/favicon.ico",
+// } as RSS]).then((items) => {
+//   console.log(items);
+// });
 
 // getRssFeed("https://www.reddit.com/.rss").then((feed) => {
 //   console.log(feed.title);

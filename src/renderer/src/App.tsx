@@ -1,18 +1,18 @@
-import HomeScreen from "@pages/Home";
-import { Ocr } from "@pages/Article/OCR";
-import Article from "@pages/Article/Article";
-import Input from "@pages/Article/ArticleAddForm";
+import { Ocr } from "@renderer/pages/articleAdd/OCR";
+import Input from "@renderer/pages/articleAdd/ArticleAddForm";
 import ErrorPage from "@pages/error";
 import Root from "@renderer/routes/Root";
-import Explore from "@pages/Explore";
-import Detail from "@pages/Detail";
-import Saved from "@pages/Saved";
-import Following from "@pages/Following";
+import D1 from "@renderer/pages/articleDetail/D1";
+import D2 from "@renderer/pages/articleDetail/D2";
+import D3 from "@renderer/pages/articleDetail/D3";
+import Saved from "@renderer/pages/main/Saved";
+import Following from "@renderer/pages/main/Following";
+import Mine from "@renderer/pages/main/Mine";
 import { Outlet } from "react-router-dom";
 // import { Routes, Route } from "react-router-dom";
 import { createHashRouter, RouterProvider } from "react-router-dom";
-import { ThemeProvider } from "@components/theme-provider";
-import Feed from "@pages/Feed";
+import { ThemeProvider } from "@renderer/components/Root/Set/theme-provider";
+import Feed from "@renderer/pages/main/Feed";
 import FeedRouter from "./routes/Feed";
 
 const router = createHashRouter([
@@ -37,6 +37,10 @@ const router = createHashRouter([
         path: "saved",
         element: <Saved />,
       },
+      {
+        path: "mine",
+        element: <Mine />,
+      },
     ],
   },
   {
@@ -45,7 +49,15 @@ const router = createHashRouter([
     children: [
       {
         path: "detail/:id",
-        element: <Detail />,
+        element: <D1 />,
+      },
+      {
+        path: "detail2/:id",
+        element: <D2 />,
+      },
+      {
+        path: "detail3/:id",
+        element: <D3 />,
       },
       {
         path: "ocr",
@@ -58,16 +70,6 @@ const router = createHashRouter([
           {
             index: true,
             element: <Input />,
-          },
-        ],
-      },
-      {
-        path: "article",
-        element: <Outlet />,
-        children: [
-          {
-            index: true,
-            element: <Article />,
           },
         ],
       },

@@ -1,6 +1,9 @@
 interface RssRes {
   status: string;
-  pk: number;
+  rssID: number;
+  rssUrl: string;
+  rssName: string;
+  favicon: string;
   message: string;
 }
 

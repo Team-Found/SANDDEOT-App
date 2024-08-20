@@ -8,7 +8,7 @@ const lastUpdate = (): Promise<Date> => {
         console.error("SQL error:", err.message);
         resolve(new Date(1970, 1, 1));
       }
-      resolve(new Date(row.date));
+      resolve(new Date(row.date * 1000));
     });
   });
 };

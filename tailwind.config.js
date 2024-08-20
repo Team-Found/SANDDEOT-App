@@ -33,6 +33,7 @@ module.exports = {
           "var(--variable-collection-secondaryText)",
         "variable-collection-secondarybg":
           "var(--variable-collection-secondarybg)",
+        AIPurple: "var(--variable-collection-AIPurple)",
         blue60: "var(--variable-collection-blue60)",
         green60: "var(--variable-collection-green60)",
         orange60: "var(--variable-collection-orange60)",
@@ -94,7 +95,22 @@ module.exports = {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            mark: {
+              backgroundColor: "rgba(255, 0, 0, 0.3)", // 하이라이트 배경색
+              fontWeight: "bold", // 하이라이트 텍스트 굵기
+              color: "inherit", // 텍스트 색상 상속
+            },
+          },
+        },
+      },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/typography"),
+    require("@tailwindcss/line-clamp"),
+  ],
 };

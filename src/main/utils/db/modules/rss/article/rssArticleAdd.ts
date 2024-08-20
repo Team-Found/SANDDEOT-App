@@ -1,26 +1,32 @@
 import db from "../../../db";
 
 const add = async (
+  articleID: number,
   RSSID: number,
   title: string,
   date: Date,
-  body: string,
-  chat: object,
+  body?: string,
+  chat?: object = {},
+  description: string,
 ): Promise<void> => {
   const query = `
-    INSERT INTO RSSArticle (RSSID, title, date, body, chat)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO RSSArticle (articleID, RSSID, title, date, body, chat, description)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
   return new Promise((resolve, reject) => {
-    db.run(query, [RSSID, title, date, body, chat], (err) => {
-      if (err) {
-        console.error("SQL error3:", err.message);
-        reject();
-      } else {
-        console.log(`글 생성 성공`);
-        resolve();
-      }
-    });
+    db.run(
+      query,
+      [articleID, RSSID, title, date, body, chat, description],
+      (err) => {
+        if (err) {
+          console.error("SQL error3:", err.message);
+          reject();
+        } else {
+          console.log(`글 생성 성공`);
+          resolve();
+        }
+      },
+    );
   });
 };
 
