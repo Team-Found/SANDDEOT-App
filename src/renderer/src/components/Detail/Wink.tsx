@@ -37,7 +37,7 @@ const Wink: React.FC<{
 
     const backgroundColor =
       isHighlightActive &&
-      colorScale(normalizedImportance).split(",")[3]?.split(")")[0] > 0.3
+      colorScale(normalizedImportance).split(",")[3]?.split(")")[0] > 0.4
         ? colorScale(normalizedImportance)
         : "transparent";
 
@@ -45,7 +45,7 @@ const Wink: React.FC<{
       focus &&
       !(
         isHighlightActive &&
-        colorScale(normalizedImportance).split(",")[3]?.split(")")[0] > 0.3
+        colorScale(normalizedImportance).split(",")[3]?.split(")")[0] > 0.4
       )
         ? 0.2
         : 1;
