@@ -5,7 +5,7 @@ const selectRSS = (RSSURL: string): Promise<number> => {
   return new Promise((resolve, reject) => {
     db.get(sql, [RSSURL], (err, row: number) => {
       if (err) {
-        console.error("SQL error:", err.message);
+        console.error("SQL error8:", err.message);
         reject();
       } else if (row) {
         // console.log("Article detail:", row);

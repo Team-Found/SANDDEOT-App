@@ -1,5 +1,6 @@
 import Parser from "rss-parser";
 import { RSS } from "../db/types/Rss";
+import count from "../db/modules/article/count";
 // type CustomFeed = { foo: string };
 // type CustomItem = { bar: number };
 
@@ -39,7 +40,15 @@ export async function getRssFeedsItems(rsss: RSS[]): Promise<Parser.Item[]> {
   const feeds = await getRssFeeds(rsss);
 
   //order by time
-  const items = feeds.flatMap((feed) => feed.items);
+  const items = feeds.flatMap((feed) =>
+    feed.items.map((item) => {
+      rsss.map((item2) => {
+        if (item2.RSSURL == feed.link) item.RSSID = item2.RSSID;
+      });
+      // item.RSSID = feed.link
+      return item;
+    }),
+  );
   items.sort((a, b) => {
     return (
       new Date(b?.isoDate as string)?.getTime() -
@@ -55,11 +64,25 @@ export async function getRssFeedsItemsAfterDatetime(
   datetime: Date,
 ): Promise<Parser.Item[]> {
   const items = await getRssFeedsItems(rsss);
+
+  const already = await count();
+  const alreadyIDs = already.map((item) => {
+    return item.RSSID;
+  });
+
+  let RSSIDs = rsss.map((item) => {
+    return item.RSSID;
+  });
+
+  RSSIDs = RSSIDs.filter((item) => {
+    return !alreadyIDs.includes(item);
+  });
+
   return items.filter((item) => {
+    if (RSSIDs.includes(item.RSSID)) return true;
     return ISODatetoDate(item.isoDate) > datetime;
   });
 }
-
 const ISODatetoDate = (isoDate?: string): Date => {
   return new Date(isoDate ?? "");
 };

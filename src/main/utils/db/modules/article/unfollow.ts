@@ -5,7 +5,7 @@ const RSSArticleDel = (RSSID: number): Promise<void> => {
   return new Promise((resolve, reject) => {
     db.run(sql, [RSSID], (err) => {
       if (err) {
-        console.error("SQL error:", err.message);
+        console.error("SQL error9:", err.message);
         reject();
       } else {
         console.log("Article Del Succese");
@@ -22,7 +22,7 @@ const RSSDel2 = (RSSID: number): Promise<void> => {
   return new Promise((resolve, reject) => {
     db.run(sql, [RSSID], (err) => {
       if (err) {
-        console.error("SQL error:", err.message);
+        console.error("SQL error10:", err.message);
         reject();
       } else {
         resolve();

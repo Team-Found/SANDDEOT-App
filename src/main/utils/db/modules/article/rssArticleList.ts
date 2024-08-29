@@ -6,7 +6,7 @@ const rssArticleList = (): Promise<Article[]> => {
   return new Promise((resolve, reject) => {
     db.all(sql, (err, rows: Article[]) => {
       if (err) {
-        console.error("SQL error:", err.message);
+        console.error("SQL error 4:", err.message);
         reject();
       } else if (rows) {
         resolve(rows);
