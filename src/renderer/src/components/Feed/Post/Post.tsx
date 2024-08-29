@@ -83,7 +83,7 @@ export default function Post(props: {
           </div>
           <div className="self-stretch justify-start items-center inline-flex">
             <div className="grow shrink basis-0 flex-col justify-center items-start gap-2.5 inline-flex">
-              <div className="self-stretch h-16 flex-col justify-start items-start gap-0.5 flex">
+              <div className="self-stretch flex-col justify-start items-start gap-0.5 flex">
                 <div className="self-stretch text-white text-base font-semibold leading-snug">
                   {props.title}
                 </div>
