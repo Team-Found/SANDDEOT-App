@@ -17,6 +17,8 @@ export default function Post(props: {
   saved: number;
   reRender: boolean;
   setReRender: React.Dispatch<React.SetStateAction<boolean>>;
+  rssName?: string;
+  favicon?: string;
 }): JSX.Element {
   const [timeState, setTimeState] = useState("");
 
@@ -54,6 +56,8 @@ export default function Post(props: {
         const data = await window.dbApi.article.RSSDetail(props.rssID);
         setRss(data);
         console.log(data);
+        props.favicon = rss[0].RSSImageURL;
+        props.rssName = rss[0].RSSName;
       } catch (error) {
         console.log("Post component error", error);
       }
@@ -68,9 +72,9 @@ export default function Post(props: {
           <div className="w-96 justify-between items-center flex">
             <div className="justify-center items-center gap-1 flex">
               <div className="w-3.5 h-3.5 rounded-full justify-center items-center flex overflow-clip">
-                <img className="w-10 h-10" src={rss[0].RSSImageURL} />
+                <img className="w-10 h-10" src={props.favicon} />
               </div>
-              <div className="text-gray-200 text-xs">{rss[0].RSSName}</div>
+              <div className="text-gray-200 text-xs">{props.rssName}</div>
               <div className="text-stone-300 text-xs">{timeState}</div>
             </div>
           </div>
