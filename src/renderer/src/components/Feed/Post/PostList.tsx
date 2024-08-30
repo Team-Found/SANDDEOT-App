@@ -77,17 +77,26 @@ export default function PostList(): JSX.Element {
     window.dbApi.article
       .savedArticleList()
       .then((item) => {
-        setSavedList(
-          item.map((a) => {
-            console.log(a);
-            return a.RSSID;
-          }),
-        );
+        const rssIdList = item.map((a) => {
+          console.log("ㅈ", a);
+          return a.RSSID; // RSSID 값만 추출
+        });
+        setSavedList(rssIdList); // RSSID 값만 들어간 배열로 상태 업데이트
+        console.log("tq", rssIdList);
+        return rssIdList; // 새로운 RSSID 리스트 반환
       })
       .then(() => {
         articleRecommend(savedList, 1).then((item) => {
+          console.log(savedList);
+          console.log("tlqkf", item);
           setRecommendList(item);
         });
+      })
+      .then(() => {
+        console.log("리", recommendList);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
       });
   }, []);
 
