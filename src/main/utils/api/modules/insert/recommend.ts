@@ -1,7 +1,7 @@
-import fetch from "electron-fetch";
+import axios from "axios"; // axios로 교체
 import { apiServer } from "../../api";
 
-interface recommendList {
+interface RecommendList {
   rssID: number;
   rssName: string;
   rssUrl: string;
@@ -19,41 +19,38 @@ interface recommendList {
 export default async function articleRecommend(
   data: number[],
   quantity: number,
-): Promise<recommendList[]> {
+): Promise<RecommendList[]> {
   const json = {
-    data: data,
+    data: [234, 235, 236],
     quantity: quantity,
   };
   console.log(JSON.stringify(json));
   console.log(json);
 
   try {
-    const response = await fetch(apiServer + "/article/recommend/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+    const response = await axios.post<RecommendList[]>(
+      `${apiServer}/article/recommend/`,
+      json, // axios에서는 자동으로 JSON으로 변환됨
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
       },
-      body: JSON.stringify(json),
-    });
+    );
 
-    if (!response.ok) {
-      throw new Error(`실패2: ${response.status}`);
-    }
-
-    const result = await response.json();
-    console.log("성공띠", result);
-    return result;
+    return response.data;
   } catch (error) {
     console.error("실패1:", error);
     return [
       {
         rssID: 33,
-        rssName: "로드실패",
+        rssName: "실패",
         rssUrl: "https://feeds.feedburner.com/ndtvnews-world-news",
         favicon:
           "https://www.ndtv.com/common/header/images/ndtv_logo_black.gif",
         articleID: 577,
-        title: "로드실패",
+        title:
+          "Hong Kong Pro-Democracy News Outlet, Editors Found Guilty Of Sedition",
         descript:
           "Hong Kong pro-democracy news outlet Stand News and its two former chief editors were found guilty of sedition on Thursday, the first conviction of its kind since the city came under Chinese rule in 1997.",
         date: 1724900370,
