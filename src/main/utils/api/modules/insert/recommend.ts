@@ -21,9 +21,10 @@ export default async function articleRecommend(
   quantity: number,
 ): Promise<RecommendList[]> {
   const json = {
-    data: [234, 235, 236],
+    data: data,
     quantity: quantity,
   };
+  console.log(data);
   console.log(JSON.stringify(json));
   console.log(json);
 
