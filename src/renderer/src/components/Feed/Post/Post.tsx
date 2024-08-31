@@ -28,9 +28,7 @@ export default function Post(props: {
     setTimeState(timeAgo.format(new Date(props.date * 1000)));
   }, [props.reRender, props.rssID]);
 
-  // Create formatter (English).
-
-  function removeHTMLTags(str): string {
+  function removeHTMLTags(str: string): string {
     return str.replace(/<\/?[^>]+(>|$)/g, "");
   }
 
@@ -47,8 +45,10 @@ export default function Post(props: {
 
     return srcArray;
   }
+
   const [rss, setRss] =
     useState<Awaited<ReturnType<typeof window.dbApi.article.RSSDetail>>>();
+
   useEffect(() => {
     const articleList = async () => {
       try {
@@ -56,14 +56,15 @@ export default function Post(props: {
         const data = await window.dbApi.article.RSSDetail(props.rssID);
         setRss(data);
         console.log(data);
-        props.favicon = rss[0].RSSImageURL;
-        props.rssName = rss[0].RSSName;
       } catch (error) {
         console.log("Post component error", error);
       }
     };
     articleList();
   }, [props.reRender, props.rssID]);
+
+  const displayFavicon = props.favicon || (rss && rss[0].RSSImageURL) || "";
+  const displayRssName = props.rssName || (rss && rss[0].RSSName) || "";
 
   return rss ? (
     <div className="w-full p-3.5 border-variable-collection-primaryBd border-[1px] rounded-lg gap-6 flex mb-4">
@@ -72,9 +73,9 @@ export default function Post(props: {
           <div className="w-96 justify-between items-center flex">
             <div className="justify-center items-center gap-1 flex">
               <div className="w-3.5 h-3.5 rounded-full justify-center items-center flex overflow-clip">
-                <img className="w-10 h-10" src={props.favicon} />
+                <img className="w-10 h-10" src={displayFavicon} />
               </div>
-              <div className="text-gray-200 text-xs">{props.rssName}</div>
+              <div className="text-gray-200 text-xs">{displayRssName}</div>
               <div className="text-stone-300 text-xs">{timeState}</div>
             </div>
           </div>

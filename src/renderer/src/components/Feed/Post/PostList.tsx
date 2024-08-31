@@ -53,7 +53,11 @@ export default function PostList(): JSX.Element {
     <div>
       {recommend.length > 0
         ? recommend.map((a, i) => (
-            <Link to={`/detail/${a.articleID}`} key={i}>
+            <Link
+              to={`/detail4/${a.articleID}`}
+              state={{ title: a.title, body: a.content }}
+              key={i}
+            >
               <Post
                 title={a.title}
                 description={a.descript}
