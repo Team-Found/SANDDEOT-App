@@ -8,11 +8,12 @@ const nlp = winkNLP(model);
 const its = nlp.its;
 
 const Wink: React.FC<{
+  articleTitle: string;
   body: string;
   highlightPercentage: number;
   focus: boolean;
   showControls: boolean;
-}> = ({ body, highlightPercentage, focus, showControls }) => {
+}> = ({ articleTitle, body, highlightPercentage, focus, showControls }) => {
   const [text, setText] = useState<string>("");
   const [nonContentElements, setNonContentElements] = useState<string[]>([]);
 
@@ -247,6 +248,7 @@ const Wink: React.FC<{
 
   return (
     <div className="prose prose-basic dark:prose-invert !max-w-full w-full flex-grow overflow-y-auto h-full p-8">
+      <h2>{articleTitle}</h2>
       {processText()}
     </div>
   );

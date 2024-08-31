@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Detail from "@renderer/components/Detail/Detail";
 import { useLocation } from "react-router-dom";
@@ -16,7 +15,7 @@ export default function D4(): JSX.Element {
         title="Example Site"
       />
       </div> */}
-      {data?.body && <Detail body={data.body} />}
+      {data?.body && <Detail body={data.body} title={data.title} />}
     </div>
   );
 }

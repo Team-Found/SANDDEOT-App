@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Controls } from "./Controls";
 import Wink from "./Wink";
 
-const App: React.FC<{ body: string }> = ({ body }) => {
+const App: React.FC<{ body: string; title: string }> = ({ body, title }) => {
   const [highlightPercentage, setHighlightPercentage] = useState<number>(50);
   const [focus, setFocus] = useState<boolean>(false);
   const [showControls, setShowControls] = useState<boolean>(false);
@@ -11,6 +11,7 @@ const App: React.FC<{ body: string }> = ({ body }) => {
     <div className="flex h-full w-full">
       <div className="prose prose-basic !max-w-full h-full dark:prose-invert w-full overflow-auto">
         <Wink
+          articleTitle={title}
           body={body}
           highlightPercentage={highlightPercentage}
           focus={focus}

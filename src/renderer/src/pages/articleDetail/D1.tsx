@@ -29,7 +29,7 @@ export default function D1(): JSX.Element {
         title="Example Site"
       />
       </div> */}
-      {article?.body && <Detail body={article.body} />}
+      {article?.body && <Detail body={article.body} title={article.title} />}
     </div>
   );
 }
