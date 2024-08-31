@@ -94,7 +94,7 @@ const Wink: React.FC<{
           onMouseLeave: (e: React.MouseEvent) => {
             // 포커스 모드가 활성화된 경우 마우스를 떼면 기본 투명도로 돌아감
             if (focus && style.backgroundColor === "transparent") {
-              (e.currentTarget as HTMLElement).style.opacity = "0.2";
+              (e.currentTarget as HTMLElement).style.opacity = "0.8";
             }
           },
         },
