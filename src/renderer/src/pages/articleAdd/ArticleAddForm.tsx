@@ -439,17 +439,22 @@ export default function Input(): JSX.Element {
                   onChange={(event, editor) => {
                     const data = editor.getData(); // HTML 데이터를 가져옴
 
-                    // HTML 데이터를 body에 저장
-                    dispatch(setBody(data));
-
+                    // Extract the content of the <h1> tag
                     const regex = /<h1[^>]*>(.*?)<\/h1>/i;
                     const match = data.match(regex);
 
                     if (match) {
-                      console.log("<h1> content:", match[1]);
-                      dispatch(setTitle(match[1].replace(/<\/?h1>/g, "")));
+                      const title = match[1];
+                      console.log("<h1> content:", title);
+                      dispatch(setTitle(title.replace(/<\/?h1>/g, "")));
+
+                      // Remove the <h1> tag and its content from the data
+                      const bodyWithoutTitle = data.replace(regex, "");
+                      dispatch(setBody(bodyWithoutTitle));
                     } else {
                       console.log("No <h1> tag found.");
+                      // If no <h1> tag is found, store the full content
+                      dispatch(setBody(data));
                     }
                   }}
                 />
