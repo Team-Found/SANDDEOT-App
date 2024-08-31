@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import summation from "@assets/img/Chat/summation.svg";
 import equipment from "@assets/img/Chat/equipment.svg";
 import question from "@assets/img/Chat/question.svg";
 import send from "@assets/img/Chat/send.svg";
 import { Slider } from "@/components/ui/slider";
+import Summary from "./control/Summary.tsx";
 
 interface ControlsProps {
   highlightPercentage: number;
@@ -89,24 +89,7 @@ export const Controls: React.FC<ControlsProps> = ({
             >
               ☰
             </button>
-            <div className="w-full pl-4 pr-3.5 py-5 border-b border-PrimaryBorder flex-col justify-start items-start inline-flex h-fit box-border">
-              <div className="self-stretch flex-col justify-center items-start flex">
-                <div className="justify-start items-center inline-flex">
-                  <img src={summation} alt="요약" />
-                  <div className="text-white text-xl font-semibold leading-normal">
-                    요약
-                  </div>
-                </div>
-              </div>
-              <div className="self-stretch pl-1 pr-1.5 rounded shadow-inner justify-center items-center gap-2.5 inline-flex">
-                <div className="grow self-stretch text-toolSecondary text-sm font-normal leading-none">
-                  Borem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                  vulputate libero et velit interdum, ac aliquet odio mattis.
-                  Class aptent taciti sociosqu ad litora torquent per conubia
-                  nostra, per inceptos himenaeos.
-                </div>
-              </div>
-            </div>
+            <Summary content="adsf" />
             <div className="w-full pl-4 pr-3.5 py-5 border-b border-PrimaryBorder h-fit box-border">
               <div className="justify-start items-start gap-2 flex">
                 <img src={equipment} alt="도구" />
@@ -166,9 +149,9 @@ export const Controls: React.FC<ControlsProps> = ({
             <div className="w-full pl-4 pr-3.5 py-5 flex-col justify-start items-start gap-2 inline-flex h-full box-border">
               <div className="self-stretch flex-col justify-start items-start gap-2 flex h-full">
                 <div className="justify-start items-start gap-2 inline-flex">
-                  <img src={question} alt="도구" />
+                  <img src={question} alt="AI" />
                   <div className="text-white text-xl font-semibold leading-normal">
-                    도구
+                    질문
                   </div>
                 </div>
                 <div className="w-full h-8 px-2 py-2 bg-zinc-500 rounded-lg justify-start items-center gap-2.5 inline-flex">
