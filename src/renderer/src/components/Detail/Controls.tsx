@@ -3,7 +3,7 @@ import equipment from "@assets/img/Chat/equipment.svg";
 import question from "@assets/img/Chat/question.svg";
 import send from "@assets/img/Chat/send.svg";
 import { Slider } from "@/components/ui/slider";
-import Summary from "./control/Summary.tsx";
+import Summary from "./control/Summary";
 import Chat from "./control/Chat.js";
 
 interface ControlsProps {
@@ -13,6 +13,9 @@ interface ControlsProps {
   setFocus: React.Dispatch<React.SetStateAction<boolean>>;
   showControls: boolean;
   setShowControls: React.Dispatch<React.SetStateAction<boolean>>;
+  threadID: string;
+  articleID: number;
+  body: string;
 }
 
 export const Controls: React.FC<ControlsProps> = ({
@@ -22,6 +25,9 @@ export const Controls: React.FC<ControlsProps> = ({
   setFocus,
   showControls,
   setShowControls,
+  threadID,
+  articleID,
+  body,
 }) => {
   const [sidebarWidth, setSidebarWidth] = useState(300); // 초기 사이드바 너비
   const [isCollapsed, setIsCollapsed] = useState(false); // 사이드바 최소화 여부
@@ -62,8 +68,9 @@ export const Controls: React.FC<ControlsProps> = ({
     setIsCollapsed(!isCollapsed);
   };
 
-  const [questionText, setQuestionText] = useState(null);
-  const [chatList, setChatList] = useState([["ㅁㄴㅇㄹ"]]);
+  const [questionText, setQuestionText] = useState<string>("");
+  const [chatList, setChatList] = useState<string[]>([""]);
+
   return (
     <div className="flex h-full dark:bg-[#0F0E0D]">
       {isCollapsed ? (
@@ -92,7 +99,7 @@ export const Controls: React.FC<ControlsProps> = ({
             >
               ☰
             </button>
-            <Summary content="adsf" />
+            <Summary body={body} threadID={threadID} articleID={articleID} />
             <div className="w-full pl-4 pr-3.5 py-5 border-b border-PrimaryBorder h-fit box-border">
               <div className="justify-start items-start gap-2 flex">
                 <img src={equipment} alt="도구" />
@@ -157,7 +164,7 @@ export const Controls: React.FC<ControlsProps> = ({
                 </div>
                 <div className="w-full h-full overflow-y-auto flex flex-col">
                   {chatList.map((chat, index) => (
-                    <Chat content={chat} kind={!(index % 2)} />
+                    <Chat key={index} content={chat} kind={!(index % 2)} />
                   ))}
                 </div>
                 <div className="w-full h-8 p-2 bg-zinc-800 rounded-3xl shadow-inner justify-between items-center inline-flex text-[#A394A5] ">
@@ -172,7 +179,9 @@ export const Controls: React.FC<ControlsProps> = ({
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
                         console.log(questionText);
-                        const updatedChatList = [...chatList, questionText];
+                        const updatedChatList = questionText
+                          ? [...chatList, questionText]
+                          : chatList;
                         setChatList(updatedChatList);
                         setQuestionText("");
                       }

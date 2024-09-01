@@ -7,7 +7,7 @@ export default function Chat({ content, kind }: ChatProps) {
   return (
     <div
       className={`pl-1 justify-start items-start gap-1 inline-flex ${
-        kind ? 'text-[#A394A5]' : 'text-[#766977]'
+        kind ? "text-[#A394A5]" : "text-[#766977]"
       }`}
     >
       <div className="text-toolSecondary text-sm font-extrabold leading-7">

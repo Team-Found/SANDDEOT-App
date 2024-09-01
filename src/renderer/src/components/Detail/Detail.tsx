@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { Controls } from "./Controls";
 import Wink from "./Wink";
 
-const App: React.FC<{ body: string; title: string }> = ({ body, title }) => {
+const App: React.FC<{
+  body: string;
+  title: string;
+  threadID: string;
+  articleID: number;
+}> = ({ body, title, threadID, articleID }) => {
   const [highlightPercentage, setHighlightPercentage] = useState<number>(50);
   const [focus, setFocus] = useState<boolean>(false);
   const [showControls, setShowControls] = useState<boolean>(false);
@@ -24,6 +29,9 @@ const App: React.FC<{ body: string; title: string }> = ({ body, title }) => {
         setFocus={setFocus}
         showControls={showControls}
         setShowControls={setShowControls}
+        threadID={threadID}
+        articleID={articleID}
+        body={body}
       />
     </div>
   );

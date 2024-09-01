@@ -27,7 +27,14 @@ export default function D2(): JSX.Element {
         className="w-3/4 h-3/4 border-2 border-gray-300"
         title="Example Site"
       /> */}
-      {article?.body && <Detail body={article.body} title={article.title} />}
+      {article?.body && (
+        <Detail
+          body={article.body}
+          title={article.title}
+          threadID={article.threadID}
+          articleID={article.articleID}
+        />
+      )}
     </div>
   );
 }
