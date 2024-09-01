@@ -5,18 +5,18 @@ const add = async (
   RSSID: number,
   title: string,
   date: Date,
+  description?: string,
   body?: string,
-  chat?: object = {},
-  description: string,
+  threadID?: null | string,
 ): Promise<void> => {
   const query = `
-    INSERT INTO RSSArticle (articleID, RSSID, title, date, body, chat, description)
+    INSERT INTO RSSArticle (articleID, RSSID, title, date, body, threadID, description)
     VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
   return new Promise((resolve, reject) => {
     db.run(
       query,
-      [articleID, RSSID, title, date, body, chat, description],
+      [articleID, RSSID, title, date, body, threadID, description],
       (err) => {
         if (err) {
           console.error("SQL error3:", err.message);

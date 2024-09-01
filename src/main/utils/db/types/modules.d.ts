@@ -64,7 +64,7 @@ learn: {
 };
 rss: {
   article: {
-      add(articleID: number, RSSID: number, title: string, date: Date, body?: string, chat?: object = {}, description: string,): Promise<void>;
+      add(articleID: number, RSSID: number, title: string, date: Date, description?: string, body?: string, threadID?: null | string,): Promise<void>;
 
   };
     lastUpdate(): Promise<Date>;

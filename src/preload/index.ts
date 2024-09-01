@@ -4,6 +4,7 @@ import db from "../main/utils/db/index.ts";
 import fs from "fs";
 import insertRss from "../main/utils/api/modules/insert/rss.ts";
 import articleRecommend from "../main/utils/api/modules/insert/recommend.ts";
+import sendQ from "../main/utils/api/modules/insert/sendQ.js";
 // import path from "path";
 
 // const path = require("node:path");
@@ -27,6 +28,7 @@ const api = {
   },
   insertRss,
   articleRecommend,
+  sendQ,
 };
 
 // Use `contextBridge` APIs to expose Electron APIs to
