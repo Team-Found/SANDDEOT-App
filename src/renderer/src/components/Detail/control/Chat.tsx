@@ -45,6 +45,12 @@ export default function Chat({ data }: ChatProps) {
       try {
         const parsedText = JSON.parse(`"${match[1]}"`);
         console.log(parsedText);
+
+        // "2줄 요약해줘" 또는 "3줄 요약해줘" 텍스트 검사
+        if (parsedText === "2줄 요약해줘" || parsedText === "3줄 요약해줘") {
+          return null; // 렌더링하지 않도록 처리
+        }
+
         return parsedText;
       } catch (error) {
         console.error("유니코드 변환 오류:", error);
@@ -73,6 +79,13 @@ export default function Chat({ data }: ChatProps) {
     return null;
   }
 
+  const extractedText = extract(data.content[0].text.value, kind);
+
+  // If extractedText is null, do not render the component
+  if (extractedText === null) {
+    return null;
+  }
+
   return (
     <div
       className={`pl-1 justify-start items-start gap-1 inline-flex ${
@@ -84,7 +97,7 @@ export default function Chat({ data }: ChatProps) {
       </div>
       <div className="grow shrink basis-0 pl-1 pr-1.5 py-1.5 rounded shadow-inner justify-center items-center gap-2.5 flex">
         <div className="grow shrink basis-0 self-stretch text-toolSecondary text-sm font-normal leading-none">
-          {extract(data.content[0].text.value, kind)}
+          {extractedText}
         </div>
       </div>
     </div>
