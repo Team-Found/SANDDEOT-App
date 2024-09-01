@@ -6,6 +6,45 @@ import { Slider } from "@/components/ui/slider";
 import Summary from "./control/Summary";
 import Chat from "./control/Chat.js";
 
+interface TextContent {
+  annotations: any[]; // 구체적인 구조를 알고 있다면 더 명확하게 정의할 수 있습니다.
+  value: string;
+}
+
+interface MessageContent {
+  text: TextContent;
+  type: string;
+}
+
+interface Message {
+  id: string;
+  assistant_id: string | null;
+  attachments: any[]; // 구체적인 구조를 알고 있다면 더 명확하게 정의할 수 있습니다.
+  completed_at: number | null;
+  content: MessageContent[];
+  created_at: number;
+  incomplete_at: number | null;
+  incomplete_details: any; // 구체적인 구조를 알고 있다면 더 명확하게 정의할 수 있습니다.
+  metadata: Record<string, unknown>;
+  object: string;
+  role: string;
+  run_id: string | null;
+  status: string | null;
+  thread_id: string;
+}
+
+interface Messages {
+  data: Message[];
+  object: string;
+  first_id: string;
+  last_id: string;
+  has_more: boolean;
+}
+
+interface ApiResponse {
+  messages: Messages;
+}
+
 interface ControlsProps {
   highlightPercentage: number;
   setHighlightPercentage: React.Dispatch<React.SetStateAction<number>>;
@@ -69,7 +108,7 @@ export const Controls: React.FC<ControlsProps> = ({
   };
 
   const [questionText, setQuestionText] = useState<string>("");
-  const [chatList, setChatList] = useState<string[]>([""]);
+  const [chatList, setChatList] = useState<ApiResponse>();
 
   return (
     <div className="flex h-full dark:bg-[#0F0E0D]">
@@ -163,9 +202,9 @@ export const Controls: React.FC<ControlsProps> = ({
                   <div className="text-xl font-semibold leading-none">질문</div>
                 </div>
                 <div className="w-full h-full overflow-y-auto flex flex-col">
-                  {chatList.map((chat, index) => (
-                    <Chat key={index} content={chat} kind={!(index % 2)} />
-                  ))}
+                  {chatList?.messages.data.map((data, index) => {
+                    return <Chat key={index} data={data} />;
+                  })}
                 </div>
                 <div className="w-full h-8 p-2 bg-zinc-800 rounded-3xl shadow-inner justify-between items-center inline-flex text-[#A394A5] ">
                   <input
@@ -178,12 +217,18 @@ export const Controls: React.FC<ControlsProps> = ({
                     }}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        console.log(questionText);
-                        const updatedChatList = questionText
-                          ? [...chatList, questionText]
-                          : chatList;
-                        setChatList(updatedChatList);
-                        setQuestionText("");
+                        window.api
+                          .sendQ(
+                            "asst_Kgk5NI2uhQhaJVUyyCJdyIVe",
+                            threadID,
+                            body,
+                            questionText,
+                            null,
+                          )
+                          .then((item) => {
+                            setChatList(item);
+                            console.log(chatList);
+                          });
                       }
                     }}
                   />
