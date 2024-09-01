@@ -8,7 +8,7 @@ const App: React.FC<{ body: string; title: string }> = ({ body, title }) => {
   const [showControls, setShowControls] = useState<boolean>(false);
 
   return (
-    <div className="flex h-full w-full">
+    <div className="flex h-full w-full dark:bg-[#0F0E0D]">
       <div className="prose prose-basic !max-w-full h-full dark:prose-invert w-full overflow-auto">
         <Wink
           articleTitle={title}

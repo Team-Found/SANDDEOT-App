@@ -10,13 +10,13 @@ export default function Summary({ content }: SummaryProps) {
       <div className="self-stretch flex-col justify-center items-start flex">
         <div className="justify-start items-center inline-flex">
           <img src={summation} alt="요약" />
-          <div className="text-white text-xl font-semibold leading-normal ml-2">
+          <div className="text-white text-xl font-semibold leading-normal ml-1">
             요약
           </div>
         </div>
       </div>
-      <div className="self-stretch pl-1 pr-1.5 py-1.5 rounded shadow-inner justify-center items-center gap-2.5 inline-flex mt-2">
-        <div className="grow self-stretch text-toolSecondary text-sm font-normal leading-none">
+      <div className="self-stretch rounded shadow-inner justify-center items-center gap-2.5 inline-flex">
+        <div className="grow self-stretch text-toolSecondary text-sm font-normal leading-none text-[#A394A5]">
           {content}
         </div>
       </div>

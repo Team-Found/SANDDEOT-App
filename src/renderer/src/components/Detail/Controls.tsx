@@ -4,6 +4,7 @@ import question from "@assets/img/Chat/question.svg";
 import send from "@assets/img/Chat/send.svg";
 import { Slider } from "@/components/ui/slider";
 import Summary from "./control/Summary.tsx";
+import Chat from "./control/Chat.js";
 
 interface ControlsProps {
   highlightPercentage: number;
@@ -61,8 +62,10 @@ export const Controls: React.FC<ControlsProps> = ({
     setIsCollapsed(!isCollapsed);
   };
 
+  const [questionText, setQuestionText] = useState(null);
+  const [chatList, setChatList] = useState([]);
   return (
-    <div className="flex h-full">
+    <div className="flex h-full dark:bg-[#0F0E0D]">
       {isCollapsed ? (
         <div
           className="h-full w-0 bg-gray-800 flex justify-center items-center cursor-pointer"
@@ -75,7 +78,7 @@ export const Controls: React.FC<ControlsProps> = ({
       ) : (
         <>
           <div
-            className="h-full cursor-ew-resize"
+            className="h-full cursor-ew-resize border-r-[1px] border-[#252525]"
             onMouseDown={handleMouseDown}
             style={{ width: "5px", cursor: "ew-resize" }}
           />
@@ -99,7 +102,7 @@ export const Controls: React.FC<ControlsProps> = ({
               </div>
               <div className="flex flex-col gap-2 py-2">
                 <div className="w-full text-toolSecondary text-sm font-normal leading-none flex flex-col">
-                  <div className="flex justify-between">
+                  <div className="flex justify-between text-[#A394A5]">
                     중요 문장 하이라이팅
                     <label className="inline-flex relative items-center cursor-pointer">
                       <input
@@ -108,7 +111,7 @@ export const Controls: React.FC<ControlsProps> = ({
                         onChange={() => setShowControls(!showControls)}
                         className="sr-only peer"
                       />
-                      <div className="w-8 h-4 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-[#974EAF00] dark:peer-focus:ring-[#974EAF00] dark:bg-gray-700 peer-checked:after:translate-x-4 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all dark:border-gray-600 peer-checked:bg-[#974EAF]"></div>
+                      <div className="w-8 h-4 rounded-full peer peer-focus:ring-4 peer-focus:ring-[#974EAF00] dark:peer-focus:ring-[#974EAF00] dark:bg-[#271D27] peer-checked:after:translate-x-4 peer-checked:after:border-[#] after:content-[''] after:absolute after:top-[2px] after:left-[2px]  after:bg-[#FCF1FF] after:border-[#FCF1FF] after:border after:rounded-full after:h-3 after:w-3 after:transition-all dark:border-gray-600 peer-checked:bg-[#974EAF]"></div>
                     </label>
                   </div>
                   {showControls && (
@@ -131,7 +134,7 @@ export const Controls: React.FC<ControlsProps> = ({
                   )}
                 </div>
                 <div className="w-full justify-center items-center inline-flex">
-                  <div className="w-full text-toolSecondary text-sm font-normal leading-none">
+                  <div className="w-full text-toolSecondary text-sm font-normal leading-none text-[#A394A5]">
                     집중 모드
                   </div>
                   <label className="inline-flex relative items-center cursor-pointer">
@@ -141,7 +144,7 @@ export const Controls: React.FC<ControlsProps> = ({
                       onChange={() => setFocus(!focus)}
                       className="sr-only peer"
                     />
-                    <div className="w-8 h-4 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-[#974EAF00] dark:peer-focus:ring-[#974EAF00] dark:bg-gray-700 peer-checked:after:translate-x-4 peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all dark:border-gray-600 peer-checked:bg-[#974EAF]"></div>
+                    <div className="w-8 h-4 rounded-full peer peer-focus:ring-4 peer-focus:ring-[#974EAF00] dark:peer-focus:ring-[#974EAF00] dark:bg-[#271D27] peer-checked:after:translate-x-4 peer-checked:after:border-[#] after:content-[''] after:absolute after:top-[2px] after:left-[2px]  after:bg-[#FCF1FF] after:border-[#FCF1FF] after:border after:rounded-full after:h-3 after:w-3 after:transition-all dark:border-gray-600 peer-checked:bg-[#974EAF]"></div>
                   </label>
                 </div>
               </div>
@@ -150,75 +153,31 @@ export const Controls: React.FC<ControlsProps> = ({
               <div className="self-stretch flex-col justify-start items-start gap-2 flex h-full">
                 <div className="justify-start items-start gap-2 inline-flex">
                   <img src={question} alt="AI" />
-                  <div className="text-white text-xl font-semibold leading-normal">
-                    질문
-                  </div>
+                  <div className="text-xl font-semibold leading-none">질문</div>
                 </div>
-                <div className="w-full h-8 px-2 py-2 bg-zinc-500 rounded-lg justify-start items-center gap-2.5 inline-flex">
-                  <div className="text-stone-950 text-sm font-normal leading-none">
-                    남자의 음식을 탐내는 이준호 • 10줄
-                  </div>
+                <div className="w-full h-full overflow-y-auto flex flex-col">
+                  {chatList.map((chat, index) => (
+                    <Chat content={chat} kind={!(index % 2)} />
+                  ))}
                 </div>
-                <div className="w-full h-full overflow-y-auto">
-                  <div className="pl-1 justify-start items-start gap-1 inline-flex">
-                    <div className="text-toolSecondary text-sm font-extrabold leading-7">
-                      Q.
-                    </div>
-                    <div className="grow shrink basis-0 pl-1 pr-1.5 py-1.5 rounded shadow-inner justify-center items-center gap-2.5 flex">
-                      <div className="grow shrink basis-0 self-stretch text-toolSecondary text-sm font-normal leading-none">
-                        Borem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Nunc vulputate libero et velit interdum, ac aliquet odio
-                        mattis. Class aptent taciti sociosqu ad litora torquent
-                        per conubia nostra, per inceptos himenaeos.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="pl-1 justify-start items-start gap-1 inline-flex">
-                    <div className="text-toolSecondary text-sm font-extrabold leading-7">
-                      A.
-                    </div>
-                    <div className="grow shrink basis-0 pl-1 pr-1.5 py-1.5 rounded shadow-inner justify-center items-center gap-2.5 flex">
-                      <div className="grow shrink basis-0 self-stretch text-toolSecondary text-sm font-normal leading-none">
-                        Borem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Nunc vulputate libero et velit interdum, ac aliquet odio
-                        mattis. Class aptent taciti sociosqu ad litora torquent
-                        per conubia nostra, per inceptos himenaeos.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="pl-1 justify-start items-start gap-1 inline-flex">
-                    <div className="text-toolSecondary text-sm font-extrabold leading-7">
-                      Q.
-                    </div>
-                    <div className="grow shrink basis-0 pl-1 pr-1.5 py-1.5 rounded shadow-inner justify-center items-center gap-2.5 flex">
-                      <div className="grow shrink basis-0 self-stretch text-toolSecondary text-sm font-normal leading-none">
-                        Borem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Nunc vulputate libero et velit interdum, ac aliquet odio
-                        mattis. Class aptent taciti sociosqu ad litora torquent
-                        per conubia nostra, per inceptos himenaeos.
-                      </div>
-                    </div>
-                  </div>
-                  <div className="pl-1 justify-start items-start gap-1 inline-flex">
-                    <div className="text-toolSecondary text-sm font-extrabold leading-7">
-                      A.
-                    </div>
-                    <div className="grow shrink basis-0 pl-1 pr-1.5 py-1.5 rounded shadow-inner justify-center items-center gap-2.5 flex">
-                      <div className="grow shrink basis-0 self-stretch text-toolSecondary text-sm font-normal leading-none">
-                        Borem ipsum dolor sit amet, consectetur adipiscing elit.
-                        Nunc vulputate libero et velit interdum, ac aliquet odio
-                        mattis. Class aptent taciti sociosqu ad litora torquent
-                        per conubia nostra, per inceptos himenaeos.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="w-full h-8 p-2 bg-zinc-800 rounded-3xl shadow-inner justify-between items-center inline-flex">
-                  <div className="grow shrink basis-0 h-3.5 justify-start items-center gap-0.5 flex">
-                    <div className="text-zinc-400 text-xs font-normal leading-none">
-                      궁금한 점을 물어보세요
-                    </div>
-                  </div>
+                <div className="w-full h-8 p-2 bg-zinc-800 rounded-3xl shadow-inner justify-between items-center inline-flex text-[#A394A5] ">
+                  <input
+                    type="text"
+                    placeholder="궁금한 점을 물어보세요"
+                    className="w-full h-3.5 bg-zinc-800 text-[#A394A5] text-xs font-normal leading-none outline-none placeholder:text-[#A394A5]"
+                    value={questionText}
+                    onInput={(e) => {
+                      setQuestionText(e.target.value);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        console.log(questionText);
+                        const updatedChatList = [...chatList, questionText];
+                        setChatList(updatedChatList);
+                        setQuestionText("");
+                      }
+                    }}
+                  />
                   <img src={send} alt="전송" />
                 </div>
               </div>
