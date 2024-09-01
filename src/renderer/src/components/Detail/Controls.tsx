@@ -63,7 +63,7 @@ export const Controls: React.FC<ControlsProps> = ({
   };
 
   const [questionText, setQuestionText] = useState(null);
-  const [chatList, setChatList] = useState([]);
+  const [chatList, setChatList] = useState([["ㅁㄴㅇㄹ"]]);
   return (
     <div className="flex h-full dark:bg-[#0F0E0D]">
       {isCollapsed ? (
@@ -166,7 +166,7 @@ export const Controls: React.FC<ControlsProps> = ({
                     placeholder="궁금한 점을 물어보세요"
                     className="w-full h-3.5 bg-zinc-800 text-[#A394A5] text-xs font-normal leading-none outline-none placeholder:text-[#A394A5]"
                     value={questionText}
-                    onInput={(e) => {
+                    onChange={(e) => {
                       setQuestionText(e.target.value);
                     }}
                     onKeyDown={(e) => {
