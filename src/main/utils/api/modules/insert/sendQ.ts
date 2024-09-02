@@ -47,6 +47,7 @@ export default async function sendQ(
   question: string,
   selection: string | null,
 ): Promise<ApiResponse> {
+  console.log(threadID, question);
   const json = {
     assistantID: assistantID,
     threadID: threadID,

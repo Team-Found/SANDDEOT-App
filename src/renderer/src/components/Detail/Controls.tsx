@@ -110,6 +110,31 @@ export const Controls: React.FC<ControlsProps> = ({
   const [questionText, setQuestionText] = useState<string>("");
   const [chatList, setChatList] = useState<ApiResponse>();
 
+  // Helper function to categorize message type
+  const categorizeMessage = (value: string): number => {
+    if (value.includes('"question"')) {
+      return 1; // Question
+    } else if (value.includes('"answer"')) {
+      return 0; // Answer
+    } else {
+      return 3; // Other types
+    }
+  };
+
+  // Arrays to hold questions and answers
+  const questions: Message[] = [];
+  const answers: Message[] = [];
+
+  // Populate questions and answers arrays
+  chatList?.messages.data.forEach((data) => {
+    const kind = categorizeMessage(data.content[0].text.value);
+    if (kind === 1) {
+      questions.push(data);
+    } else if (kind === 0) {
+      answers.push(data);
+    }
+  });
+
   return (
     <div className="flex h-full dark:bg-[#0F0E0D]">
       {isCollapsed ? (
@@ -202,9 +227,12 @@ export const Controls: React.FC<ControlsProps> = ({
                   <div className="text-xl font-semibold leading-none">질문</div>
                 </div>
                 <div className="w-full h-full overflow-y-auto flex flex-col">
-                  {chatList?.messages.data.map((data, index) => {
-                    return <Chat key={index} data={data} />;
-                  })}
+                  {questions.map((question, index) => (
+                    <React.Fragment key={question.id}>
+                      <Chat data={question} />
+                      {answers[index] && <Chat data={answers[index]} />}
+                    </React.Fragment>
+                  ))}
                 </div>
                 <div className="w-full h-8 p-2 bg-zinc-800 rounded-3xl shadow-inner justify-between items-center inline-flex text-[#A394A5] ">
                   <input
@@ -217,17 +245,23 @@ export const Controls: React.FC<ControlsProps> = ({
                     }}
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        window.api
-                          .sendQ(
-                            "asst_Kgk5NI2uhQhaJVUyyCJdyIVe",
-                            threadID,
-                            body,
-                            questionText,
-                            null,
-                          )
+                        console.log("durl", articleID);
+                        window.dbApi.article
+                          .threadSelect(articleID)
                           .then((item) => {
-                            setChatList(item);
-                            console.log(chatList);
+                            console.log(item);
+                            window.api
+                              .sendQ(
+                                "asst_Kgk5NI2uhQhaJVUyyCJdyIVe",
+                                item.threadID,
+                                body,
+                                questionText,
+                                null,
+                              )
+                              .then((item) => {
+                                setChatList(item);
+                                console.log(chatList);
+                              });
                           });
                       }
                     }}

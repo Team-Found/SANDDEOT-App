@@ -37,6 +37,8 @@ article: {
 
     selectRSS(RSSURL: string): Promise<number>;
 
+    threadSelect(articleID: number): Promise<string | null>;
+
     threadUpdate(threadID: string, articleID: number): Promise<void>;
 
     RSSArticleDel(RSSID: number): Promise<void>;
