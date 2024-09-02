@@ -130,7 +130,6 @@ import lastUpdate from "./utils/db/modules/rss/lastUpdate";
 import db from "./utils/db/index";
 
 import newArticle from "./utils/api/modules/article/newArticle";
-import { rawArticle } from "./utils/api/modules/article/newArticle";
 
 const dbApi = db;
 
