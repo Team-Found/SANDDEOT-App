@@ -34,7 +34,7 @@ export default function PostList(): JSX.Element {
         // 추천 기사 가져오기
         console.log(articleList, "whtRK");
         return window.api
-          .articleRecommend(articleList, 3)
+          .articleRecommend(articleList, 15)
           .then((item: RecommendList | RecommendList[]) => {
             // item이 배열이 아닌 경우 배열로 감싸기
             const itemArray = Array.isArray(item) ? item : [item];

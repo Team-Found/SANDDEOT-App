@@ -13,13 +13,7 @@ export default function Summary({ body, threadID, articleID }: SummaryProps) {
   useEffect(() => {
     if (threadID == null) {
       window.api
-        .sendQ(
-          "asst_Kgk5NI2uhQhaJVUyyCJdyIVe",
-          threadID,
-          body,
-          "2줄 요약해줘",
-          null,
-        )
+        .sendQ("asst_Kgk5NI2uhQhaJVUyyCJdyIVe", threadID, body, "", null)
         .then((item) => {
           setSum(item.messages.data[0].content[0].text.value);
           console.log("처음", sum);
