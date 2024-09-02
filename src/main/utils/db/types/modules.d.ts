@@ -11,6 +11,8 @@ import db from "../../../db";
 import WordDetail from "../../types/WordDetail";
 interface Modules {
 article: {
+    del(): Promise<void>;
+
     add(title: string, date: Date, body: string, translated: string, origin: number, author: string, RSSID?: number,): Promise<number>;
 
     detail(ArticleID: number): Promise<ArticleDetail>;

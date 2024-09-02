@@ -134,7 +134,12 @@ export const Sidebar = (): JSX.Element => {
             <div className="flex items-center justify-center gap-2.5 px-[5px] py-0.5 relative">
               <img alt="Settings" src={setSvg} />
             </div>
-            <div className="w-fit [font-family:'Pretendard_Variable-Bold',Helvetica] font-bold text-[#f9f4f4] text-xs whitespace-nowrap relative tracking-[0] leading-[normal]">
+            <div
+              className="w-fit [font-family:'Pretendard_Variable-Bold',Helvetica] font-bold text-[#f9f4f4] text-xs whitespace-nowrap relative tracking-[0] leading-[normal]"
+              onClick={() => {
+                window.dbApi.article.del();
+              }}
+            >
               설정
             </div>
           </div>
