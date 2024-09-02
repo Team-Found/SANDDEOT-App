@@ -35,6 +35,7 @@ declare global {
         question: string,
         selection: string | null,
       ) => Promise<ApiResponse>;
+      history: (threadID: string) => Promise<ApiResponse>;
     };
     dbApi: Modules;
   }
