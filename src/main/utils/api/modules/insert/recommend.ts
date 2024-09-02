@@ -69,7 +69,7 @@ export default async function articleRecommend(
         title: "This iOS 18 feature needs to be copied by YouTube and Netflix",
         descript:
           "When you’re going to watch a video on your iPhone, what’s the app you turn to? My guess is, in most cases, it’s YouTube. How about on your Apple TV? Probably Netflix. But in iOS 18 and tvOS 18, Apple has added a key subtitles feature to its own TV app that I hope inspires YouTube and Netflix to copy it ASAP.",
-        date: 1724900370,
+        date: 1725199200,
         thumbnail: "",
         imgList: [],
         content:
@@ -86,7 +86,7 @@ export default async function articleRecommend(
         title: "These 10 Apple products will likely be discontinued next week",
         descript:
           "Apple’s annual iPhone event is being held next week on September 9th, where we’ll see iPhone 16, new AirPods, some new Apple Watch models, and potentially more. However, the introduction of new products also means saying goodbye to older ones. These are some Apple products you probably won’t be able to buy from the Apple Store after that keynote.",
-        date: 1724900370,
+        date: 1724943049,
         thumbnail: "",
         imgList: [],
         content:
@@ -122,7 +122,7 @@ export default async function articleRecommend(
           "2024 is the biggest global election year in history. What’s at stake for developers?",
         descript:
           "GitHub is considering what is at stake for our users and platform, how we can take responsible action to support free and fair elections, and how developers contribute to resilient democratic processes.",
-        date: 1724900370,
+        date: 1725231049,
         thumbnail: "",
         imgList: [],
         content:
@@ -158,7 +158,7 @@ export default async function articleRecommend(
           "Automating open source: How Ersilia distributes AI models to advance global health equity",
         descript:
           "Discover how the Ersilia Open Source Initiative accelerates drug discovery by using GitHub Actions to disseminate AI/ML models.",
-        date: 1724900370,
+        date: 1725029449,
         thumbnail: "",
         imgList: [],
         content:
@@ -175,7 +175,7 @@ export default async function articleRecommend(
         title: "How to level up your Git game with GitHub CLI",
         descript:
           "Using Git in the CLI can improve your development speed and power. Here are our top eight commands for using GitHub via your command line.",
-        date: 1724900370,
+        date: 1725288649,
         thumbnail: "",
         imgList: [],
         content:
