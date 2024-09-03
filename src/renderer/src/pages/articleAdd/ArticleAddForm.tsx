@@ -3,6 +3,7 @@ import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { Link as Link2 } from "react-router-dom";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import store, { setTitle, setBody, RootState } from "../../utils/store";
+import axios from "axios";
 
 import {
   BalloonEditor,
@@ -110,10 +111,47 @@ export default function Input(): JSX.Element {
   const dispatch = useDispatch();
   const title = useSelector((state: RootState) => state.textData.title);
   const body = useSelector((state: RootState) => state.textData.body);
+  const editorRef = useRef<any>(null); // CKEditor 인스턴스를 저장할 ref
 
   const editorContainerRef = useRef(null);
-  const editorRef = useRef(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
+
+  const [isEditorReady, setIsEditorReady] = useState(false); // CKEditor가 준비되었는지 확인
+
+  const handleButtonClick = async () => {
+    console.log("함수 진입 성공");
+    try {
+      console.log(body);
+      const requestData = {
+        content: `${body}`,
+      };
+
+      const response = await axios.post(
+        "http://10.150.150.145:8000/ai/markdownFormat",
+        requestData,
+      );
+
+      const responseData = response.data;
+      if (
+        responseData &&
+        responseData.messages &&
+        responseData.messages.content
+      ) {
+        console.log(response);
+        const content = responseData.messages.content;
+        console.log(content);
+        dispatch(setBody(content));
+
+        // CKEditor 인스턴스가 준비되었는지 확인 후 데이터 설정
+        if (isEditorReady && editorRef.current && editorRef.current.editor) {
+          console.log("초기화");
+          editorRef.current.editor.setData(content);
+        }
+      }
+    } catch (error) {
+      console.error("POST 요청 중 오류 발생:", error);
+    }
+  };
 
   useEffect(() => {
     setIsLayoutReady(true);
@@ -436,6 +474,10 @@ export default function Input(): JSX.Element {
                 <CKEditor
                   editor={BalloonEditor}
                   config={editorConfig}
+                  onReady={(editor) => {
+                    editorRef.current = { editor }; // CKEditor 인스턴스를 ref에 저장
+                    setIsEditorReady(true); // CKEditor가 준비되었음을 설정
+                  }}
                   onChange={(event, editor) => {
                     const data = editor.getData(); // HTML 데이터를 가져옴
 
@@ -464,6 +506,9 @@ export default function Input(): JSX.Element {
         </div>
       </div>
       <div className="flex flex-row-reverse w-full max-w-[1000px] mx-auto my-0">
+        <Button className="px-8" onClick={handleButtonClick}>
+          마크다운 포맷
+        </Button>
         <Link2 to="../../">
           <ButtonDemo />
         </Link2>
