@@ -462,7 +462,7 @@ export default function Input(): JSX.Element {
   };
 
   return (
-    <>
+    <div className="w-full h-full flex flex-col justify-between">
       <div className="main-container prose lg:prose-lg dark:prose-invert w-full m-0">
         <div
           className="editor-container editor-container_balloon-editor editor-container_include-style editor-container_include-block-toolbar w-full"
@@ -505,7 +505,7 @@ export default function Input(): JSX.Element {
           </div>
         </div>
       </div>
-      <div className="flex absolute bottom-0 justify-between w-[900px] m-6">
+      <div className="flex justify-between w-full p-6">
         <Button className="px-8" onClick={handleButtonClick}>
           마크다운 포맷
         </Button>
@@ -513,6 +513,6 @@ export default function Input(): JSX.Element {
           <ButtonDemo />
         </Link2>
       </div>
-    </>
+    </div>
   );
 }
