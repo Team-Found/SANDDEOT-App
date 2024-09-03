@@ -167,17 +167,19 @@ const FrameWrapper = (): JSX.Element => {
               이런 RSS는 어때요?
             </div>
             <div className="flex flex-col items-start gap-[-3px] self-stretch w-full flex-[0_0_auto]">
-              {/* <RssBlock
+              <RssBlock
                 blogTitle="Apple"
                 followProperty1="default"
                 property1="default"
+                imageUri="https://developer.apple.com/wwdc24/images/motion/axiju/endframe-small_2x.jpg"
                 reRender={reRender}
                 setReRender={setReRender}
               />
               <RssBlock
-                blogTitle="Github Blog"
+                blogTitle="The Github Blog"
                 followProperty1="default"
                 property1="default"
+                imageUri="https://cdn.iconscout.com/icon/free/png-256/free-github-3691248-3073768.png?f=webp"
                 reRender={reRender}
                 setReRender={setReRender}
               />
@@ -192,9 +194,10 @@ const FrameWrapper = (): JSX.Element => {
                 blogTitle="Fox News"
                 followProperty1="default"
                 property1="default"
+                imageUri="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-sjsqGIakPgU005shgWAFs7OpIgNxT42Ptw&s"
                 reRender={reRender}
                 setReRender={setReRender}
-              /> */}
+              />
             </div>
           </div>
         </div>
