@@ -505,7 +505,7 @@ export default function Input(): JSX.Element {
           </div>
         </div>
       </div>
-      <div className="flex flex-row-reverse w-full max-w-[1000px] mx-auto my-0">
+      <div className="flex absolute bottom-0 justify-between w-[900px] m-6">
         <Button className="px-8" onClick={handleButtonClick}>
           마크다운 포맷
         </Button>
