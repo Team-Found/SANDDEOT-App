@@ -4,8 +4,7 @@
 ![표지](https://github.com/user-attachments/assets/0083db08-e314-45c8-b17e-06aca72a1c6f)
 > 🤖 AI 추천 RSS로 정보 습득이 쉬워지는 순간!
 
-'산뜻'은 RSS리더와 AI추천 시스템을 결합한 사용자 맞춤 RSS리더입니다.
-
+'산뜻'은 RSS리더와 AI추천 시스템을 결합한 사용자 맞춤 RSS리더입니다.<br />
 부가적으로 읽기 보조 기능도 제공하여 바쁜 개발자들도 언제 어디서든 쉽게 최신 정보에 접근할 수 있습니다.
 
 [시연영상](https://nas.obtuse.kr/d/s/zyTBwLjHiqZ5D5AabBs7AUUk0Sj2fFCS/dRHiJesZEpfPsYjLSDKhewbobpU78nCc-s7lAmKaipAs)
