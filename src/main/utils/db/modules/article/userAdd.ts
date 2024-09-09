@@ -13,7 +13,7 @@ const addUserArticle = async (
   return new Promise((resolve, reject) => {
     db.run(query, [title, unixTime, body], (err) => {
       if (err) {
-        console.error("SQL error3:", err.message);
+        console.error("SQL error3??:", err.message);
         reject();
       } else {
         console.log(`글 생성 성공`);

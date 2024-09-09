@@ -17,7 +17,7 @@ const edit = (
       }),
       (err) => {
         if (err) {
-          console.error("SQL error:", err.message);
+          console.error("SQL error14:", err.message);
           reject();
         } else {
           resolve();

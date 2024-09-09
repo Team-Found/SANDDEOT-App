@@ -48,9 +48,9 @@ const newArticle = async (articles: rawArticle[]) => {
         result.article.rssID,
         result.article.title,
         new Date(result.article.date),
-        result.article.content[0].value,
-        {},
         result.article.description || result.article.summary,
+        result.article.content[0].value,
+        null,
       );
     },
   );

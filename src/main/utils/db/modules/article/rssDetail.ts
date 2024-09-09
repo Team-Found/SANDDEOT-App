@@ -10,7 +10,7 @@ const RSSDetail = async (RSSID: number): Promise<RSS> => {
   return new Promise((resolve, reject) => {
     db.all(sql, [RSSID], (err, row: RSS) => {
       if (err) {
-        console.error("SQL error:", err.message);
+        console.error("SQL error5:", err.message);
         reject();
       } else {
         resolve(row);

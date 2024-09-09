@@ -11,7 +11,7 @@ const detail = async (
   return new Promise((resolve, reject) => {
     db.all(sql, [RSSID], (err, rows) => {
       if (err) {
-        console.error("SQL error:", err.message);
+        console.error("SQL error13:", err.message);
         reject();
       } else {
         resolve(rows);

@@ -4,6 +4,6 @@ export default interface ArticleDetail {
   title: string;
   date: number;
   body?: string;
-  chat: string;
   description: string;
+  threadID: string | null;
 }

@@ -10,7 +10,7 @@ const add = (rss: RSS): Promise<void> => {
       [rss.RSSID, rss.RSSURL, rss.RSSName, rss.RSSImageUrl],
       (err) => {
         if (err) {
-          console.error("SQL error:", err.message);
+          console.error("SQL error12:", err.message);
           reject();
         } else {
           resolve();

@@ -5,6 +5,7 @@ import Root from "@renderer/routes/Root";
 import D1 from "@renderer/pages/articleDetail/D1";
 import D2 from "@renderer/pages/articleDetail/D2";
 import D3 from "@renderer/pages/articleDetail/D3";
+import D4 from "@renderer/pages/articleDetail/D4";
 import Saved from "@renderer/pages/main/Saved";
 import Following from "@renderer/pages/main/Following";
 import Mine from "@renderer/pages/main/Mine";
@@ -58,6 +59,10 @@ const router = createHashRouter([
       {
         path: "detail3/:id",
         element: <D3 />,
+      },
+      {
+        path: "detail4/:id",
+        element: <D4 />,
       },
       {
         path: "ocr",

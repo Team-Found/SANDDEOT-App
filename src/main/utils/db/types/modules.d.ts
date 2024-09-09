@@ -11,6 +11,8 @@ import db from "../../../db";
 import WordDetail from "../../types/WordDetail";
 interface Modules {
 article: {
+    del(): Promise<void>;
+
     add(title: string, date: Date, body: string, translated: string, origin: number, author: string, RSSID?: number,): Promise<number>;
 
     detail(ArticleID: number): Promise<ArticleDetail>;
@@ -20,6 +22,8 @@ article: {
     remove(bodyID: number): Promise<number>;
 
     update(bodyID: number, option: { title?: string; body?: string; image?: Blob; translated?: string; feedback?: string; score?: number; editDate?: Date; IMPP?: string; level?: number; },): Promise<number>;
+
+    count(): Promise<count[]>;
 
     rssArticleList(): Promise<Article[]>;
 
@@ -34,6 +38,10 @@ article: {
     savedArticleList(): Promise<Article[]>;
 
     selectRSS(RSSURL: string): Promise<number>;
+
+    threadSelect(articleID: number): Promise<string | null>;
+
+    threadUpdate(threadID: string, articleID: number): Promise<void>;
 
     RSSArticleDel(RSSID: number): Promise<void>;
 
@@ -62,7 +70,7 @@ learn: {
 };
 rss: {
   article: {
-      add(articleID: number, RSSID: number, title: string, date: Date, body?: string, chat?: object = {}, description: string,): Promise<void>;
+      add(articleID: number, RSSID: number, title: string, date: Date, description?: string, body?: string, threadID?: null | string,): Promise<void>;
 
   };
     lastUpdate(): Promise<Date>;
