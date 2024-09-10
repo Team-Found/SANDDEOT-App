@@ -5,6 +5,16 @@
   "main": "./out/main/index.js",
   "author": "example.com",
   "homepage": "https://electron-vite.org",
+  "build": {
+    "appId": "kr.sanddeot.obtuse.app",
+    "productName": "Sanddeot",
+    "mac": {
+      "icon": "resources/icon.png",
+      "category": "public.app-category.lifestyle",
+      "target": "dmg",
+      "sign": false
+    }
+  },
   "scripts": {
     "format": "prettier --write .",
     "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix",
@@ -18,7 +28,8 @@
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
-    "build:mac": "electron-vite build && electron-builder --mac",
+    "build:mac": "electron-vite build && electron-builder --mac --config -c.mac.identity=null",
+    "build:mac:witoutVite": "electron-builder --mac --config -c.mac.identity=null",
     "build:linux": "electron-vite build && electron-builder --linux"
   },
   "dependencies": {
@@ -28,6 +39,7 @@
     "@ckeditor/ckeditor5-react": "^8.0.0",
     "@electron-toolkit/preload": "^3.0.1",
     "@electron-toolkit/utils": "^3.0.0",
+    "@mapbox/node-pre-gyp": "^1.0.11",
     "@radix-ui/react-dialog": "^1.1.1",
     "@radix-ui/react-dropdown-menu": "^2.1.1",
     "@radix-ui/react-popover": "^1.1.1",
@@ -41,6 +53,8 @@
     "@types/react-modal": "^3.16.3",
     "@types/react-redux": "^7.1.33",
     "@types/sqlite3": "^3.1.11",
+    "abbrev": "^2.0.0",
+    "are-we-there-yet": "^4.0.2",
     "axios": "^1.7.5",
     "ckeditor5": "^42.0.2",
     "class-variance-authority": "^0.7.0",
@@ -51,9 +65,12 @@
     "d3-array": "^3.2.4",
     "electron-fetch": "^1.9.1",
     "electron-updater": "^6.1.7",
+    "entities": "^5.0.0",
     "esm": "^3.2.25",
     "javascript-time-ago": "^2.5.10",
     "lucide-react": "^0.424.0",
+    "nopt": "^7.2.1",
+    "npmlog": "^7.0.1",
     "prop-types": "^15.8.1",
     "react-cropper": "^2.3.3",
     "react-modal": "^3.16.1",
@@ -63,13 +80,16 @@
     "react-toastify": "^10.0.5",
     "react-webcam": "^7.2.0",
     "rss-parser": "^3.13.0",
+    "sax": "^1.4.1",
     "sqlite3": "^5.1.6",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "tesseract.js": "^5.1.0",
     "tesseract.js-core": "^5.1.0",
     "wink-eng-lite-web-model": "^1.8.0",
-    "wink-nlp": "^2.3.0"
+    "wink-nlp": "^2.3.0",
+    "xml2js": "^0.6.2",
+    "xmlbuilder": "^15.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
