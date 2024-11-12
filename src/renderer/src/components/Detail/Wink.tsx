@@ -1,59 +1,89 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import winkNLP from "wink-nlp";
 import model from "wink-eng-lite-web-model";
 import { interpolateRgb } from "d3";
 
-// NLP 초기화
+// NLP 모델 초기화
 const nlp = winkNLP(model);
 const its = nlp.its;
+
+// 타입 정의 추가
+interface WinkDocument {
+  out: (
+    param: typeof its.sentenceWiseImportance,
+  ) => Array<{ importance: number }>;
+}
 
 const Wink: React.FC<{
   articleTitle: string;
   body: string;
-  highlightPercentage: number;
-  focus: boolean;
-  showControls: boolean;
+  highlightPercentage: number; // 하이라이트 강도 (0-100)
+  focus: boolean; // 포커스 모드 활성화 여부
+  showControls: boolean; // 컨트롤 표시 여부
 }> = ({ articleTitle, body, highlightPercentage, focus, showControls }) => {
+  // 본문 텍스트와 특수 태그 상태 관리
   const [text, setText] = useState<string>("");
   const [nonContentElements, setNonContentElements] = useState<string[]>([]);
 
+  // 초기 텍스트 처리
   useEffect(() => {
     setText(body);
-    extractNonContentTags(body); // 자식 요소를 가질 수 없는 태그 및 code 블록, figure 태그 처리
+    extractNonContentTags(body);
   }, [body]);
 
-  const sentenceWiseNormalizedWeights = (doc: any, its: any) => {
-    return doc.out(its.sentenceWiseImportance).map((e: any) => e.importance);
-  };
+  /**
+   * 문장별 중요도 점수 계산
+   * @param doc NLP 문서 객체
+   * @returns 각 문장의 정규화된 중요도 점수 배열
+   */
+  const sentenceWiseNormalizedWeights = useCallback((doc: WinkDocument) => {
+    return doc.out(its.sentenceWiseImportance).map((e) => e.importance);
+  }, []);
 
-  const highlightText = (importance: number, maxImportance: number) => {
-    const isHighlightActive = showControls && highlightPercentage > 0;
+  /**
+   * 문장의 중요도에 따른 하이라이트 스타일 계산
+   * @param importance 문장의 중요도 점수
+   * @param maxImportance 전체 문장 중 최대 중요도 점수
+   */
+  const highlightText = useCallback(
+    (importance: number, maxImportance: number): React.CSSProperties => {
+      const isHighlightActive = showControls && highlightPercentage > 0;
+      const normalizedImportance = importance / maxImportance;
+      const opacity = Math.min(1, highlightPercentage / 100);
 
-    const normalizedImportance = importance / maxImportance;
-    const opacity = Math.min(1, highlightPercentage / 100); // 슬라이더 값에 따라 최대 투명도 설정
-    const colorScale = interpolateRgb(
-      `rgba(151, 78, 175, 0)`,
-      `rgba(151, 78, 175, ${opacity})`,
-    );
+      // 보라색 계열의 그라데이션 색상 생성
+      const colorScale = interpolateRgb(
+        `rgba(151, 78, 175, 0)`,
+        `rgba(151, 78, 175, ${opacity})`,
+      );
 
-    const backgroundColor =
-      isHighlightActive &&
-      colorScale(normalizedImportance).split(",")[3]?.split(")")[0] > 0.4
-        ? colorScale(normalizedImportance)
-        : "transparent";
+      // 배경색 계산: 중요도가 높은 경우에만 적용
+      const backgroundColor =
+        isHighlightActive &&
+        parseFloat(
+          colorScale(normalizedImportance).split(",")[3]?.split(")")[0],
+        ) > 0.4
+          ? colorScale(normalizedImportance)
+          : "transparent";
 
-    // 포커스 모드에서의 기본 투명도 설정
-    const baseOpacity = focus && backgroundColor === "transparent" ? 0.2 : 1; // 하이라이팅된 텍스트는 투명도를 낮추지 않음
+      // 포커스 모드일 때 덜 중요한 텍스트는 흐리게 표시
+      const baseOpacity = focus && backgroundColor === "transparent" ? 0.2 : 1;
 
-    return {
-      backgroundColor,
-      color: "white",
-      opacity: baseOpacity,
-      transition: "opacity 0.3s ease",
-    };
-  };
+      return {
+        backgroundColor,
+        color: "white",
+        opacity: baseOpacity,
+        transition: "opacity 0.3s ease",
+      };
+    },
+    [focus, highlightPercentage, showControls],
+  );
 
-  const extractNonContentTags = (html: string) => {
+  /**
+   * HTML에서 특수 태그(이미지, 코드 블록 등) 추출
+   * @param html 원본 HTML 문자열
+   */
+  const extractNonContentTags = (html: string): void => {
     const parser = new DOMParser();
     const docFragment = parser.parseFromString(html, "text/html");
     const removableElements = docFragment.querySelectorAll(
@@ -63,36 +93,35 @@ const Wink: React.FC<{
 
     removableElements.forEach((element) => {
       extractedElements.push(element.outerHTML);
-      element.remove(); // 텍스트에서 해당 태그 제거
+      element.remove();
     });
 
-    setNonContentElements(extractedElements); // 태그들을 저장
-    setText(docFragment.body.innerHTML); // 해당 태그들을 제거한 텍스트로 설정
+    setNonContentElements(extractedElements);
+    setText(docFragment.body.innerHTML);
   };
 
+  // HTML 요소를 React 요소로 변환하고 하이라이트 적용
   const renderWithHighlight = (
     element: ChildNode,
     style: React.CSSProperties,
   ): React.ReactNode => {
     if (element.nodeType === Node.ELEMENT_NODE) {
       const TagName = (element as HTMLElement).tagName.toLowerCase();
-      const children = Array.from(element.childNodes).map((child, j) =>
+      const children = Array.from(element.childNodes).map((child) =>
         renderWithHighlight(child, style),
       );
 
       return React.createElement(
         TagName,
         {
-          key: `${TagName}-${Math.random()}`, // 고유한 키 값
-          style: {}, // 블록 태그의 기본 디스플레이 속성 유지
+          key: `${TagName}-${Math.random()}`,
+          style: {},
           onMouseEnter: (e: React.MouseEvent) => {
-            // 포커스 모드가 활성화된 경우 마우스를 올리면 투명도를 1로 설정
             if (focus && style.backgroundColor === "transparent") {
               (e.currentTarget as HTMLElement).style.opacity = "1";
             }
           },
           onMouseLeave: (e: React.MouseEvent) => {
-            // 포커스 모드가 활성화된 경우 마우스를 떼면 기본 투명도로 돌아감
             if (focus && style.backgroundColor === "transparent") {
               (e.currentTarget as HTMLElement).style.opacity = "0.8";
             }
@@ -103,7 +132,7 @@ const Wink: React.FC<{
     } else if (element.nodeType === Node.TEXT_NODE) {
       return (
         <span
-          key={Math.random()} // 고유한 키 값
+          key={Math.random()}
           style={style}
           onMouseEnter={(e) => {
             if (focus && style.backgroundColor === "transparent") {
@@ -123,16 +152,16 @@ const Wink: React.FC<{
     return null;
   };
 
-  const processText = () => {
+  // 텍스트 처리 및 렌더링
+  const processText = useCallback(() => {
     const doc = nlp.readDoc(text);
     const sentences = doc.sentences().out(its.value);
-    const sentenceWeights = sentenceWiseNormalizedWeights(doc, its);
-
+    const sentenceWeights = sentenceWiseNormalizedWeights(doc);
     const maxImportance = Math.max(...sentenceWeights);
 
     let tagIndex = 0;
 
-    return sentences.map((sentence, index) => {
+    return sentences.map((sentence: string, index: number) => {
       const importance = sentenceWeights[index];
       const style = highlightText(importance, maxImportance);
 
@@ -144,7 +173,6 @@ const Wink: React.FC<{
         renderWithHighlight(element, style),
       );
 
-      // 각 문장의 마지막에 자식 요소가 없는 태그 및 code, pre, figure 태그를 삽입
       if (tagIndex < nonContentElements.length) {
         sentenceElements.push(
           <span
@@ -160,7 +188,7 @@ const Wink: React.FC<{
         </div>
       );
     });
-  };
+  }, [text, nonContentElements, highlightText, sentenceWiseNormalizedWeights]);
 
   return (
     <div className="prose prose-basic dark:prose-invert !max-w-full w-full flex-grow overflow-y-auto h-full p-8">

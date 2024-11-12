@@ -176,14 +176,6 @@ const FrameWrapper = (): JSX.Element => {
                 setReRender={setReRender}
               />
               <RssBlock
-                blogTitle="The Github Blog"
-                followProperty1="default"
-                property1="default"
-                imageUri="https://cdn.iconscout.com/icon/free/png-256/free-github-3691248-3073768.png?f=webp"
-                reRender={reRender}
-                setReRender={setReRender}
-              />
-              <RssBlock
                 blogTitle="Billboard"
                 followProperty1="default"
                 property1="default"

@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import { Link as Link2 } from "react-router-dom";
-import { Provider, useDispatch, useSelector } from "react-redux";
-import store, { setTitle, setBody, RootState } from "../../utils/store";
+import { useDispatch, useSelector } from "react-redux";
+import { setTitle, setBody, RootState } from "../../utils/store";
 import axios from "axios";
 
 import {
@@ -48,7 +48,7 @@ import {
   LinkImage,
   List,
   ListProperties,
-  Markdown,
+  //Markdown,
   MediaEmbed,
   PageBreak,
   Paragraph,
@@ -111,14 +111,16 @@ export default function Input(): JSX.Element {
   const dispatch = useDispatch();
   const title = useSelector((state: RootState) => state.textData.title);
   const body = useSelector((state: RootState) => state.textData.body);
-  const editorRef = useRef<any>(null); // CKEditor 인스턴스를 저장할 ref
+  const editorRef = useRef<BalloonEditor | null>(null); // CKEditor 인스턴스를 저장할 ref
 
-  const editorContainerRef = useRef(null);
+  const editorContainerRef = useRef<HTMLDivElement | null>(null);
   const [isLayoutReady, setIsLayoutReady] = useState(false);
 
   const [isEditorReady, setIsEditorReady] = useState(false); // CKEditor가 준비되었는지 확인
 
-  const handleButtonClick = async () => {
+  const editorWrapperRef = useRef<HTMLDivElement>(null); // 새로운 ref 추가
+
+  const handleButtonClick = async (): Promise<void> => {
     console.log("함수 진입 성공");
     try {
       console.log(body);
@@ -127,7 +129,7 @@ export default function Input(): JSX.Element {
       };
 
       const response = await axios.post(
-        "http://10.150.150.145:8000/ai/markdownFormat",
+        "http://10.150.150.28:8000/ai/markdownFormat",
         requestData,
       );
 
@@ -143,9 +145,9 @@ export default function Input(): JSX.Element {
         dispatch(setBody(content));
 
         // CKEditor 인스턴스가 준비되었는지 확인 후 데이터 설정
-        if (isEditorReady && editorRef.current && editorRef.current.editor) {
+        if (isEditorReady && editorRef.current) {
           console.log("초기화");
-          editorRef.current.editor.setData(content);
+          editorRef.current.setData(content);
         }
       }
     } catch (error) {
@@ -153,13 +155,92 @@ export default function Input(): JSX.Element {
     }
   };
 
-  useEffect(() => {
+  useEffect((): (() => void) => {
     setIsLayoutReady(true);
-
     return () => setIsLayoutReady(false);
   }, []);
 
-  const editorConfig = {
+  const editorConfig: {
+    toolbar: {
+      items: string[];
+      shouldNotGroupWhenFull: boolean;
+    };
+    plugins: (
+      | typeof AccessibilityHelp
+      | typeof Alignment
+      | typeof Autoformat
+      | typeof AutoImage
+      | typeof AutoLink
+      | typeof Autosave
+      | typeof Base64UploadAdapter
+      | typeof BlockQuote
+      | typeof BlockToolbar
+      | typeof Bold
+      | typeof Code
+      | typeof CodeBlock
+      | typeof Essentials
+      | typeof FindAndReplace
+      | typeof FontBackgroundColor
+      | typeof FontColor
+      | typeof FontFamily
+      | typeof FontSize
+      | typeof GeneralHtmlSupport
+      | typeof Heading
+      | typeof Highlight
+      | typeof HorizontalLine
+      | typeof HtmlComment
+      | typeof HtmlEmbed
+      | typeof ImageBlock
+      | typeof ImageCaption
+      | typeof ImageInline
+      | typeof ImageInsert
+      | typeof ImageInsertViaUrl
+      | typeof ImageResize
+      | typeof ImageStyle
+      | typeof ImageTextAlternative
+      | typeof ImageToolbar
+      | typeof ImageUpload
+      | typeof Indent
+      | typeof IndentBlock
+      | typeof Italic
+      | typeof Link
+      | typeof LinkImage
+      | typeof List
+      | typeof ListProperties
+      | typeof MediaEmbed
+      | typeof PageBreak
+      | typeof Paragraph
+      | typeof PasteFromMarkdownExperimental
+      | typeof PasteFromOffice
+      | typeof RemoveFormat
+      | typeof SelectAll
+      | typeof ShowBlocks
+      | typeof SpecialCharacters
+      | typeof SpecialCharactersArrows
+      | typeof SpecialCharactersCurrency
+      | typeof SpecialCharactersEssentials
+      | typeof SpecialCharactersLatin
+      | typeof SpecialCharactersMathematical
+      | typeof SpecialCharactersText
+      | typeof Strikethrough
+      | typeof Style
+      | typeof Subscript
+      | typeof Superscript
+      | typeof Table
+      | typeof TableCaption
+      | typeof TableCellProperties
+      | typeof TableColumnResize
+      | typeof TableProperties
+      | typeof TableToolbar
+      | typeof TextPartLanguage
+      | typeof TextTransformation
+      | typeof Title
+      | typeof TodoList
+      | typeof Underline
+      | typeof Undo
+    )[];
+    [key: string]: unknown;
+  } = {
     toolbar: {
       items: [
         "undo",
@@ -210,7 +291,7 @@ export default function Input(): JSX.Element {
         "accessibilityHelp",
       ],
       shouldNotGroupWhenFull: false,
-    },
+    } as const,
     plugins: [
       AccessibilityHelp,
       Alignment,
@@ -469,16 +550,16 @@ export default function Input(): JSX.Element {
           ref={editorContainerRef}
         >
           <div className="editor-container__editor">
-            <div ref={editorRef}>
+            <div ref={editorWrapperRef}>
               {isLayoutReady && (
                 <CKEditor
                   editor={BalloonEditor}
                   config={editorConfig}
                   onReady={(editor) => {
-                    editorRef.current = { editor }; // CKEditor 인스턴스를 ref에 저장
-                    setIsEditorReady(true); // CKEditor가 준비되었음을 설정
+                    editorRef.current = editor; // editor 객체를 직접 할당
+                    setIsEditorReady(true);
                   }}
-                  onChange={(event, editor) => {
+                  onChange={(_, editor) => {
                     const data = editor.getData(); // HTML 데이터를 가져옴
 
                     // Extract the content of the <h1> tag
