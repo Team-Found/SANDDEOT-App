@@ -26,7 +26,10 @@ export default function PostList(): JSX.Element {
     window.dbApi.article
       .savedArticleList()
       .then((item) => {
-        const articleList = item.map((a) => a.articleID);
+        const articleList: number[][] = item.map((a) => [
+          a.articleID,
+          a.duration,
+        ]);
         console.log("tq", articleList);
         return articleList;
       })

@@ -6,4 +6,5 @@ export default interface Article {
   body?: string;
   saved: number;
   description: string;
+  duration: number;
 }

@@ -2,7 +2,7 @@ import db from "../../db";
 import Article from "../../types/Article";
 
 const savedArticleList = (): Promise<Article[]> => {
-  const sql = `SELECT articleID, RSSID, title, date, body, saved, description FROM RSSArticle WHERE saved = 1`;
+  const sql = `SELECT articleID, RSSID, title, date, body, saved, description, duration FROM RSSArticle WHERE saved = 1`;
   return new Promise((resolve, reject) => {
     db.all(sql, (err, rows: Article[]) => {
       if (err) {

@@ -25,7 +25,7 @@ declare global {
       resolveRequire: (module: string) => string;
       insertRss: (RSSUrl: string) => Promise<RssRes>;
       articleRecommend: (
-        data: number[],
+        data: number[][],
         quantity: number,
       ) => Promise<RecommendList>;
       sendQ: (

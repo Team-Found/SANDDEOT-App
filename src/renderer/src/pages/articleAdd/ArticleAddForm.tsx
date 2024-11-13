@@ -127,7 +127,7 @@ export default function Input(): JSX.Element {
       };
 
       const response = await axios.post(
-        "http://10.150.150.145:8000/ai/markdownFormat",
+        "http://10.150.150.28:8000/ai/markdownFormat",
         requestData,
       );
 

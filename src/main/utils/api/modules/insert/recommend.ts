@@ -17,21 +17,21 @@ interface RecommendList {
 }
 
 export default async function articleRecommend(
-  data: number[],
+  articleIDDurationList: number[][],
   quantity: number,
 ): Promise<RecommendList[]> {
-  const json = {
-    data: data,
+  const recommendationPayload = {
+    data: articleIDDurationList,
     quantity: quantity,
   };
-  console.log(data);
-  console.log(JSON.stringify(json));
-  console.log(json);
+  console.log(articleIDDurationList);
+  console.log(JSON.stringify(recommendationPayload));
+  console.log(recommendationPayload);
 
   try {
     const response = await axios.post<RecommendList[]>(
       `${apiServer}/article/recommend/`,
-      json, // axios에서는 자동으로 JSON으로 변환됨
+      recommendationPayload, // axios에서는 자동으로 JSON으로 변환됨
       {
         headers: {
           "Content-Type": "application/json",
