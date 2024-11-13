@@ -1,1 +1,0 @@
-alter table LearnEdit MODIFY editID INTEGER NOT NULL AUTO_INCREMENT;
