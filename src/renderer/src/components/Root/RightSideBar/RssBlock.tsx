@@ -8,6 +8,12 @@ interface Props {
   isFollowed: boolean;
   imageUrl?: string;
 }
+interface IsNotFollowedProps extends Props {
+  isFollowed: false;
+  domain: string;
+}
+
+type WholeProps = Props | IsNotFollowedProps;
 
 export const RssBlock = ({
   RSSID,
@@ -15,7 +21,8 @@ export const RssBlock = ({
   property1 = false,
   isFollowed,
   imageUrl,
-}: Props): JSX.Element => {
+  domain,
+}: WholeProps): JSX.Element => {
   return (
     <div
       className={`[border-bottom-style:solid] border-[#161616] w-full flex border-t items-center [border-top-style:solid] gap-2 px-0 py-1.5 border-b relative `}
@@ -29,7 +36,11 @@ export const RssBlock = ({
             />
             <p className={`font-medium text-white text-xs`}>{blogTitle}</p>
           </div>
-          <Follow isFollowed={isFollowed} RSSID={RSSID ? RSSID : 0} />
+          <Follow
+            isFollowed={isFollowed}
+            RSSID={RSSID ? RSSID : 0}
+            domain={domain}
+          />
         </>
       ) : (
         <>

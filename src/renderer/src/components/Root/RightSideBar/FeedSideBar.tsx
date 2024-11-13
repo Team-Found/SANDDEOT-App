@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { RssBlock } from "./RssBlock";
 import search from "@assets/img/search.svg";
 import Modal from "react-modal";
-import FollowedRSSList from "./FollowedRSSList";
 import { toast } from "react-toastify";
+import FollowedRSSList from "./FollowedRSSList";
 import { useDispatch } from "react-redux";
 import { setReRender } from "./../../../utils/store";
 
@@ -164,11 +164,13 @@ const FrameWrapper = (): JSX.Element => {
                 isFollowed={false}
                 property1={true}
                 imageUrl="https://developer.apple.com/wwdc24/images/motion/axiju/endframe-small_2x.jpg"
+                domain="https://www.billboard.com/feed"
               />
               <RssBlock
                 blogTitle="Billboard"
                 isFollowed={false}
                 property1={true}
+                domain="https://www.billboard.com/feed"
               />
               <RssBlock
                 blogTitle="Fox News"

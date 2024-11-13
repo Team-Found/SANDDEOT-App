@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { RssBlock } from "./RssBlock";
 import { useSelector } from "react-redux";
+
 // import { setReRender } from "./../../../utils/store";
 
 export default function FollowedRSSList(): JSX.Element {
