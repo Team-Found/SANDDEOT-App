@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RssBlock } from "./RssBlock";
 import search from "@assets/img/search.svg";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
 import FollowedRSSList from "./FollowedRSSList";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setReRender } from "./../../../utils/store";
 
 const customStyles = {
@@ -128,6 +128,21 @@ function PromptModal(): JSX.Element {
 }
 
 const FrameWrapper = (): JSX.Element => {
+  const reRenderValue = useSelector((state) => state.reRender.value);
+
+  const [rssList, setRssList] = useState<
+    Awaited<ReturnType<typeof window.dbApi.rss.list>>
+  >([]);
+
+  useEffect(() => {
+    window.dbApi.rss.list().then((rows) => {
+      const alreadyRSS = rows.map((entry) => entry.RSSURL); //나중에 RSSID로 비교하자
+      setRssList(
+        recommendJSON.filter((item) => !alreadyRSS.includes(item.domain)),
+      );
+    });
+  }, [reRenderValue]);
+
   // const [reRender, setReRender] = useState(false);
   return (
     <div className="flex flex-col w-[295px] h-[810px] items-start gap-[17px] pt-2 pb-[45px] px-0 border-l-[1px] border-primaryBd">
@@ -159,25 +174,15 @@ const FrameWrapper = (): JSX.Element => {
               이런 RSS는 어때요?
             </div>
             <div className="flex flex-col items-start gap-[-3px] self-stretch w-full flex-[0_0_auto]">
-              <RssBlock
-                blogTitle="Apple"
-                isFollowed={false}
-                property1={true}
-                imageUrl="https://developer.apple.com/wwdc24/images/motion/axiju/endframe-small_2x.jpg"
-                domain="https://www.billboard.com/feed"
-              />
-              <RssBlock
-                blogTitle="Billboard"
-                isFollowed={false}
-                property1={true}
-                domain="https://www.billboard.com/feed"
-              />
-              <RssBlock
-                blogTitle="Fox News"
-                isFollowed={false}
-                property1={true}
-                imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-sjsqGIakPgU005shgWAFs7OpIgNxT42Ptw&s"
-              />
+              {rssList.map((data, index) => (
+                <RssBlock
+                  key={index}
+                  blogTitle={data.blogTitle}
+                  imageUrl={data.imageUrl}
+                  isFollowed={false}
+                  domain={data.domain}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -185,5 +190,24 @@ const FrameWrapper = (): JSX.Element => {
     </div>
   );
 };
+
+const recommendJSON = [
+  {
+    blogTitle: "Apple",
+    imageUrl:
+      "https://developer.apple.com/wwdc24/images/motion/axiju/endframe-small_2x.jpg",
+    domain: "https://www.apple.com/newsroom/rss-feed.rss",
+  },
+  {
+    blogTitle: "Billboard",
+    domain: "https://www.billboard.com/feed",
+  },
+  {
+    blogTitle: "Fox News",
+    imageUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-sjsqGIakPgU005shgWAFs7OpIgNxT42Ptw&s",
+    domain: "https://moxie.foxnews.com/google-publisher/latest.xml",
+  },
+];
 
 export default FrameWrapper;

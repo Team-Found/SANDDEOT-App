@@ -18,7 +18,7 @@ type WholeProps = Props | IsNotFollowedProps;
 export const RssBlock = ({
   RSSID,
   blogTitle = "",
-  property1 = false,
+  property1 = true,
   isFollowed,
   imageUrl,
   domain,
