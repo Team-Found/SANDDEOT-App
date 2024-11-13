@@ -19,14 +19,8 @@ const App: React.FC<{
       const duration = Math.floor((endTime - startTime) / 1000);
 
       if (duration > 0) {
-        const readTimeData = {
-          title,
-          articleID,
-          duration,
-        };
-
-        console.log("페이지 체류 데이터:", readTimeData);
-        navigator.sendBeacon("YOUR_API_ENDPOINT", JSON.stringify(readTimeData));
+        window.dbApi.rss.article.updateDuration(articleID, duration);
+        console.log("페이지 체류 데이터:", duration);
       }
     };
 
