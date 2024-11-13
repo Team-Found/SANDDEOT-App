@@ -23,7 +23,7 @@ export type Feed = {
 } & Parser.Output<{ [key: string]: any }>;
 
 export async function getRssFeed(rss: RSS): Promise<Feed> {
-  console.log(rss.RSSURL);
+  // console.log(rss.RSSURL);
   const feed = await parser.parseURL(rss.RSSURL);
   feed.items.forEach((item) => {
     item.RSSID = rss.RSSID;

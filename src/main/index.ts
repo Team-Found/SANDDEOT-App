@@ -135,31 +135,16 @@ const dbApi = db;
 
 const updateRSSArticleDB = async (): Promise<void> => {
   const lastUpdateDate = await lastUpdate();
-  console.log(lastUpdateDate, "lastUpdateDate");
+  // console.log(lastUpdateDate, "lastUpdateDate");
   const RSSs = await dbApi.rss.list();
-  console.log(RSSs, "RSSs");
+  // console.log(RSSs, "RSSs");
   const items = await getRssFeedsItemsAfterDatetime(RSSs, lastUpdateDate);
 
   if (items.length === 0) {
     console.log("already up to date");
-    return [];
+    return;
   }
-  console.log(items);
-  console.log(
-    items.map(
-      (item) =>
-        ({
-          rssID: item.RSSID,
-          title: item.title,
-          description: item.description,
-          summary: item.summary,
-          date: Math.floor(new Date(item.isoDate).getTime() / 1000),
-          content: [{ value: item["content:encoded"] }],
-          link: item.link,
-          media_thumbnail: item["media:thumbnail"],
-        }) as rawArticle,
-    ),
-  );
+  // console.log(items);
 
   newArticle(
     items.map(

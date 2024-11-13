@@ -2,13 +2,7 @@ import db from "../../db";
 import ArticleDetail from "../../types/ArticleDetail";
 import Article from "../../types/Article";
 import { RSS } from "../../types/Rss";
-import Category from "../../types/Category";
-import { LearnAddEdit } from "../../types/Learn";
-import { Learn, LearnAnalytics } from "../../types/Learn";
-import LearnEdit from "./learnEdit";
-import { LeanEdit } from "../../types/Learn";
 import db from "../../../db";
-import WordDetail from "../../types/WordDetail";
 interface Modules {
 article: {
     del(): Promise<void>;
@@ -52,25 +46,11 @@ article: {
     userArticleList(): Promise<Article[]>;
 
 };
-category: {
-    add(categoryName: string): Promise<number>;
-
-    remove(categoryID: number): Promise<number>;
-
-    list(): Promise<Category[]>;
-
-};
-learn: {
-    add(startDate: Date, endDate: Date, bodyID: number, editList: LearnAddEdit[],): Promise<number>;
-
-    analytics(anStartDate: Date = new Date(0), anEndDate: Date = new Date(),): Promise<LearnAnalytics[]>;
-
-    edit(learnID?: number): Promise<LeanEdit[]>;
-
-};
 rss: {
   article: {
       add(articleID: number, RSSID: number, title: string, date: Date, description?: string, body?: string, threadID?: null | string,): Promise<void>;
+
+      updateDuration(articleID: number, duration: number, //sec): Promise<void>;
 
   };
     lastUpdate(): Promise<Date>;
@@ -86,14 +66,6 @@ rss: {
     remove(RSSID: number): Promise<void>;
 
     urlToId(url: string): Promise<number>;
-
-};
-word: {
-    add(word: string, mean: string, bodyID: number): Promise<number>;
-
-    list(star?: boolean): Promise<WordDetail[]>;
-
-    remove(wordID: number): Promise<number>;
 
 };
 }
