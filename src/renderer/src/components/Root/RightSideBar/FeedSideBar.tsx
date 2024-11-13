@@ -130,18 +130,20 @@ function PromptModal(): JSX.Element {
 const FrameWrapper = (): JSX.Element => {
   const reRenderValue = useSelector((state) => state.reRender.value);
 
-  const [rssList, setRssList] = useState<
-    Awaited<ReturnType<typeof window.dbApi.rss.list>>
-  >([]);
+  type RSSItem =
+    | { blogTitle: string; imageUrl: string; domain: string }
+    | { blogTitle: string; domain: string; imageUrl?: undefined };
+
+  const [rssList, setRssList] = useState<RSSItem[]>([]); // 타입을 명시적으로 지정
 
   useEffect(() => {
     window.dbApi.rss.list().then((rows) => {
-      const alreadyRSS = rows.map((entry) => entry.RSSURL); //나중에 RSSID로 비교하자
+      const alreadyRSS = rows.map((entry) => entry.RSSURL);
       setRssList(
         recommendJSON.filter((item) => !alreadyRSS.includes(item.domain)),
       );
     });
-  }, [reRenderValue]);
+  }, [reRenderValue, recommendJSON]);
 
   // const [reRender, setReRender] = useState(false);
   return (

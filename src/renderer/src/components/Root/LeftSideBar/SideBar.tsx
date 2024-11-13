@@ -11,6 +11,9 @@ import React from "react";
 import "@assets/hover.css";
 import Modal from "react-modal";
 import { Link } from "react-router-dom";
+import { setReRender } from "@renderer/utils/store";
+import { useDispatch } from "react-redux";
+import { Dispatch } from '../../../../../../node_modules/redux/src/types/store';
 
 const customStyles = {
   overlay: {
@@ -96,6 +99,7 @@ function Dropdown(): JSX.Element {
 }
 
 export const Sidebar = (): JSX.Element => {
+  const dispatch = useDispatch();
   // const [isDropdownView, setDropdownView] = useState(false);
   return (
     <div className="flex flex-col w-[200px] h-[calc(100vh-2.25rem)] items-start pt-2 pb-0 px-[11px] relative bg-variable-collection-primarybg border-r [border-right-style:solid] border-variable-collection-primaryborder">
@@ -138,6 +142,7 @@ export const Sidebar = (): JSX.Element => {
               className="w-fit [font-family:'Pretendard_Variable-Bold',Helvetica] font-bold text-[#f9f4f4] text-xs whitespace-nowrap relative tracking-[0] leading-[normal]"
               onClick={() => {
                 window.dbApi.article.del();
+                dispatch(setReRender());
               }}
             >
               설정

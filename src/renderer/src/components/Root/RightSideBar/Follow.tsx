@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux";
 import { setReRender } from "./../../../utils/store";
 import { toast } from "react-toastify";
+import { useState } from 'react';
 
 interface Props {
   isFollowed: boolean;
@@ -16,8 +17,10 @@ type WholeProps = Props | IsNotFollowedProps;
 
 export const Follow = ({ isFollowed, RSSID, domain }: WholeProps): JSX.Element => {
   const dispatch = useDispatch();
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  function insertRss(domain: string): void {
+  async function insertRss(domain: string): Promise<void> {
+    setIsProcessing(true)
     window.api
       .insertRss(domain)
       .then((res) => {
@@ -55,7 +58,7 @@ export const Follow = ({ isFollowed, RSSID, domain }: WholeProps): JSX.Element =
             window.dbApi.article.RSSArticleDel(RSSID).then(() => {
               dispatch(setReRender());
             });
-          } else {
+          } else if(!isProcessing){
             insertRss(domain);
           }
         }}
