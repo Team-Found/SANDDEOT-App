@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RssBlock } from "./RssBlock";
 import search from "@assets/img/search.svg";
 import Modal from "react-modal";
-import FollowedRSSList from "./FollowedRSSList";
 import { toast } from "react-toastify";
+import FollowedRSSList from "./FollowedRSSList";
+import { useDispatch, useSelector } from "react-redux";
+import { setReRender } from "./../../../utils/store";
 
 const customStyles = {
   overlay: {
@@ -27,13 +29,9 @@ const customStyles = {
 // Make sure to bind modal to your appElement (https://reactcommunity.org/react-modal/accessibility/)
 Modal.setAppElement("#root");
 
-function PromptModal({
-  reRender,
-  setReRender,
-}: {
-  reRender: boolean;
-  setReRender: React.Dispatch<React.SetStateAction<boolean>>;
-}): JSX.Element {
+function PromptModal(): JSX.Element {
+  const dispatch = useDispatch();
+
   let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -53,7 +51,7 @@ function PromptModal({
         window.dbApi.article.rssStateUp(inputValue).then(() => {
           toast.success("RSS가 추가되었습니다.");
           closeModal();
-          setReRender(!reRender);
+          dispatch(setReRender());
         });
       })
 
@@ -75,7 +73,7 @@ function PromptModal({
             }
           })
           .then(() => {
-            setReRender(!reRender);
+            dispatch(setReRender());
           })
           .catch((err) => {
             console.log(err);
@@ -90,13 +88,7 @@ function PromptModal({
   return (
     <>
       <div onClick={openModal} className="w-full">
-        <RssBlock
-          blogTitle="#"
-          followProperty1="default"
-          property1="variant-2"
-          reRender={reRender}
-          setReRender={setReRender}
-        />
+        <RssBlock blogTitle="#" isFollowed={true} property1={false} />
       </div>
       <Modal
         isOpen={modalIsOpen}
@@ -136,7 +128,22 @@ function PromptModal({
 }
 
 const FrameWrapper = (): JSX.Element => {
-  const [reRender, setReRender] = useState(false);
+  const reRenderValue = useSelector((state) => state.reRender.value);
+
+  const [rssList, setRssList] = useState<
+    Awaited<ReturnType<typeof window.dbApi.rss.list>>
+  >([]);
+
+  useEffect(() => {
+    window.dbApi.rss.list().then((rows) => {
+      const alreadyRSS = rows.map((entry) => entry.RSSURL); //나중에 RSSID로 비교하자
+      setRssList(
+        recommendJSON.filter((item) => !alreadyRSS.includes(item.domain)),
+      );
+    });
+  }, [reRenderValue]);
+
+  // const [reRender, setReRender] = useState(false);
   return (
     <div className="flex flex-col w-[295px] h-[810px] items-start gap-[17px] pt-2 pb-[45px] px-0 border-l-[1px] border-primaryBd">
       <div className="px-4 w-full box-border">
@@ -153,13 +160,13 @@ const FrameWrapper = (): JSX.Element => {
           <div className="w-full mt-[-1.00px] [font-family:'Pretendard_Variable-Regular',Helvetica] font-normal text-[#cbcbcb] text-sm tracking-[0] leading-[normal]"></div>
         </div>
         <div className="flex flex-col items-start gap-[30px] self-stretch w-full flex-[0_0_auto]">
-          <div className="flex flex-col items-start gap-2.5 self-stretch w-full flex-[0_0_auto]">
-            <div className="self-stretch mt-[-1.00px] [font-family:'Pretendard_Variable-Bold',Helvetica] font-bold text-variable-collection-primarytext text-base tracking-[0] leading-[normal] pt-5">
+          <div className="flex flex-col items-start gap-2.5 self-stretch w-full ">
+            <div className="font-bold text-variable-collection-primarytext text-base pt-5">
               구독한 RSS
             </div>
             <div className="flex flex-col items-start gap-0 self-stretch w-full flex-[0_0_auto] box-border">
-              <FollowedRSSList reRender={reRender} setReRender={setReRender} />
-              <PromptModal reRender={reRender} setReRender={setReRender} />
+              <FollowedRSSList />
+              <PromptModal />
             </div>
           </div>
           <div className="flex flex-col items-start gap-2.5 self-stretch w-full flex-[0_0_auto]">
@@ -167,29 +174,15 @@ const FrameWrapper = (): JSX.Element => {
               이런 RSS는 어때요?
             </div>
             <div className="flex flex-col items-start gap-[-3px] self-stretch w-full flex-[0_0_auto]">
-              <RssBlock
-                blogTitle="Apple"
-                followProperty1="default"
-                property1="default"
-                imageUri="https://developer.apple.com/wwdc24/images/motion/axiju/endframe-small_2x.jpg"
-                reRender={reRender}
-                setReRender={setReRender}
-              />
-              <RssBlock
-                blogTitle="Billboard"
-                followProperty1="default"
-                property1="default"
-                reRender={reRender}
-                setReRender={setReRender}
-              />
-              <RssBlock
-                blogTitle="Fox News"
-                followProperty1="default"
-                property1="default"
-                imageUri="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-sjsqGIakPgU005shgWAFs7OpIgNxT42Ptw&s"
-                reRender={reRender}
-                setReRender={setReRender}
-              />
+              {rssList.map((data, index) => (
+                <RssBlock
+                  key={index}
+                  blogTitle={data.blogTitle}
+                  imageUrl={data.imageUrl}
+                  isFollowed={false}
+                  domain={data.domain}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -197,5 +190,24 @@ const FrameWrapper = (): JSX.Element => {
     </div>
   );
 };
+
+const recommendJSON = [
+  {
+    blogTitle: "Apple",
+    imageUrl:
+      "https://developer.apple.com/wwdc24/images/motion/axiju/endframe-small_2x.jpg",
+    domain: "https://www.apple.com/newsroom/rss-feed.rss",
+  },
+  {
+    blogTitle: "Billboard",
+    domain: "https://www.billboard.com/feed",
+  },
+  {
+    blogTitle: "Fox News",
+    imageUrl:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-sjsqGIakPgU005shgWAFs7OpIgNxT42Ptw&s",
+    domain: "https://moxie.foxnews.com/google-publisher/latest.xml",
+  },
+];
 
 export default FrameWrapper;

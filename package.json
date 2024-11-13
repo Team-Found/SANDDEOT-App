@@ -81,7 +81,7 @@
     "react-webcam": "^7.2.0",
     "rss-parser": "^3.13.0",
     "sax": "^1.4.1",
-    "sqlite3": "^5.1.6",
+    "sqlite3": "^5.1.7",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
     "tesseract.js": "^5.1.0",

@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
 import { RssBlock } from "./RssBlock";
-export default function FollowedRSSList({
-  reRender,
-  setReRender,
-}: {
-  reRender: boolean;
-  setReRender: React.Dispatch<React.SetStateAction<boolean>>;
-}): JSX.Element {
+import { useSelector } from "react-redux";
+
+// import { setReRender } from "./../../../utils/store";
+
+export default function FollowedRSSList(): JSX.Element {
   const [rssList, setRssList] = useState<
     Awaited<ReturnType<typeof window.dbApi.rss.list>>
   >([]);
+
+  const reRenderValue = useSelector((state) => state.reRender.value);
+
   useEffect(() => {
     window.dbApi.rss.list().then((rows) => {
       setRssList(rows);
-      console.log(rows);
-      console.log("hi");
     });
-  }, [reRender]);
+  }, [reRenderValue]);
+  console.log(rssList);
   return (
     <>
       {rssList.map((rss) => (
@@ -24,11 +24,9 @@ export default function FollowedRSSList({
           <RssBlock
             RSSID={rss.RSSID}
             blogTitle={rss.RSSName}
-            followProperty1="variant-2"
-            property1="default"
-            imageUri={rss.RSSImageURL}
-            reRender={reRender}
-            setReRender={setReRender}
+            isFollowed={true}
+            property1={true}
+            imageUrl={rss.RSSImageURL}
           />
         </div>
       ))}
