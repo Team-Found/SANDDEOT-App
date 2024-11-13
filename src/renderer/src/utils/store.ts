@@ -37,20 +37,42 @@ const pages = createSlice({
   },
 });
 
+interface ReRenderState {
+  value: boolean;
+}
+
+const initialState2: ReRenderState = {
+  value: false,
+};
+
+const reRender = createSlice({
+  name: "reRender",
+  initialState: initialState2,
+  reducers: {
+    setReRender: (state) => {
+      state.value = !state.value;
+    },
+  },
+});
+
 // 스토어 구성
 const store = configureStore({
   reducer: {
     textData: textData.reducer,
     pages: pages.reducer,
+    reRender: reRender.reducer,
   },
 });
 
 // RootState 타입 정의
 export type RootState = ReturnType<typeof store.getState>;
 
+export type AppDispatch = typeof store.dispatch;
+
 // 액션 내보내기
 export const { setTitle, setBody } = textData.actions;
 export const { setNumber } = pages.actions;
+export const { setReRender } = reRender.actions;
 
 // 스토어 내보내기
 export default store;
