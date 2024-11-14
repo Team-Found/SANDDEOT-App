@@ -149,18 +149,6 @@ const FrameWrapper = (): JSX.Element => {
   return (
     <div className="flex flex-col w-[295px] h-[810px] items-start gap-[17px] pt-2 pb-[45px] px-0 border-l-[1px] border-primaryBd">
       <div className="px-4 w-full box-border">
-        <div className="flex items-center gap-3.5 px-3 mt-2 self-stretch w-full flex-[0_0_auto] rounded-2xl overflow-hidden border border-solid border-variable-collection-primaryborder">
-          <label htmlFor="input1">
-            <img className="w-9 h-9" alt="Search" src={search} />
-          </label>
-          <input
-            type="text"
-            placeholder="Search"
-            className="w-full bg-transparent focus:outline-none"
-            id="input1"
-          ></input>
-          <div className="w-full mt-[-1.00px] [font-family:'Pretendard_Variable-Regular',Helvetica] font-normal text-[#cbcbcb] text-sm tracking-[0] leading-[normal]"></div>
-        </div>
         <div className="flex flex-col items-start gap-[30px] self-stretch w-full flex-[0_0_auto]">
           <div className="flex flex-col items-start gap-2.5 self-stretch w-full ">
             <div className="font-bold text-variable-collection-primarytext text-base pt-5">
