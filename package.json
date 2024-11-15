@@ -35,6 +35,8 @@
   "dependencies": {
     "@babel/preset-env": "^7.25.3",
     "@babel/preset-typescript": "^7.24.7",
+    "@babel/register": "^7.24.6",
+    "@babel/core": "^7.25.2",
     "@ckeditor/ckeditor5-language": "^42.0.2",
     "@ckeditor/ckeditor5-react": "^8.0.0",
     "@electron-toolkit/preload": "^3.0.1",
@@ -92,8 +94,6 @@
     "xmlbuilder": "^15.1.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.25.2",
-    "@babel/register": "^7.24.6",
     "@electron-toolkit/eslint-config-prettier": "^2.0.0",
     "@electron-toolkit/eslint-config-ts": "^2.0.0",
     "@electron-toolkit/tsconfig": "^1.0.1",

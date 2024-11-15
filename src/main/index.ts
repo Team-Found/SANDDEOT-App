@@ -49,10 +49,15 @@ function createWindow(): void {
     process.env["ELECTRON_RENDERER_URL"] = join(__dirname, "../renderer");
     // mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
-  mainWindow.loadURL(process.env["ELECTRON_RENDERER_URL"]);
+  mainWindow.loadURL(
+    is.dev
+      ? process.env["ELECTRON_RENDERER_URL"]
+      : "file://" + process.env["ELECTRON_RENDERER_URL"] + "/index.html",
+  );
+  console.log("file://" + process.env["ELECTRON_RENDERER_URL"] + "/index.html");
   if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
-    mainWindow.webContents.openDevTools();
   }
+  mainWindow.webContents.openDevTools();
 }
 
 // This method will be called when Electron has finished
