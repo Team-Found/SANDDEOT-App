@@ -10,26 +10,26 @@ interface SummaryProps {
 export default function Summary({ body, threadID, articleID }: SummaryProps) {
   const [sum, setSum] = useState<string>("");
 
-  useEffect(() => {
-    if (threadID == null) {
-      window.api
-        .sendQ("asst_Kgk5NI2uhQhaJVUyyCJdyIVe", threadID, body, "", null)
-        .then((item) => {
-          setSum(item.messages.data[0].content[0].text.value);
-          console.log("처음", sum);
-          return item.messages.data[0].thread_id;
-        })
-        .then((thread_ID) => {
-          window.dbApi.article.threadUpdate(thread_ID, articleID);
-        });
-    } else {
-      console.log(threadID, "이거 아니야?");
-      window.api.history(threadID).then((item) => {
-        setSum(item.messages.data[0].content[0].text.value);
-        console.log("두번째", sum);
-      });
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (threadID == null) {
+  //     window.api
+  //       .sendQ("asst_Kgk5NI2uhQhaJVUyyCJdyIVe", threadID, body, "", null)
+  //       .then((item) => {
+  //         setSum(item.messages.data[0].content[0].text.value);
+  //         console.log("처음", sum);
+  //         return item.messages.data[0].thread_id;
+  //       })
+  //       .then((thread_ID) => {
+  //         window.dbApi.article.threadUpdate(thread_ID, articleID);
+  //       });
+  //   } else {
+  //     console.log(threadID, "이거 아니야?");
+  //     window.api.history(threadID).then((item) => {
+  //       setSum(item.messages.data[0].content[0].text.value);
+  //       console.log("두번째", sum);
+  //     });
+  //   }
+  // }, []);
 
   //   "asst_Kgk5NI2uhQhaJVUyyCJdyIVe",
   //   null,
