@@ -11,6 +11,7 @@ import { join } from "path";
 import { electronApp, optimizer, is } from "@electron-toolkit/utils";
 import icon from "../../resources/icon.png?asset";
 import trayIcon from "../../resources/trayIcon.png?asset";
+import path from "path";
 
 // process.env.ELECTRON_RENDERER_URL
 
@@ -50,14 +51,14 @@ function createWindow(): void {
     // mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
   mainWindow.loadURL(
-    is.dev
-      ? process.env["ELECTRON_RENDERER_URL"]
-      : "file://" + process.env["ELECTRON_RENDERER_URL"] + "/index.html",
+    // is.dev
+    // ? process.env["ELECTRON_RENDERER_URL"]
+    "file://" + process.env["ELECTRON_RENDERER_URL"] + "/index.html",
   );
   console.log("file://" + process.env["ELECTRON_RENDERER_URL"] + "/index.html");
-  if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
-  }
-  mainWindow.webContents.openDevTools();
+  // if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
+  //   mainWindow.webContents.openDevTools();
+  // }
 }
 
 // This method will be called when Electron has finished
@@ -100,6 +101,10 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on("ping", () => console.log("pong"));
+
+  ipcMain.handle("get-db-path", () => {
+    return path.join(app.getPath("userData"), "SANDDOET.db");
+  });
 
   // ipcMain.on(constants.SEND_MAIN_PING, (event, arg) => {
   //   console.log("Main.js received a ping!!!");
