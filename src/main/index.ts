@@ -51,8 +51,8 @@ function createWindow(): void {
     // mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
   mainWindow.loadURL(
-    // is.dev
-    // ? process.env["ELECTRON_RENDERER_URL"]
+    is.dev
+    ? process.env["ELECTRON_RENDERER_URL"] :
     "file://" + process.env["ELECTRON_RENDERER_URL"] + "/index.html",
   );
   console.log("file://" + process.env["ELECTRON_RENDERER_URL"] + "/index.html");

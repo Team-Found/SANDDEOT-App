@@ -129,7 +129,7 @@ export default function Input(): JSX.Element {
       };
 
       const response = await axios.post(
-        "http://10.150.150.28:8000/ai/markdownFormat",
+        "https://sanddoet.obtuse.kr/ai/markdownFormat",
         requestData,
       );
 
