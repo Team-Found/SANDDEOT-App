@@ -240,31 +240,31 @@ export const Controls: React.FC<ControlsProps> = ({
                     placeholder="궁금한 점을 물어보세요"
                     className="w-full h-3.5 bg-zinc-800 text-[#A394A5] text-xs font-normal leading-none outline-none placeholder:text-[#A394A5]"
                     value={questionText}
-                    // onChange={(e) => {
-                    //   setQuestionText(e.target.value);
-                    // }}
-                    // onKeyDown={(e) => {
-                    //   if (e.key === "Enter") {
-                    //     console.log("durl", articleID);
-                    //     window.dbApi.article
-                    //       .threadSelect(articleID)
-                    //       .then((item) => {
-                    //         console.log(item);
-                    //         window.api
-                    //           .sendQ(
-                    //             "asst_Kgk5NI2uhQhaJVUyyCJdyIVe",
-                    //             item.threadID,
-                    //             body,
-                    //             questionText,
-                    //             null,
-                    //           )
-                    //           .then((item) => {
-                    //             setChatList(item);
-                    //             console.log(chatList);
-                    //           });
-                    //       });
-                    //   }
-                    // }}
+                    onChange={(e) => {
+                      setQuestionText(e.target.value);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        console.log("durl", articleID);
+                        window.dbApi.article
+                          .threadSelect(articleID)
+                          .then((item) => {
+                            console.log(item);
+                            window.api
+                              .sendQ(
+                                "asst_Kgk5NI2uhQhaJVUyyCJdyIVe",
+                                item.threadID,
+                                body,
+                                questionText,
+                                null,
+                              )
+                              .then((item) => {
+                                setChatList(item);
+                                console.log(chatList);
+                              });
+                          });
+                      }
+                    }}
                   />
                   <img src={send} alt="전송" />
                 </div>

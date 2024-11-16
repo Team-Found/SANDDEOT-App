@@ -120,40 +120,40 @@ export default function Input(): JSX.Element {
 
   const editorWrapperRef = useRef<HTMLDivElement>(null); // 새로운 ref 추가
 
-  // const handleButtonClick = async (): Promise<void> => {
-  //   console.log("함수 진입 성공");
-  //   try {
-  //     console.log(body);
-  //     const requestData = {
-  //       content: `${body}`,
-  //     };
+  const handleButtonClick = async (): Promise<void> => {
+    console.log("함수 진입 성공");
+    try {
+      console.log(body);
+      const requestData = {
+        content: `${body}`,
+      };
 
-  //     const response = await axios.post(
-  //       "https://sanddoet.obtuse.kr",
-  //       requestData,
-  //     );
+      const response = await axios.post(
+        "http://10.150.150.28:8000/ai/markdownFormat",
+        requestData,
+      );
 
-  //     const responseData = response.data;
-  //     if (
-  //       responseData &&
-  //       responseData.messages &&
-  //       responseData.messages.content
-  //     ) {
-  //       console.log(response);
-  //       const content = responseData.messages.content;
-  //       console.log(content);
-  //       dispatch(setBody(content));
+      const responseData = response.data;
+      if (
+        responseData &&
+        responseData.messages &&
+        responseData.messages.content
+      ) {
+        console.log(response);
+        const content = responseData.messages.content;
+        console.log(content);
+        dispatch(setBody(content));
 
-  //       // CKEditor 인스턴스가 준비되었는지 확인 후 데이터 설정
-  //       if (isEditorReady && editorRef.current) {
-  //         console.log("초기화");
-  //         editorRef.current.setData(content);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("POST 요청 중 오류 발생:", error);
-  //   }
-  // };
+        // CKEditor 인스턴스가 준비되었는지 확인 후 데이터 설정
+        if (isEditorReady && editorRef.current) {
+          console.log("초기화");
+          editorRef.current.setData(content);
+        }
+      }
+    } catch (error) {
+      console.error("POST 요청 중 오류 발생:", error);
+    }
+  };
 
   useEffect((): (() => void) => {
     setIsLayoutReady(true);
@@ -587,9 +587,7 @@ export default function Input(): JSX.Element {
         </div>
       </div>
       <div className="flex justify-between w-full p-6">
-        <Button className="px-8">
-          {" "}
-          {/*onClick={handleButtonClick}*/}
+        <Button className="px-8" onClick={handleButtonClick}>
           마크다운 포맷
         </Button>
         <Link2 to="../../">
