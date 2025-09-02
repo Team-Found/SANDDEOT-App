@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { RssBlock } from "./RssBlock";
-import search from "@assets/img/search.svg";
 import Modal from "react-modal";
 import { toast } from "react-toastify";
 import FollowedRSSList from "./FollowedRSSList";
 import { useDispatch, useSelector } from "react-redux";
-import { setReRender } from "./../../../utils/store";
+import { RootState, setReRender } from "./../../../utils/store";
 
 const customStyles = {
   overlay: {
@@ -43,43 +42,36 @@ function PromptModal(): JSX.Element {
     // references are now sync'd and can be accessed.
     subtitle.style.color = "#f00";
   }
-  function insertRss(): void {
-    window.dbApi.article
-      .selectRSS(inputValue)
-
-      .then(() => {
-        window.dbApi.article.rssStateUp(inputValue).then(() => {
-          toast.success("RSS가 추가되었습니다.");
-          closeModal();
-          dispatch(setReRender());
-        });
-      })
-
-      .catch(() => {
-        window.api
-          .insertRss(inputValue)
-          .then((res) => {
-            if (res.status === "success") {
-              window.dbApi.rss.add({
-                RSSID: res.rssID,
-                RSSURL: res.rssUrl,
-                RSSName: res.rssName,
-                RSSImageUrl: res.favicon,
-              });
-              toast.success("RSS가 추가되었습니다.");
-              closeModal();
-            } else {
-              toast.error("RSS 추가에 실패했습니다.");
-            }
-          })
-          .then(() => {
-            dispatch(setReRender());
-          })
-          .catch((err) => {
-            console.log(err);
-            toast.error("RSS 추가에 실패했습니다.");
+  async function insertRss(): Promise<void> {
+    try {
+      // Check if RSS already exists in the DB
+      await window.dbApi.article.selectRSS(inputValue);
+      // If it exists, update its state
+      await window.dbApi.article.rssStateUp(inputValue);
+      toast.success("기존 RSS를 구독했습니다.");
+    } catch (error) {
+      // If it doesn't exist, add it as a new RSS feed
+      try {
+        const res = await window.api.insertRss(inputValue);
+        if (res.status === "success") {
+          await window.dbApi.rss.add({
+            RSSID: res.rssID,
+            RSSURL: res.rssUrl,
+            RSSName: res.rssName,
+            RSSImageUrl: res.favicon,
           });
-      });
+          toast.success("새로운 RSS를 추가했습니다.");
+        } else {
+          toast.error("RSS 추가에 실패했습니다.");
+        }
+      } catch (err) {
+        console.error("Failed to insert new RSS:", err);
+        toast.error("RSS 추가에 실패했습니다.");
+      }
+    } finally {
+      closeModal();
+      dispatch(setReRender());
+    }
   }
 
   function closeModal(): void {
@@ -88,7 +80,14 @@ function PromptModal(): JSX.Element {
   return (
     <>
       <div onClick={openModal} className="w-full">
-        <RssBlock blogTitle="#" isFollowed={true} property1={false} />
+        <div
+          className={`[border-bottom-style:solid] border-[#161616] w-full flex border-t items-center [border-top-style:solid] gap-2 px-0 py-1.5 border-b relative `}
+        >
+          <img src="/src/components/Root/RightSideBar/Plus2.svg" alt="" />
+          <div className="font-medium text-variable-collection-blue60 text-xs">
+            새로 추가하기
+          </div>
+        </div>
       </div>
       <Modal
         isOpen={modalIsOpen}
@@ -128,7 +127,7 @@ function PromptModal(): JSX.Element {
 }
 
 const FrameWrapper = (): JSX.Element => {
-  const reRenderValue = useSelector((state) => state.reRender.value);
+  const reRenderValue = useSelector((state: RootState) => state.reRender.value);
 
   type RSSItem =
     | { blogTitle: string; imageUrl: string; domain: string }
@@ -137,12 +136,19 @@ const FrameWrapper = (): JSX.Element => {
   const [rssList, setRssList] = useState<RSSItem[]>([]); // 타입을 명시적으로 지정
 
   useEffect(() => {
-    window.dbApi.rss.list().then((rows) => {
-      const alreadyRSS = rows.map((entry) => entry.RSSURL);
-      setRssList(
-        recommendJSON.filter((item) => !alreadyRSS.includes(item.domain)),
-      );
-    });
+    const fetchRssList = async () => {
+      try {
+        const rows = await window.dbApi.rss.list();
+        const alreadyRSS = rows.map((entry) => entry.RSSURL);
+        setRssList(
+          recommendJSON.filter((item) => !alreadyRSS.includes(item.domain)),
+        );
+      } catch (error) {
+        console.error("Failed to fetch RSS list:", error);
+      }
+    };
+
+    fetchRssList();
   }, [reRenderValue, recommendJSON]);
 
   // const [reRender, setReRender] = useState(false);

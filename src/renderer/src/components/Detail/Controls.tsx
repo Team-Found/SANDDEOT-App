@@ -250,18 +250,20 @@ export const Controls: React.FC<ControlsProps> = ({
                           .threadSelect(articleID)
                           .then((item) => {
                             console.log(item);
-                            window.api
-                              .sendQ(
-                                "asst_Kgk5NI2uhQhaJVUyyCJdyIVe",
-                                item.threadID,
-                                body,
-                                questionText,
-                                null,
-                              )
-                              .then((item) => {
-                                setChatList(item);
-                                console.log(chatList);
-                              });
+                            if (item) {
+                              window.api
+                                .sendQ(
+                                  "asst_Kgk5NI2uhQhaJVUyyCJdyIVe",
+                                  item,
+                                  body,
+                                  questionText,
+                                  null,
+                                )
+                                .then((response) => {
+                                  setChatList(response);
+                                  console.log(response);
+                                });
+                            }
                           });
                       }
                     }}

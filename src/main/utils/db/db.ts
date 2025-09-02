@@ -1,4 +1,3 @@
-import { ipcRenderer } from "electron";
 import * as sqlite3 from "sqlite3";
 import path from "path";
 

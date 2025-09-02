@@ -46,14 +46,14 @@ function createWindow(): void {
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
-  if (!(is.dev && process.env["ELECTRON_RENDERER_URL"])) {
-    process.env["ELECTRON_RENDERER_URL"] = join(__dirname, "../renderer");
-    // mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
+  let rendererUrl = process.env["ELECTRON_RENDERER_URL"];
+  if (!rendererUrl) {
+    rendererUrl = join(__dirname, "../renderer");
   }
   mainWindow.loadURL(
     is.dev
-    ? process.env["ELECTRON_RENDERER_URL"] :
-    "file://" + process.env["ELECTRON_RENDERER_URL"] + "/index.html",
+      ? rendererUrl
+      : "file://" + rendererUrl + "/index.html",
   );
   console.log("file://" + process.env["ELECTRON_RENDERER_URL"] + "/index.html");
   // if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
@@ -135,11 +135,15 @@ app.on("window-all-closed", app.dock.hide);
 
 // background process
 
-import { getRssFeedsItemsAfterDatetime } from "./utils/rss/rss";
+import {
+  getRssFeedsItemsAfterDatetime,
+  ItemWithRSSID,
+} from "./utils/rss/rss";
 import lastUpdate from "./utils/db/modules/rss/lastUpdate";
 import db from "./utils/db/index";
 
 import newArticle from "./utils/api/modules/article/newArticle";
+import { rawArticle } from "./utils/api/types/rawArticle";
 
 const dbApi = db;
 
@@ -156,21 +160,17 @@ const updateRSSArticleDB = async (): Promise<void> => {
   }
   // console.log(items);
 
-  newArticle(
-    items.map(
-      (item) =>
-        ({
-          rssID: item.RSSID,
-          title: item.title,
-          description: item.content || item.description,
-          summary: item.summary,
-          date: Math.floor(new Date(item.isoDate).getTime() / 1000),
-          content: [{ value: item["content:encoded"] }],
-          link: item.link,
-          media_thumbnail: item["media:thumbnail"],
-        }) as rawArticle,
-    ),
-  );
+  const articles: rawArticle[] = items.map((item: ItemWithRSSID) => ({
+    rssID: item.RSSID,
+    title: item.title || "",
+    description: item.content || item.description || "",
+    summary: item.summary || "",
+    date: Math.floor(new Date(item.isoDate || 0).getTime() / 1000),
+    content: [{ value: item["content:encoded"] || "" }],
+    link: item.link || "",
+    media_thumbnail: item["media:thumbnail"] || "",
+  }));
+  newArticle(articles);
 };
 
 const background = setInterval(() => {
