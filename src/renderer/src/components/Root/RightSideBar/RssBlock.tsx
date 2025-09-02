@@ -1,28 +1,24 @@
 import PropTypes from "prop-types";
 import Plus2 from "./Plus2.svg";
 import { Follow } from "./Follow";
-interface Props {
-  RSSID?: number;
-  blogTitle: string;
+
+type RssBlockProps = {
   property1?: boolean;
-  isFollowed: boolean;
+  blogTitle: string;
   imageUrl?: string;
-}
-interface IsNotFollowedProps extends Props {
-  isFollowed: false;
-  domain: string;
-}
+} & (
+  | { isFollowed: true; RSSID: number; domain?: never }
+  | { isFollowed: false; domain: string; RSSID?: never }
+);
 
-type WholeProps = Props | IsNotFollowedProps;
+export const RssBlock = (props: RssBlockProps): JSX.Element => {
+  const {
+    blogTitle = "",
+    property1 = true,
+    isFollowed,
+    imageUrl,
+  } = props;
 
-export const RssBlock = ({
-  RSSID,
-  blogTitle = "",
-  property1 = true,
-  isFollowed,
-  imageUrl,
-  domain,
-}: WholeProps): JSX.Element => {
   return (
     <div
       className={`[border-bottom-style:solid] border-[#161616] w-full flex border-t items-center [border-top-style:solid] gap-2 px-0 py-1.5 border-b relative `}
@@ -36,11 +32,11 @@ export const RssBlock = ({
             />
             <p className={`font-medium text-white text-xs`}>{blogTitle}</p>
           </div>
-          <Follow
-            isFollowed={isFollowed}
-            RSSID={RSSID ? RSSID : 0}
-            domain={domain}
-          />
+          {isFollowed ? (
+            <Follow isFollowed={true} RSSID={props.RSSID} />
+          ) : (
+            <Follow isFollowed={false} domain={props.domain} />
+          )}
         </>
       ) : (
         <>

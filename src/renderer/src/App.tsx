@@ -2,10 +2,9 @@ import { Ocr } from "@renderer/pages/articleAdd/OCR";
 import Input from "@renderer/pages/articleAdd/ArticleAddForm";
 import ErrorPage from "@pages/error";
 import Root from "@renderer/routes/Root";
-import D1 from "@renderer/pages/articleDetail/D1";
-import D2 from "@renderer/pages/articleDetail/D2";
-import D3 from "@renderer/pages/articleDetail/D3";
-import D4 from "@renderer/pages/articleDetail/D4";
+import ArticleDetail1 from "@renderer/pages/articleDetail/ArticleDetail1";
+import ArticleDetail2 from "@renderer/pages/articleDetail/ArticleDetail2";
+import ArticleDetail3 from "@renderer/pages/articleDetail/ArticleDetail3";
 import Saved from "@renderer/pages/main/Saved";
 import Following from "@renderer/pages/main/Following";
 import Mine from "@renderer/pages/main/Mine";
@@ -50,19 +49,15 @@ const router = createHashRouter([
     children: [
       {
         path: "detail/:id",
-        element: <D1 />,
+        element: <ArticleDetail1 />,
       },
       {
         path: "detail2/:id",
-        element: <D2 />,
+        element: <ArticleDetail2 />,
       },
       {
         path: "detail3/:id",
-        element: <D3 />,
-      },
-      {
-        path: "detail4/:id",
-        element: <D4 />,
+        element: <ArticleDetail3 />,
       },
       {
         path: "ocr",

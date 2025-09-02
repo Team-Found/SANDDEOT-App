@@ -1,6 +1,15 @@
 import Parser from "rss-parser";
 import { RSS } from "../db/types/Rss";
 import count from "../db/modules/article/count";
+
+export type ItemWithRSSID = Parser.Item & {
+  RSSID: number;
+  description?: string;
+  summary?: string;
+  "media:thumbnail"?: { $: { url: string } };
+  "media:content"?: any;
+  "content:encoded"?: string;
+};
 // type CustomFeed = { foo: string };
 // type CustomItem = { bar: number };
 
@@ -26,7 +35,7 @@ export async function getRssFeed(rss: RSS): Promise<Feed> {
   // console.log(rss.RSSURL);
   const feed = await parser.parseURL(rss.RSSURL);
   feed.items.forEach((item) => {
-    item.RSSID = rss.RSSID;
+    (item as unknown as ItemWithRSSID).RSSID = rss.RSSID;
   });
   return feed;
 }
@@ -36,17 +45,18 @@ export async function getRssFeeds(rsss: RSS[]): Promise<Feed[]> {
   return feeds;
 }
 
-export async function getRssFeedsItems(rsss: RSS[]): Promise<Parser.Item[]> {
+export async function getRssFeedsItems(rsss: RSS[]): Promise<ItemWithRSSID[]> {
   const feeds = await getRssFeeds(rsss);
 
   //order by time
   const items = feeds.flatMap((feed) =>
     feed.items.map((item) => {
+      const itemWithRssId = item as unknown as ItemWithRSSID;
       rsss.map((item2) => {
-        if (item2.RSSURL == feed.link) item.RSSID = item2.RSSID;
+        if (item2.RSSURL == feed.link) itemWithRssId.RSSID = item2.RSSID;
       });
       // item.RSSID = feed.link
-      return item;
+      return itemWithRssId;
     }),
   );
   items.sort((a, b) => {
@@ -62,7 +72,7 @@ export async function getRssFeedsItems(rsss: RSS[]): Promise<Parser.Item[]> {
 export async function getRssFeedsItemsAfterDatetime(
   rsss: RSS[],
   datetime: Date,
-): Promise<Parser.Item[]> {
+): Promise<ItemWithRSSID[]> {
   const items = await getRssFeedsItems(rsss);
 
   const already = await count();
@@ -85,9 +95,6 @@ export async function getRssFeedsItemsAfterDatetime(
 }
 const ISODatetoDate = (isoDate?: string): Date => {
   return new Date(isoDate ?? "");
-};
-const ISODatetoUnix = (isoDate: string): number => {
-  return Math.floor(ISODatetoDate(isoDate).getTime() / 1000);
 };
 
 // getRssFeedsItems([{

@@ -1,5 +1,4 @@
 import FeedSideBar from "@renderer/components/Root/RightSideBar/FeedSideBar";
-import FeedSideBar2 from "@renderer/components/Root/RightSideBar/FeedSideBar2";
 import { Outlet } from "react-router-dom";
 import Root from "./Root";
 import TabBar from "@renderer/components/Root/TabBar/TabBar";

@@ -13,7 +13,6 @@ import Modal from "react-modal";
 import { Link } from "react-router-dom";
 import { setReRender } from "@renderer/utils/store";
 import { useDispatch } from "react-redux";
-import { Dispatch } from '../../../../../../node_modules/redux/src/types/store';
 
 const customStyles = {
   overlay: {

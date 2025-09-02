@@ -1,8 +1,6 @@
-import db from "../../db";
 import ArticleDetail from "../../types/ArticleDetail";
 import Article from "../../types/Article";
 import { RSS } from "../../types/Rss";
-import db from "../../../db";
 interface Modules {
 article: {
     del(): Promise<void>;
@@ -50,7 +48,7 @@ rss: {
   article: {
       add(articleID: number, RSSID: number, title: string, date: Date, description?: string, body?: string, threadID?: null | string,): Promise<void>;
 
-      updateDuration(articleID: number, duration: number, //sec): Promise<void>;
+      updateDuration(articleID: number, duration: number /* sec */): Promise<void>;
 
   };
     lastUpdate(): Promise<Date>;

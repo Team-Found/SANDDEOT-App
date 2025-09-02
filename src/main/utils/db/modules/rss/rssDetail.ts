@@ -1,20 +1,19 @@
 import db from "../../db";
+import { RSS } from "../../types/Rss";
 
-const detail = async (
-  RSSID: number,
-): { RSSID: number; RSSURL: string; RSSName: string; RSSImage: string } => {
+const detail = async (RSSID: number): Promise<RSS> => {
   const sql = `
     SELECT *
     FROM RSS
     WHERE RSSID = ?
   `;
   return new Promise((resolve, reject) => {
-    db.all(sql, [RSSID], (err, rows) => {
+    db.get(sql, [RSSID], (err, row: RSS) => {
       if (err) {
         console.error("SQL error13:", err.message);
-        reject();
+        reject(err);
       } else {
-        resolve(rows);
+        resolve(row);
       }
     });
   });

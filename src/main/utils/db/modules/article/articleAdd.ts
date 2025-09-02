@@ -1,8 +1,6 @@
 import db from "../../db";
 
-// const db = require("../../db");
-
-const insertRSSA = (bodyID: number, RSSID: number): Promise<number> => {
+const insertRSSA = async (bodyID: number, RSSID: number): Promise<number> => {
   return new Promise((resolve, reject) => {
     db.run(
       "INSERT INTO RSSArticle (bodyID, RSSID) VALUES (?, ?)",
@@ -10,7 +8,7 @@ const insertRSSA = (bodyID: number, RSSID: number): Promise<number> => {
       (err) => {
         if (err) {
           console.error("SQL error3:", err.message);
-          reject();
+          reject(err);
         } else {
           console.log(`third success`);
           resolve(0);
@@ -20,7 +18,7 @@ const insertRSSA = (bodyID: number, RSSID: number): Promise<number> => {
   });
 };
 
-const selectBodyID = (
+const selectBodyID = async (
   title: string,
   unixTime: number,
   body: string,
@@ -35,7 +33,7 @@ const selectBodyID = (
       (err, row: { bodyID: number }) => {
         if (err) {
           console.error("SQL error2:", err.message);
-          reject();
+          reject(err);
         } else {
           console.log(`second success`);
           resolve(row.bodyID);
@@ -45,7 +43,7 @@ const selectBodyID = (
   });
 };
 
-const add = (
+const add = async (
   title: string,
   date: Date,
   body: string,
@@ -56,32 +54,29 @@ const add = (
 ): Promise<number> => {
   const sql =
     "INSERT INTO Body (title, date, body, translated, origin, author) VALUES (?, ?, ?, ?, ?, ?)";
-  // console.log(body);
-  // console.log(title);
-  // console.log(date);
   const unixTime = Math.floor(date.getTime() / 1000);
+
   return new Promise((resolve, reject) => {
-    db.run(sql, [title, unixTime, body, translated, origin, author], (err) => {
+    db.run(sql, [title, unixTime, body, translated, origin, author], async (err) => {
       if (err) {
         console.error("SQL error1:", err.message);
-        reject();
-      } else if (RSSID) {
-        console.log(`success`);
-        selectBodyID(title, unixTime, body, translated, origin, author).then(
-          (bodyID) => {
-            insertRSSA(bodyID, RSSID).then(() => {
-              resolve(0);
-            });
-            resolve(0);
-          },
-        );
+        reject(err);
       } else {
-        resolve(0);
+        if (RSSID) {
+          try {
+            console.log(`success`);
+            const bodyID = await selectBodyID(title, unixTime, body, translated, origin, author);
+            await insertRSSA(bodyID, RSSID);
+            resolve(0);
+          } catch (e) {
+            reject(e);
+          }
+        } else {
+          resolve(0);
+        }
       }
     });
   });
 };
-
-// add("1234234", new Date(), "hihihi", "", 3, 1, "woghks", null, 1);
 
 export default add;

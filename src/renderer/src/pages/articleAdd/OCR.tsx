@@ -1,8 +1,4 @@
 import Tesseract from "tesseract.js";
-import { useRef } from "react";
-
-const defaultSrc =
-  "https://raw.githubusercontent.com/roadmanfong/react-cropper/master/example/img/child.jpg";
 
 import Webcam from "react-webcam";
 import {
@@ -28,7 +24,7 @@ export const Ocr: React.FC = () => {
   }
 
   const [progress, setProgress] = useState<number>(0);
-  const [image, setImage] = useState<string | ArrayBuffer | null>();
+  const [image, setImage] = useState<string | null>();
   const [deviceId, setDeviceId] = React.useState({});
   const [devices, setDevices] = React.useState([] as Devices[]);
   const cropperRef = createRef<ReactCropperElement>();
@@ -47,11 +43,13 @@ export const Ocr: React.FC = () => {
 
   // console.log(devices[0]);
 
-  const webcamRef = React.useRef(null);
+  const webcamRef = React.useRef<Webcam>(null);
   const capture = React.useCallback(() => {
-    const imageSrc = webcamRef.current?.getScreenshot();
-    console.log(imageSrc);
-    setImage(imageSrc);
+    if (webcamRef.current) {
+      const imageSrc = webcamRef.current.getScreenshot();
+      console.log(imageSrc);
+      setImage(imageSrc);
+    }
   }, [webcamRef]);
 
   const onChange = (e: any) => {
@@ -64,7 +62,7 @@ export const Ocr: React.FC = () => {
     }
     const reader = new FileReader();
     reader.onload = (): void => {
-      setImage(reader.result as any);
+      setImage(reader.result as string);
     };
     reader.readAsDataURL(files[0]);
   };
